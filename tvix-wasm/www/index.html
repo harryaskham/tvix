@@ -628,6 +628,35 @@
                 // Call the regular evaluate method
                 return this.evaluate(expression, raw);
             }
+            
+            evaluate_with_debug_info(expression, raw, prettyPrintAst, displayAst, dumpBytecode, traceRuntime, strict) {
+                console.log(`Mock: evaluate_with_debug_info called with flags: display_ast=${displayAst}, dump_bytecode=${dumpBytecode}, trace_runtime=${traceRuntime}, strict=${strict}, pretty_print_ast=${prettyPrintAst}`);
+                
+                // Generate mock debug information
+                const result = this.evaluate(expression, raw);
+                
+                const mockAst = `(mock AST for: ${expression})
+├─ Expr
+│  └─ ${expression.split(' ').length > 2 ? 'BinOp' : 'Literal'}
+│     ${expression.includes('+') ? '├─ Operator: +' : ''}
+│     ${expression.includes('+') ? '├─ Left: ' + expression.split('+')[0].trim() : ''}
+│     ${expression.includes('+') ? '└─ Right: ' + expression.split('+')[1]?.trim() : '└─ Value: ' + expression}`;
+                
+                const mockBytecode = dumpBytecode ? `[Mock Bytecode for: ${expression}]
+OpConstant(0) // ${expression}
+${expression.includes('+') ? 'OpAdd\n' : ''}OpReturn` : '';
+                
+                const mockTrace = traceRuntime ? `[Mock VM Trace for: ${expression}]
+0000: OpConstant(0)    [  ]
+${expression.includes('+') ? '0001: OpAdd           [ val ]\n' : ''}0002: OpReturn         [ result ]` : '';
+                
+                return {
+                    result: result,
+                    ast: (displayAst || prettyPrintAst) ? mockAst : '',
+                    bytecode: mockBytecode,
+                    trace: mockTrace
+                };
+            }
         }
 
         function saveState() {
@@ -752,6 +781,37 @@
                 astDisplay.classList.remove('show');
             }
         }
+        
+        function displayDebugInfo(settings, debugInfo, input) {
+            const astDisplay = document.getElementById('ast-display');
+            
+            // Handle AST display
+            if (settings.prettyPrintAst) {
+                if (debugInfo && debugInfo.ast) {
+                    astDisplay.textContent = `AST for: ${input.substring(0, 50)}${input.length > 50 ? '...' : ''}\n\n${debugInfo.ast}`;
+                } else {
+                    astDisplay.textContent = `AST for: ${input.substring(0, 50)}${input.length > 50 ? '...' : ''}\n\n(Debug info not available - using fallback)`;
+                }
+            }
+            
+            // Log debug information to console
+            if (debugInfo) {
+                if (settings.displayAst && debugInfo.ast) {
+                    console.log('=== Display AST ===');
+                    console.log(debugInfo.ast);
+                }
+                
+                if (settings.dumpBytecode && debugInfo.bytecode) {
+                    console.log('=== Dump Bytecode ===');
+                    console.log(debugInfo.bytecode);
+                }
+                
+                if (settings.traceRuntime && debugInfo.trace) {
+                    console.log('=== Trace Runtime ===');
+                    console.log(debugInfo.trace);
+                }
+            }
+        }
 
         function setupEventHandlers() {
             // Attach button event handlers
@@ -839,9 +899,22 @@
                     }
                     
                     try {
-                        // Use the new evaluate_with_settings method if available, fall back to evaluate
                         let result;
-                        if (typeof tvixEvaluator.evaluate_with_settings === 'function') {
+                        let debugInfo = null;
+                        
+                        // Use the new debug interface if available, otherwise fall back
+                        if (typeof tvixEvaluator.evaluate_with_debug_info === 'function') {
+                            debugInfo = tvixEvaluator.evaluate_with_debug_info(
+                                input, 
+                                rawMode, 
+                                settings.prettyPrintAst,
+                                settings.displayAst, 
+                                settings.dumpBytecode, 
+                                settings.traceRuntime, 
+                                settings.strict
+                            );
+                            result = debugInfo.result;
+                        } else if (typeof tvixEvaluator.evaluate_with_settings === 'function') {
                             result = tvixEvaluator.evaluate_with_settings(
                                 input, 
                                 rawMode, 
@@ -859,16 +932,8 @@
                         if (!evaluationAborted) {
                             setOutput(maybeUnquote(result, rawMode), 'success');
                             
-                            // Handle pretty-print AST display
-                            if (settings.prettyPrintAst) {
-                                const astDisplay = document.getElementById('ast-display');
-                                if (typeof tvixEvaluator.evaluate_with_settings === 'function') {
-                                    // With the new WASM interface, AST data would be available
-                                    astDisplay.textContent = `Pretty-printed AST for: ${input.substring(0, 50)}${input.length > 50 ? '...' : ''}\n\n[Debug flags active - check console for additional output]`;
-                                } else {
-                                    astDisplay.textContent = `Pretty-printed AST for: ${input.substring(0, 50)}${input.length > 50 ? '...' : ''}\n\n(Rebuild WASM to see AST - new interface not available)`;
-                                }
-                            }
+                            // Handle debug info display
+                            displayDebugInfo(settings, debugInfo, input);
                         }
                     } catch (error) {
                         if (!evaluationAborted) {

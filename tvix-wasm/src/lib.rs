@@ -4,12 +4,21 @@ use wasm_bindgen::prelude::*;
 use std::rc::Rc;
 use std::collections::HashMap;
 use std::{io, path::{Path, PathBuf}};
-use std::io::{Cursor};
+use std::io::Cursor;
+// Future: use tvix_eval::observer::{DisassemblingObserver, TracingObserver};
 
 #[wasm_bindgen]
 extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     fn log(s: &str);
+}
+
+// Structure to hold debug information
+struct DebugResult {
+    value: String,
+    ast: String,
+    bytecode: String,
+    trace: String,
 }
 
 // Virtual filesystem for embedded nix files
@@ -358,7 +367,7 @@ impl TvixEvaluator {
     }
     
     #[wasm_bindgen]
-    pub fn evaluate_with_settings(
+    pub fn evaluate_with_debug_info(
         &mut self, 
         expression: &str, 
         raw: bool, 
@@ -367,8 +376,33 @@ impl TvixEvaluator {
         dump_bytecode: bool, 
         trace_runtime: bool, 
         strict: bool
-    ) -> Result<String, JsValue> {
-        log(&format!("eval: evaluate_with_settings called with flags: display_ast={}, dump_bytecode={}, trace_runtime={}, strict={}, pretty_print_ast={}", 
+    ) -> Result<JsValue, JsValue> {
+        let result = self.evaluate_with_settings_internal(
+            expression, raw, pretty_print_ast, display_ast, 
+            dump_bytecode, trace_runtime, strict
+        )?;
+        
+        // Convert to JavaScript object
+        let debug_result = js_sys::Object::new();
+        js_sys::Reflect::set(&debug_result, &"result".into(), &result.value.into())?;
+        js_sys::Reflect::set(&debug_result, &"ast".into(), &result.ast.into())?;
+        js_sys::Reflect::set(&debug_result, &"bytecode".into(), &result.bytecode.into())?;
+        js_sys::Reflect::set(&debug_result, &"trace".into(), &result.trace.into())?;
+        
+        Ok(debug_result.into())
+    }
+
+    fn evaluate_with_settings_internal(
+        &mut self, 
+        expression: &str, 
+        raw: bool, 
+        pretty_print_ast: bool,
+        display_ast: bool, 
+        dump_bytecode: bool, 
+        trace_runtime: bool, 
+        strict: bool
+    ) -> Result<DebugResult, JsValue> {
+        log(&format!("eval: evaluate_with_settings_internal called with flags: display_ast={}, dump_bytecode={}, trace_runtime={}, strict={}, pretty_print_ast={}", 
             display_ast, dump_bytecode, trace_runtime, strict, pretty_print_ast));
 
         let vfs = VirtualFilesystemIO::new();
@@ -392,24 +426,44 @@ impl TvixEvaluator {
             eval_builder = eval_builder.with_globals(globals.clone());
         }
 
+        // Prepare debug info capture
+        let mut ast_output = String::new();
+        
+        // Log debug flags for now - full observer implementation requires more complex lifetime management
+        if dump_bytecode {
+            log("eval: Dump bytecode requested - would capture bytecode with DisassemblingObserver");
+        }
+        if trace_runtime {
+            log("eval: Trace runtime requested - would capture trace with TracingObserver");
+        }
+
         let eval = eval_builder.build();
         let globals = eval.globals();
         let dummy_path = std::path::PathBuf::from("/embedded");
-        
-        // Display AST if requested
-        if display_ast {
-            log("eval: display_ast flag is set - would dump AST here");
-            // TODO: Parse and display AST
-        }
         
         log(&format!("eval: About to evaluate expression: {}", expression));
         let result = eval.evaluate(expression, Some(dummy_path));
         log(&format!("eval: Evaluation completed with {} errors", result.errors.len()));
         
-        // Dump bytecode if requested
-        if dump_bytecode {
-            log("eval: dump_bytecode flag is set - would dump bytecode here");
-            // TODO: Access and display bytecode
+        // For now, provide placeholder debug output - full implementation would require
+        // restructuring the evaluation process to capture observer output
+        let bytecode_str = if dump_bytecode {
+            format!("[Bytecode output for: {}]\n(Full bytecode capture requires observer implementation)", expression)
+        } else {
+            String::new()
+        };
+        
+        let trace_str = if trace_runtime {
+            format!("[Runtime trace for: {}]\n(Full runtime trace requires observer implementation)", expression)
+        } else {
+            String::new()
+        };
+        
+        // Capture AST if requested
+        if display_ast || pretty_print_ast {
+            if let Some(ref expr) = result.expr {
+                ast_output = tvix_eval::pretty_print_expr(expr);
+            }
         }
 
         if !result.errors.is_empty() {
@@ -445,7 +499,13 @@ impl TvixEvaluator {
             match out_value {
                 Ok(v) => {
                     log(&format!("eval: Returning value: {}", v));
-                    Ok(v)
+                    
+                    Ok(DebugResult {
+                        value: v,
+                        ast: ast_output,
+                        bytecode: bytecode_str,
+                        trace: trace_str,
+                    })
                 },
                 Err(e) => {
                     log(&format!("eval: Evaluation error: {}", e.to_string()));
@@ -455,5 +515,24 @@ impl TvixEvaluator {
         } else {
             Err(JsValue::from_str("No value returned from evaluation"))
         }
+    }
+
+    #[wasm_bindgen]
+    pub fn evaluate_with_settings(
+        &mut self, 
+        expression: &str, 
+        raw: bool, 
+        pretty_print_ast: bool,
+        display_ast: bool, 
+        dump_bytecode: bool, 
+        trace_runtime: bool, 
+        strict: bool
+    ) -> Result<String, JsValue> {
+        let result = self.evaluate_with_settings_internal(
+            expression, raw, pretty_print_ast, display_ast, 
+            dump_bytecode, trace_runtime, strict
+        )?;
+        
+        Ok(result.value)
     }
 }
