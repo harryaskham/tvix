@@ -28,18 +28,42 @@ function loadExpression() {
 }
 
 // Global editor instance
-window.createTvixEditor = function(element, initialDoc = '', onDocChange = null) {
+window.createTvixEditor = function(element, initialDoc = '', onDocChange = null, onEvaluate = null) {
   // Use saved expression if no initial doc provided
   if (!initialDoc) {
     initialDoc = loadExpression();
   }
+  // Create keybindings array
+  const keybindings = [indentWithTab];
+  
+  // Add Ctrl+Enter for evaluation if callback provided
+  if (onEvaluate) {
+    keybindings.push({
+      key: "Ctrl-Enter",
+      run: () => {
+        console.log('Ctrl+Enter pressed - triggering evaluation');
+        onEvaluate();
+        return true;
+      }
+    });
+    // Also add Cmd+Enter for Mac users
+    keybindings.push({
+      key: "Cmd-Enter", 
+      run: () => {
+        console.log('Cmd+Enter pressed - triggering evaluation');
+        onEvaluate();
+        return true;
+      }
+    });
+  }
+  
   const extensions = [
     // vim must come before basicSetup
     vim(),
     basicSetup,
     javascript(),
-    // Override tab key to insert tab instead of losing focus
-    keymap.of([indentWithTab])
+    // Add keybindings with high precedence to override vim
+    keymap.of(keybindings, { precedence: 'override' })
   ];
   
   // Add document change listener with localStorage saving
@@ -112,12 +136,42 @@ window.createTvixEditor = function(element, initialDoc = '', onDocChange = null)
         window.Vim.map("jk", "<Esc>", "insert");
         window.Vim.map("kj", "<Esc>", "insert"); 
         window.Vim.map(";", ":");
-        console.log('✅ Custom vim mappings configured: jk/kj -> Esc, ; -> :');
+        
+        // Add Ctrl+Enter mapping for evaluation if callback provided
+        if (onEvaluate) {
+          // Define the evaluation command
+          if (window.Vim.defineEx) {
+            window.Vim.defineEx('evaluate', 'eval', function() {
+              console.log('Vim Ctrl+Enter evaluation triggered');
+              onEvaluate();
+            });
+          }
+          // Map Ctrl+Enter in normal and insert modes
+          window.Vim.map("<C-CR>", ":evaluate<CR>", "normal");
+          window.Vim.map("<C-CR>", "<Esc>:evaluate<CR>a", "insert");
+          console.log('✅ Custom vim mappings configured: jk/kj -> Esc, ; -> :, Ctrl+Enter -> evaluate');
+        } else {
+          console.log('✅ Custom vim mappings configured: jk/kj -> Esc, ; -> :');
+        }
       } else if (Vim && Vim.map) {
         Vim.map("jk", "<Esc>", "insert");
         Vim.map("kj", "<Esc>", "insert"); 
         Vim.map(";", ":");
-        console.log('✅ Custom vim mappings configured via imported Vim: jk/kj -> Esc, ; -> :');
+        
+        // Add Ctrl+Enter mapping for evaluation if callback provided
+        if (onEvaluate) {
+          if (Vim.defineEx) {
+            Vim.defineEx('evaluate', 'eval', function() {
+              console.log('Vim Ctrl+Enter evaluation triggered');
+              onEvaluate();
+            });
+          }
+          Vim.map("<C-CR>", ":evaluate<CR>", "normal");
+          Vim.map("<C-CR>", "<Esc>:evaluate<CR>a", "insert");
+          console.log('✅ Custom vim mappings configured via imported Vim: jk/kj -> Esc, ; -> :, Ctrl+Enter -> evaluate');
+        } else {
+          console.log('✅ Custom vim mappings configured via imported Vim: jk/kj -> Esc, ; -> :');
+        }
       } else {
         console.log('⚠️ Vim object not available:', {
           windowVim: typeof window.Vim,

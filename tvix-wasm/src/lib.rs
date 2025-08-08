@@ -5,7 +5,7 @@ use std::rc::Rc;
 use std::collections::HashMap;
 use std::{io, path::{Path, PathBuf}};
 use std::io::Cursor;
-// Future: use tvix_eval::observer::{DisassemblingObserver, TracingObserver};
+use tvix_eval::observer::{DisassemblingObserver, TracingObserver};
 
 #[wasm_bindgen]
 extern "C" {
@@ -326,6 +326,7 @@ impl tvix_eval::EvalIO for VirtualFilesystemIO {
 #[wasm_bindgen]
 pub struct TvixEvaluator {
     globals: Option<Rc<tvix_eval::GlobalsMap>>,
+    source_map: Option<tvix_eval::SourceCode>,
 }
 
 #[wasm_bindgen]
@@ -335,6 +336,7 @@ impl TvixEvaluator {
         console_error_panic_hook::set_once();
         Self { 
             globals: None,
+            source_map: None,
         }
     }
 
@@ -425,38 +427,76 @@ impl TvixEvaluator {
         if let Some(globals) = &self.globals {
             eval_builder = eval_builder.with_globals(globals.clone());
         }
+        
+        // Reuse source map for better import caching across evaluations
+        if let Some(ref source_map) = self.source_map {
+            eval_builder = eval_builder.with_source_map(source_map.clone());
+        }
 
         // Prepare debug info capture
         let mut ast_output = String::new();
         
-        // Log debug flags for now - full observer implementation requires more complex lifetime management
-        if dump_bytecode {
-            log("eval: Dump bytecode requested - would capture bytecode with DisassemblingObserver");
-        }
-        if trace_runtime {
-            log("eval: Trace runtime requested - would capture trace with TracingObserver");
-        }
+        // Capture the source map for preservation after evaluation
+        let current_source_map = eval_builder.source_map().clone();
+        
+        // Create the evaluation with observers - we need to manage lifetimes carefully
+        let (result, globals, bytecode_str, trace_str) = if dump_bytecode || trace_runtime {
+            // We need to capture observer output, so we create buffers and observers
+            let mut bytecode_buffer = Vec::new();
+            let mut trace_buffer = Vec::new();
+            
+            // Set up observers
+            let source_map = eval_builder.source_map().clone();
+            
+            // Create observers that will capture to our buffers
+            let mut compiler_observer = if dump_bytecode {
+                Some(DisassemblingObserver::new(source_map.clone(), &mut bytecode_buffer))
+            } else {
+                None
+            };
+            
+            let mut runtime_observer = if trace_runtime {
+                Some(TracingObserver::new(&mut trace_buffer))
+            } else {
+                None
+            };
+            
+            // Set the observers on the builder
+            if let Some(ref mut obs) = compiler_observer {
+                eval_builder.set_compiler_observer(Some(obs));
+            }
+            if let Some(ref mut obs) = runtime_observer {
+                eval_builder.set_runtime_observer(Some(obs));
+            }
 
-        let eval = eval_builder.build();
-        let globals = eval.globals();
-        let dummy_path = std::path::PathBuf::from("/embedded");
-        
-        log(&format!("eval: About to evaluate expression: {}", expression));
-        let result = eval.evaluate(expression, Some(dummy_path));
-        log(&format!("eval: Evaluation completed with {} errors", result.errors.len()));
-        
-        // For now, provide placeholder debug output - full implementation would require
-        // restructuring the evaluation process to capture observer output
-        let bytecode_str = if dump_bytecode {
-            format!("[Bytecode output for: {}]\n(Full bytecode capture requires observer implementation)", expression)
+            let eval = eval_builder.build();
+            let globals = eval.globals();
+            let dummy_path = std::path::PathBuf::from("/embedded");
+            
+            log(&format!("eval: About to evaluate expression: {}", expression));
+            let result = eval.evaluate(expression, Some(dummy_path));
+            log(&format!("eval: Evaluation completed with {} errors", result.errors.len()));
+            
+            // Explicitly drop the observers to release the borrow
+            drop(compiler_observer);
+            drop(runtime_observer);
+            
+            // Now we can safely access the buffers
+            let captured_bytecode = String::from_utf8_lossy(&bytecode_buffer).to_string();
+            let captured_trace = String::from_utf8_lossy(&trace_buffer).to_string();
+            
+            (result, globals, captured_bytecode, captured_trace)
         } else {
-            String::new()
-        };
-        
-        let trace_str = if trace_runtime {
-            format!("[Runtime trace for: {}]\n(Full runtime trace requires observer implementation)", expression)
-        } else {
-            String::new()
+            // No observers needed - simpler path
+            let eval = eval_builder.build();
+            let globals = eval.globals();
+            let dummy_path = std::path::PathBuf::from("/embedded");
+            
+            log(&format!("eval: About to evaluate expression: {}", expression));
+            let result = eval.evaluate(expression, Some(dummy_path));
+            log(&format!("eval: Evaluation completed with {} errors", result.errors.len()));
+            
+            (result, globals, String::new(), String::new())
         };
         
         // Capture AST if requested
@@ -488,13 +528,29 @@ impl TvixEvaluator {
         }
 
         if let Some(value) = result.value {
+            // Preserve the evaluation state for import caching and globals
             self.globals = Some(globals);
+            // Preserve the updated source map - this helps maintain import cache state
+            self.source_map = Some(current_source_map);
+            
+            // In strict mode, the value should be fully forced, but let's ensure proper conversion
             let typed_value: Result<String, String> = Ok(format!("{} :: {}", value, value.type_of()));
-            // Try to convert to string - first contextful, then regular display
-            let raw_value: Result<String, String> = value.to_contextful_str()
-                .map(|s| s.to_string())
-                .map_err(|e| format!("to_contextful_str failed: {:?}", e))
-                .or_else(|_| Ok(format!("{}", value)));
+            
+            // Try to convert to string - handle both contextful and regular display
+            let raw_value: Result<String, String> = match value.to_contextful_str() {
+                Ok(contextful) => Ok(contextful.to_string()),
+                Err(_) => {
+                    // If contextful conversion fails, try regular display
+                    // The strict mode should have forced most thunks already
+                    let display_str = format!("{}", value);
+                    if display_str.contains("thunk(blackhole)") {
+                        log(&format!("eval: Warning - found unforced thunk in output: {}", display_str));
+                        Ok(format!("(unforced thunk - try enabling strict mode)"))
+                    } else {
+                        Ok(display_str)
+                    }
+                }
+            };
             let out_value = if raw { raw_value.or(typed_value) } else { typed_value };
             match out_value {
                 Ok(v) => {

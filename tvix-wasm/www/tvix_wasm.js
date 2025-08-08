@@ -356,7 +356,7 @@ function __wbg_adapter_122(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg0);
     _assertNum(arg1);
     _assertNum(arg3);
-    const ret = wasm.closure125_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    const ret = wasm.closure122_externref_shim(arg0, arg1, arg2, arg3, arg4);
     return ret !== 0;
 }
 
@@ -374,7 +374,7 @@ function __wbg_adapter_139(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg0);
     _assertNum(arg1);
     _assertNum(arg3);
-    const ret = wasm.closure127_externref_shim_multivalue_shim(arg0, arg1, arg2, arg3, arg4);
+    const ret = wasm.closure124_externref_shim_multivalue_shim(arg0, arg1, arg2, arg3, arg4);
     var v1 = getArrayJsValueFromWasm0(ret[0], ret[1]).slice();
     wasm.__wbindgen_free(ret[0], ret[1] * 4, 4);
     return v1;
@@ -384,14 +384,14 @@ function __wbg_adapter_142(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg0);
     _assertNum(arg1);
     _assertNum(arg3);
-    wasm.closure119_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure116_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_159(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg0);
     _assertNum(arg1);
     _assertNum(arg3);
-    const ret = wasm.closure123_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    const ret = wasm.closure120_externref_shim(arg0, arg1, arg2, arg3, arg4);
     return ret;
 }
 
@@ -399,33 +399,33 @@ function __wbg_adapter_176(arg0, arg1, arg2, arg3, arg4, arg5) {
     _assertNum(arg0);
     _assertNum(arg1);
     _assertNum(arg4);
-    const ret = wasm.closure128_externref_shim(arg0, arg1, arg2, arg3, arg4, arg5);
+    const ret = wasm.closure125_externref_shim(arg0, arg1, arg2, arg3, arg4, arg5);
     return ret;
 }
 
 function __wbg_adapter_187(arg0, arg1, arg2) {
     _assertNum(arg0);
     _assertNum(arg1);
-    const ret = wasm.closure109_externref_shim(arg0, arg1, arg2);
+    const ret = wasm.closure106_externref_shim(arg0, arg1, arg2);
     return ret !== 0;
 }
 
 function __wbg_adapter_390(arg0, arg1, arg2, arg3) {
     _assertNum(arg0);
     _assertNum(arg1);
-    wasm.closure110_externref_shim(arg0, arg1, arg2, arg3);
+    wasm.closure107_externref_shim(arg0, arg1, arg2, arg3);
 }
 
 function __wbg_adapter_721(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg0);
     _assertNum(arg1);
-    wasm.closure113_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure110_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_940(arg0, arg1, arg2, arg3) {
     _assertNum(arg0);
     _assertNum(arg1);
-    wasm.closure111_externref_shim(arg0, arg1, arg2, arg3);
+    wasm.closure108_externref_shim(arg0, arg1, arg2, arg3);
 }
 
 function __wbg_adapter_991(arg0, arg1, arg2, arg3, arg4) {
@@ -433,7 +433,7 @@ function __wbg_adapter_991(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertNum(arg2);
     _assertNum(arg3);
-    wasm.closure120_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure117_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1028(arg0, arg1, arg2, arg3, arg4) {
@@ -441,7 +441,7 @@ function __wbg_adapter_1028(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertNum(arg2);
     _assertNum(arg3);
-    wasm.closure124_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure121_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1065(arg0, arg1, arg2, arg3, arg4) {
@@ -449,7 +449,7 @@ function __wbg_adapter_1065(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertNum(arg2);
     _assertNum(arg3);
-    wasm.closure121_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure118_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1102(arg0, arg1, arg2, arg3, arg4) {
@@ -457,7 +457,7 @@ function __wbg_adapter_1102(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertNum(arg2);
     _assertNum(arg3);
-    wasm.closure122_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure119_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1139(arg0, arg1, arg2, arg3, arg4) {
@@ -465,7 +465,7 @@ function __wbg_adapter_1139(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertNum(arg2);
     _assertNum(arg3);
-    wasm.closure114_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure111_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1176(arg0, arg1, arg2, arg3, arg4) {
@@ -473,7 +473,7 @@ function __wbg_adapter_1176(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertNum(arg2);
     _assertNum(arg3);
-    wasm.closure112_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure109_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1213(arg0, arg1, arg2, arg3, arg4) {
@@ -481,21 +481,21 @@ function __wbg_adapter_1213(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertNum(arg2);
     _assertNum(arg3);
-    wasm.closure118_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure115_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1250(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg0);
     _assertNum(arg1);
     _assertNum(arg3);
-    wasm.closure116_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure113_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1287(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg0);
     _assertNum(arg1);
     _assertNum(arg3);
-    wasm.closure115_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure112_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1324(arg0, arg1, arg2, arg3, arg4) {
@@ -503,7 +503,7 @@ function __wbg_adapter_1324(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertBigInt(arg2);
     _assertNum(arg3);
-    wasm.closure117_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure114_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 function __wbg_adapter_1361(arg0, arg1, arg2, arg3, arg4) {
@@ -511,7 +511,7 @@ function __wbg_adapter_1361(arg0, arg1, arg2, arg3, arg4) {
     _assertNum(arg1);
     _assertBigInt(arg2);
     _assertNum(arg3);
-    wasm.closure126_externref_shim(arg0, arg1, arg2, arg3, arg4);
+    wasm.closure123_externref_shim(arg0, arg1, arg2, arg3, arg4);
 }
 
 const TvixEvaluatorFinalization = (typeof FinalizationRegistry === 'undefined')

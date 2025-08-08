@@ -322,6 +322,42 @@
             box-shadow: 0 0 1px #88c0d0;
         }
         
+        /* Debug section styles */
+        .debug-section {
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .debug-section.show {
+            display: block;
+        }
+        
+        .debug-header {
+            margin-bottom: 8px;
+        }
+        
+        .debug-header h4 {
+            margin: 0;
+            color: #88c0d0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .debug-display {
+            background: #2e3440;
+            border: 1px solid #4c566a;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            max-height: 250px;
+            color: #d8dee9;
+            line-height: 1.4;
+        }
+        
+        /* Legacy AST display class for backward compatibility */
         .ast-display {
             background: #2e3440;
             border: 1px solid #4c566a;
@@ -374,7 +410,30 @@
                 <h3>Result</h3>
             </div>
             <div id="output" class="output">Ready to evaluate expressions!</div>
-            <div id="ast-display" class="ast-display"></div>
+            
+            <!-- Runtime Trace Display -->
+            <div id="trace-section" class="debug-section">
+                <div class="debug-header">
+                    <h4>Runtime Trace</h4>
+                </div>
+                <div id="trace-display" class="debug-display"></div>
+            </div>
+            
+            <!-- AST Display -->
+            <div id="ast-section" class="debug-section">
+                <div class="debug-header">
+                    <h4>AST</h4>
+                </div>
+                <div id="ast-display" class="debug-display"></div>
+            </div>
+            
+            <!-- Bytecode Display -->
+            <div id="bytecode-section" class="debug-section">
+                <div class="debug-header">
+                    <h4>Bytecode</h4>
+                </div>
+                <div id="bytecode-display" class="debug-display"></div>
+            </div>
         </div>
     </div>
     
@@ -524,14 +583,21 @@
         }
 
         function initEditor() {
-            // Create editor using our bundled function with live evaluation callback
+            // Create editor using our bundled function with callbacks
             // The editor will automatically load from localStorage
             editor = window.createTvixEditor(
                 document.getElementById('editor'), 
                 '', // Empty string means use localStorage
                 function(update) {
+                    // Doc change callback - for live mode
                     if (document.getElementById('live-mode').checked) {
                         debouncedEvaluate();
+                    }
+                },
+                function() {
+                    // Evaluation callback - for Ctrl+Enter
+                    if (!document.getElementById('live-mode').checked) {
+                        evaluateCurrentExpression();
                     }
                 }
             );
@@ -642,13 +708,13 @@
 │     ${expression.includes('+') ? '├─ Left: ' + expression.split('+')[0].trim() : ''}
 │     ${expression.includes('+') ? '└─ Right: ' + expression.split('+')[1]?.trim() : '└─ Value: ' + expression}`;
                 
-                const mockBytecode = dumpBytecode ? `[Mock Bytecode for: ${expression}]
-OpConstant(0) // ${expression}
-${expression.includes('+') ? 'OpAdd\n' : ''}OpReturn` : '';
+                const mockBytecode = dumpBytecode ? `== ${expression} (mock) ==
+OpConstant(0) ${expression.includes('1') ? '// 1' : '// ' + expression.split(' ')[0]}
+${expression.includes('2') ? 'OpConstant(1) // 2\n' : ''}${expression.includes('+') ? 'OpAdd\n' : ''}${expression.includes('*') ? 'OpMultiply\n' : ''}OpReturn` : '';
                 
-                const mockTrace = traceRuntime ? `[Mock VM Trace for: ${expression}]
-0000: OpConstant(0)    [  ]
-${expression.includes('+') ? '0001: OpAdd           [ val ]\n' : ''}0002: OpReturn         [ result ]` : '';
+                const mockTrace = traceRuntime ? `== Runtime Trace (mock) ==
+0000 OP_CONSTANT      0    [ ${expression.includes('1') ? "'1'" : "'" + expression.split(' ')[0] + "'"} ]
+${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${expression.includes('+') ? "0002 OP_ADD              [ '3' ]\n" : ''}${expression.includes('*') ? "0002 OP_MULTIPLY         [ '6' ]\n" : ''}0003 OP_RETURN            [ '${expression.includes('+') ? '3' : expression.includes('*') ? '6' : expression}' ]` : '';
                 
                 return {
                     result: result,
@@ -731,8 +797,8 @@ ${expression.includes('+') ? '0001: OpAdd           [ val ]\n' : ''}0002: OpRetu
                 document.getElementById('setting-trace-runtime').checked = settings.traceRuntime;
                 document.getElementById('setting-strict').checked = settings.strict;
                 
-                // Update AST display visibility
-                updateAstDisplay();
+                // Update debug display visibility
+                updateDebugDisplays();
             } catch (e) {
                 console.warn('Could not restore settings from localStorage:', e);
                 // Set defaults on error
@@ -763,7 +829,7 @@ ${expression.includes('+') ? '0001: OpAdd           [ val ]\n' : ''}0002: OpRetu
         
         function handleSettingChange() {
             saveSettings();
-            updateAstDisplay();
+            updateDebugDisplays();
             
             // Re-evaluate if live mode is on
             if (document.getElementById('live-mode').checked) {
@@ -771,45 +837,85 @@ ${expression.includes('+') ? '0001: OpAdd           [ val ]\n' : ''}0002: OpRetu
             }
         }
         
-        function updateAstDisplay() {
-            const prettyPrintAst = document.getElementById('setting-pretty-print-ast').checked;
-            const astDisplay = document.getElementById('ast-display');
+        function updateDebugDisplays() {
+            const settings = getSettings();
             
-            if (prettyPrintAst) {
-                astDisplay.classList.add('show');
+            // Update AST display
+            const astSection = document.getElementById('ast-section');
+            if (settings.prettyPrintAst) {
+                astSection.classList.add('show');
             } else {
-                astDisplay.classList.remove('show');
+                astSection.classList.remove('show');
+            }
+            
+            // Update bytecode display
+            const bytecodeSection = document.getElementById('bytecode-section');
+            if (settings.dumpBytecode) {
+                bytecodeSection.classList.add('show');
+            } else {
+                bytecodeSection.classList.remove('show');
+            }
+            
+            // Update trace display
+            const traceSection = document.getElementById('trace-section');
+            if (settings.traceRuntime) {
+                traceSection.classList.add('show');
+            } else {
+                traceSection.classList.remove('show');
             }
         }
         
+        // Legacy function for backward compatibility
+        function updateAstDisplay() {
+            updateDebugDisplays();
+        }
+        
         function displayDebugInfo(settings, debugInfo, input) {
-            const astDisplay = document.getElementById('ast-display');
+            // Update debug display visibility
+            updateDebugDisplays();
             
-            // Handle AST display
-            if (settings.prettyPrintAst) {
-                if (debugInfo && debugInfo.ast) {
-                    astDisplay.textContent = `AST for: ${input.substring(0, 50)}${input.length > 50 ? '...' : ''}\n\n${debugInfo.ast}`;
-                } else {
-                    astDisplay.textContent = `AST for: ${input.substring(0, 50)}${input.length > 50 ? '...' : ''}\n\n(Debug info not available - using fallback)`;
-                }
-            }
-            
-            // Log debug information to console
+            // Populate debug displays with content
             if (debugInfo) {
+                // Handle AST display
+                const astDisplay = document.getElementById('ast-display');
+                if (settings.prettyPrintAst && debugInfo.ast) {
+                    astDisplay.textContent = debugInfo.ast;
+                } else if (settings.prettyPrintAst) {
+                    astDisplay.textContent = '(AST not available)';
+                } else {
+                    astDisplay.textContent = '';
+                }
+                
+                // Handle bytecode display
+                const bytecodeDisplay = document.getElementById('bytecode-display');
+                if (settings.dumpBytecode && debugInfo.bytecode) {
+                    bytecodeDisplay.textContent = debugInfo.bytecode;
+                } else if (settings.dumpBytecode) {
+                    bytecodeDisplay.textContent = '(Bytecode not available)';
+                } else {
+                    bytecodeDisplay.textContent = '';
+                }
+                
+                // Handle runtime trace display
+                const traceDisplay = document.getElementById('trace-display');
+                if (settings.traceRuntime && debugInfo.trace) {
+                    traceDisplay.textContent = debugInfo.trace;
+                } else if (settings.traceRuntime) {
+                    traceDisplay.textContent = '(Runtime trace not available)';
+                } else {
+                    traceDisplay.textContent = '';
+                }
+                
+                // Still log display AST to console for CLI-like behavior
                 if (settings.displayAst && debugInfo.ast) {
                     console.log('=== Display AST ===');
                     console.log(debugInfo.ast);
                 }
-                
-                if (settings.dumpBytecode && debugInfo.bytecode) {
-                    console.log('=== Dump Bytecode ===');
-                    console.log(debugInfo.bytecode);
-                }
-                
-                if (settings.traceRuntime && debugInfo.trace) {
-                    console.log('=== Trace Runtime ===');
-                    console.log(debugInfo.trace);
-                }
+            } else {
+                // Clear all displays when no debug info is available
+                document.getElementById('ast-display').textContent = '';
+                document.getElementById('bytecode-display').textContent = '';
+                document.getElementById('trace-display').textContent = '';
             }
         }
 
