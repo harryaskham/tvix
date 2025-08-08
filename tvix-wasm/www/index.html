@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tvix WebAssembly Evaluator</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: #2e3440;
+            color: #d8dee9;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+        }
+        .input-section, .output-section {
+            background: #3b4252;
+            border: 1px solid #4c566a;
+            border-radius: 6px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .section-header h3 {
+            margin: 0;
+        }
+        .section-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        /* Nord theme for CodeMirror - force override any defaults */
+        #editor {
+            flex: 1;
+            min-height: 0;
+        }
+        .cm-editor {
+            width: 100% !important;
+            height: 100% !important;
+            border: 1px solid #4c566a !important;
+            border-radius: 4px !important;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+            font-size: 14px !important;
+            background: #2e3440 !important;
+        }
+        .cm-editor.cm-focused {
+            border-color: #88c0d0 !important;
+        }
+        .cm-editor .cm-content {
+            background-color: #2e3440 !important;
+            color: #d8dee9 !important;
+            padding: 10px !important;
+        }
+        .cm-editor .cm-gutters {
+            background-color: #3b4252 !important;
+            color: #4c566a !important;
+            border-right: 1px solid #4c566a !important;
+        }
+        .cm-editor .cm-activeLineGutter {
+            background-color: #434c5e !important;
+        }
+        .cm-editor .cm-activeLine {
+            background-color: rgba(76, 86, 106, 0.2) !important;
+        }
+        .cm-editor .cm-cursor {
+            border-left-color: #d8dee9 !important;
+        }
+        .cm-editor .cm-selectionBackground {
+            background-color: rgba(136, 192, 208, 0.3) !important;
+        }
+        /* Vim mode cursor styles */
+        .cm-editor .cm-vim-normal .cm-cursor {
+            background-color: #d8dee9 !important;
+            color: #2e3440 !important;
+            border: none !important;
+            width: 8px !important;
+        }
+        .cm-editor .cm-vim-insert .cm-cursor {
+            background-color: transparent !important;
+            border-left: 2px solid #a3be8c !important;
+            width: 2px !important;
+        }
+        .cm-editor .cm-vim-visual .cm-selectionBackground {
+            background-color: rgba(136, 192, 208, 0.5) !important;
+        }
+        button {
+            background: #5e81ac;
+            color: #eceff4;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #81a1c1;
+        }
+        button:disabled {
+            background: #4c566a;
+            cursor: not-allowed;
+        }
+        .output {
+            background: #2e3440;
+            border: 1px solid #4c566a;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            flex: 1;
+            white-space: pre-wrap;
+            overflow-y: auto;
+        }
+        .error {
+            color: #bf616a;
+        }
+        .success {
+            color: #a3be8c;
+        }
+        .info {
+            color: #88c0d0;
+            font-style: italic;
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
+            color: #d8dee9;
+        }
+        .status-light {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-red {
+            background-color: #bf616a;
+        }
+        .status-green {
+            background-color: #a3be8c;
+        }
+        
+        /* Settings modal styles */
+        .settings-icon {
+            background: none;
+            border: none;
+            color: #d8dee9;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 0;
+        }
+        .settings-icon:hover {
+            background: rgba(136, 192, 208, 0.2);
+            color: #88c0d0;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal {
+            background: #3b4252;
+            border: 1px solid #4c566a;
+            border-radius: 8px;
+            padding: 25px;
+            min-width: 400px;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #4c566a;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: #eceff4;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: #d8dee9;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+            border-radius: 4px;
+            margin: 0;
+        }
+        .modal-close:hover {
+            background: rgba(191, 97, 106, 0.2);
+            color: #bf616a;
+        }
+        
+        .settings-section {
+            margin-bottom: 20px;
+        }
+        
+        .settings-section h4 {
+            margin: 0 0 10px 0;
+            color: #88c0d0;
+            font-size: 14px;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(76, 86, 106, 0.3);
+        }
+        
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-label {
+            color: #d8dee9;
+            font-size: 14px;
+        }
+        
+        .setting-description {
+            color: #81a1c1;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        
+        .setting-control {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #4c566a;
+            transition: 0.2s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #d8dee9;
+            transition: 0.2s;
+            border-radius: 50%;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: #5e81ac;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        
+        .toggle-switch input:focus + .toggle-slider {
+            box-shadow: 0 0 1px #88c0d0;
+        }
+        
+        .ast-display {
+            background: #2e3440;
+            border: 1px solid #4c566a;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 12px;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            max-height: 200px;
+            margin-top: 10px;
+            color: #d8dee9;
+            display: none;
+        }
+        
+        .ast-display.show {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-section">
+            <div class="section-header">
+                <h3>Nix Expression</h3>
+                <div class="section-controls">
+                    <span id="status-light" class="status-light status-red"></span>
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" id="live-mode" style="margin-right: 8px;">
+                        live
+                    </label>
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" id="raw-mode" style="margin-right: 8px;">
+                        raw
+                    </label>
+                    <button id="settings-btn" class="settings-icon" title="Settings">⚙️</button>
+                </div>
+            </div>
+            <div id="editor"></div>
+            <button id="evaluate" style="display: none; margin-top: 10px;">Evaluate</button>
+        </div>
+        
+        <div class="output-section">
+            <div class="section-header">
+                <h3>Result</h3>
+            </div>
+            <div id="output" class="output">Ready to evaluate expressions!</div>
+            <div id="ast-display" class="ast-display"></div>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Runtime Settings</h3>
+                <button id="modal-close" class="modal-close">×</button>
+            </div>
+            
+            <div class="settings-section">
+                <h4>AST Display</h4>
+                <div class="setting-row">
+                    <div>
+                        <div class="setting-label">Pretty-Print AST</div>
+                        <div class="setting-description">Show formatted AST below results</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-pretty-print-ast">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h4>Debug Flags</h4>
+                <div class="setting-row">
+                    <div>
+                        <div class="setting-label">Display AST</div>
+                        <div class="setting-description">Dump raw AST before interpreting</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-display-ast">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-row">
+                    <div>
+                        <div class="setting-label">Dump Bytecode</div>
+                        <div class="setting-description">Dump bytecode before evaluating</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-dump-bytecode">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-row">
+                    <div>
+                        <div class="setting-label">Trace Runtime</div>
+                        <div class="setting-description">Trace VM execution</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-trace-runtime">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h4>Evaluation</h4>
+                <div class="setting-row">
+                    <div>
+                        <div class="setting-label">Strict Evaluation</div>
+                        <div class="setting-description">Force evaluation of thunks before output</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-strict">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="codemirror-bundle.js"></script>
+    <script>
+        let tvixEvaluator = null;
+        let editor = null;
+
+        async function initWasm() {
+            try {
+                console.log('Starting WASM initialization...');
+                
+                // Try to load the real WASM first
+                console.log('Attempting to load real WASM module...');
+                try {
+                    const jsModule = await import('./tvix_wasm.js');
+                    await jsModule.default();
+                    tvixEvaluator = new jsModule.TvixEvaluator();
+                    console.log('Real WASM evaluator loaded successfully!');
+                    document.getElementById('status-light').className = 'status-light status-green';
+                } catch (wasmError) {
+                    console.log('WASM loading failed, using mock evaluator:', wasmError.message);
+                    tvixEvaluator = new MockTvixEvaluator();
+                    document.getElementById('status-light').className = 'status-light status-red';
+                }
+                
+                document.getElementById('evaluate').disabled = false;
+                
+                // Initialize CodeMirror editor (handles loading localStorage expr)
+                initEditor();
+                
+                // Restore live and raw modes from localStorage
+                restoreState();
+
+                // Attach event handlers
+                setupEventHandlers();
+                
+                // Auto-evaluate the default expression
+                handleLiveMode();
+                liveMode = document.getElementById('live-mode').checked;
+                if (liveMode) {
+                  evaluateCurrentExpression();
+                }
+            } catch (error) {
+                console.error('Failed to initialize WASM:', error);
+                console.error('Error stack:', error.stack);
+                
+                // Fall back to mock for demonstration
+                console.log('Falling back to mock evaluator for demonstration...');
+                tvixEvaluator = new MockTvixEvaluator();
+                document.getElementById('status-light').className = 'status-light status-red';
+                document.getElementById('evaluate').disabled = false;
+                
+                // Initialize CodeMirror editor
+                initEditor();
+                
+                // Attach event handlers even with mock
+                setupEventHandlers();
+                
+                // Auto-evaluate the default expression
+                evaluateCurrentExpression();
+            }
+        }
+
+        function initEditor() {
+            // Create editor using our bundled function with live evaluation callback
+            // The editor will automatically load from localStorage
+            editor = window.createTvixEditor(
+                document.getElementById('editor'), 
+                '', // Empty string means use localStorage
+                function(update) {
+                    if (document.getElementById('live-mode').checked) {
+                        debouncedEvaluate();
+                    }
+                }
+            );
+            
+            // Debug vim mode
+            console.log('Editor created:', editor);
+            console.log('Editor DOM element:', editor.dom);
+            console.log('Available global objects:', {
+                CodeMirror: typeof CodeMirror !== 'undefined' ? CodeMirror : 'undefined',
+                createTvixEditor: typeof window.createTvixEditor
+            });
+        }
+        
+        // Mock evaluator as fallback
+        class MockTvixEvaluator {
+            constructor() {
+                console.log("Mock Tvix evaluator initialized");
+            }
+            
+            evaluate(expression, raw) {
+                try {
+                    // Show the debug messages we would expect from real WASM
+                    console.log('Mock: VFS: EVALUATE METHOD CALLED - version 2.0');
+                    console.log('Mock: VFS Test: Created VFS with embedded files');
+                    
+                    if (expression.trim().startsWith('<') && expression.trim().endsWith('>')) {
+                        console.log('Mock: VFS: Detected angle bracket expression (search path):', expression);
+                        console.log('Mock: VFS: This would call our virtual filesystem for <nixpkgs> resolution');
+                        
+                        if (expression.includes('nixpkgs')) {
+                            return 'Mock <nixpkgs> resolution - would work with embedded nixpkgs files';
+                        }
+                        return 'Mock search path result for: ' + expression;
+                    }
+                    
+                    if (expression.trim() === '1 + 2') {
+                        return '3 :: int';
+                    } else if (expression.trim() === '1 + 2 * 3') {
+                        return '7 :: int';
+                    } else if (expression.includes('[1 2 3 4 5]')) {
+                        return '[ 1 2 3 4 5 ] :: list';
+                    } else if (expression.includes('{ x = 42')) {
+                        return '{ x = 42; y = "hello"; z = true; } :: set';
+                    } else if (expression.includes('map')) {
+                        return '[ 2 4 6 ] :: list';
+                    } else if (expression.includes('builtins.length')) {
+                        return '4 :: int';
+                    } else if (expression.includes('let x = 10')) {
+                        return '30 :: int';
+                    } else if (expression.includes('if true')) {
+                        return '"yes" :: string';
+                    } else if (expression.includes('rec {')) {
+                        return '{ x = 1; y = 2; } :: set';
+                    } else {
+                        return 'Mock evaluation result for: ' + expression;
+                    }
+                } catch (e) {
+                    throw new Error('Mock evaluation error: ' + e.message);
+                }
+            }
+            
+            evaluate_raw(expression) {
+                try {
+                    if (expression.trim() === '1 + 2') {
+                        return '3';
+                    } else if (expression.trim() === '1 + 2 * 3') {
+                        return '7';
+                    } else if (expression.includes('{ x = 42')) {
+                        return '{ x = 42; y = "hello"; z = true; }';
+                    } else {
+                        return 'Raw: ' + expression;
+                    }
+                } catch (e) {
+                    throw new Error('Mock raw evaluation error: ' + e.message);
+                }
+            }
+            
+            evaluate_with_settings(expression, raw, prettyPrintAst, displayAst, dumpBytecode, traceRuntime, strict) {
+                console.log(`Mock: evaluate_with_settings called with flags: display_ast=${displayAst}, dump_bytecode=${dumpBytecode}, trace_runtime=${traceRuntime}, strict=${strict}, pretty_print_ast=${prettyPrintAst}`);
+                
+                if (displayAst) {
+                    console.log('Mock: Display AST flag is set - would show AST here');
+                }
+                if (dumpBytecode) {
+                    console.log('Mock: Dump bytecode flag is set - would show bytecode here');
+                }
+                if (traceRuntime) {
+                    console.log('Mock: Trace runtime flag is set - would show VM trace here');
+                }
+                if (strict) {
+                    console.log('Mock: Strict evaluation flag is set - would force all thunks');
+                }
+                
+                // Call the regular evaluate method
+                return this.evaluate(expression, raw);
+            }
+        }
+
+        function saveState() {
+            const liveMode = document.getElementById('live-mode').checked;
+            const rawMode = document.getElementById('raw-mode').checked;
+            try {
+                localStorage.setItem('tvix-live-mode', liveMode);
+                localStorage.setItem('tvix-raw-mode', rawMode);
+            } catch (e) {
+                console.warn('Could not save state to localStorage:', e);
+            }
+        }
+
+        function restoreLiveState() {
+            try {
+                const liveMode = localStorage.getItem('tvix-live-mode');
+                document.getElementById('live-mode').checked = liveMode === 'true';
+            } catch (e) {
+                console.warn('Could not get live state from localStorage:', e);
+                document.getElementById('live-mode').checked = true;
+            }
+        }
+
+        function restoreRawState() {
+            try {
+                const rawMode = localStorage.getItem('tvix-raw-mode');
+                document.getElementById('raw-mode').checked = rawMode === 'true';
+            } catch (e) {
+                console.warn('Could not get raw state from localStorage:', e);
+                document.getElementById('raw-mode').checked = true;
+            }
+        }
+
+        function restoreState() {
+            restoreLiveState();
+            restoreRawState();
+            restoreSettings();
+        }
+        
+        // Settings management
+        const defaultSettings = {
+            prettyPrintAst: false,
+            displayAst: false,
+            dumpBytecode: false,
+            traceRuntime: false,
+            strict: false
+        };
+        
+        function saveSettings() {
+            const settings = {
+                prettyPrintAst: document.getElementById('setting-pretty-print-ast').checked,
+                displayAst: document.getElementById('setting-display-ast').checked,
+                dumpBytecode: document.getElementById('setting-dump-bytecode').checked,
+                traceRuntime: document.getElementById('setting-trace-runtime').checked,
+                strict: document.getElementById('setting-strict').checked
+            };
+            try {
+                localStorage.setItem('tvix-settings', JSON.stringify(settings));
+            } catch (e) {
+                console.warn('Could not save settings to localStorage:', e);
+            }
+        }
+        
+        function restoreSettings() {
+            try {
+                const saved = localStorage.getItem('tvix-settings');
+                const settings = saved ? JSON.parse(saved) : defaultSettings;
+                
+                document.getElementById('setting-pretty-print-ast').checked = settings.prettyPrintAst;
+                document.getElementById('setting-display-ast').checked = settings.displayAst;
+                document.getElementById('setting-dump-bytecode').checked = settings.dumpBytecode;
+                document.getElementById('setting-trace-runtime').checked = settings.traceRuntime;
+                document.getElementById('setting-strict').checked = settings.strict;
+                
+                // Update AST display visibility
+                updateAstDisplay();
+            } catch (e) {
+                console.warn('Could not restore settings from localStorage:', e);
+                // Set defaults on error
+                Object.keys(defaultSettings).forEach(key => {
+                    const element = document.getElementById('setting-' + key.replace(/([A-Z])/g, '-$1').toLowerCase());
+                    if (element) element.checked = defaultSettings[key];
+                });
+            }
+        }
+        
+        function getSettings() {
+            return {
+                prettyPrintAst: document.getElementById('setting-pretty-print-ast').checked,
+                displayAst: document.getElementById('setting-display-ast').checked,
+                dumpBytecode: document.getElementById('setting-dump-bytecode').checked,
+                traceRuntime: document.getElementById('setting-trace-runtime').checked,
+                strict: document.getElementById('setting-strict').checked
+            };
+        }
+        
+        function openSettings() {
+            document.getElementById('settings-modal').classList.add('show');
+        }
+        
+        function closeSettings() {
+            document.getElementById('settings-modal').classList.remove('show');
+        }
+        
+        function handleSettingChange() {
+            saveSettings();
+            updateAstDisplay();
+            
+            // Re-evaluate if live mode is on
+            if (document.getElementById('live-mode').checked) {
+                debouncedEvaluate();
+            }
+        }
+        
+        function updateAstDisplay() {
+            const prettyPrintAst = document.getElementById('setting-pretty-print-ast').checked;
+            const astDisplay = document.getElementById('ast-display');
+            
+            if (prettyPrintAst) {
+                astDisplay.classList.add('show');
+            } else {
+                astDisplay.classList.remove('show');
+            }
+        }
+
+        function setupEventHandlers() {
+            // Attach button event handlers
+            document.getElementById('evaluate').addEventListener('click', evaluateExpression);
+            document.getElementById('live-mode').addEventListener('change', handleLiveMode);
+            document.getElementById('raw-mode').addEventListener('change', toggleRawMode);
+            
+            // Settings modal handlers
+            document.getElementById('settings-btn').addEventListener('click', openSettings);
+            document.getElementById('modal-close').addEventListener('click', closeSettings);
+            document.getElementById('settings-modal').addEventListener('click', function(e) {
+                if (e.target === this) closeSettings();
+            });
+            
+            // Settings change handlers
+            document.getElementById('setting-pretty-print-ast').addEventListener('change', handleSettingChange);
+            document.getElementById('setting-display-ast').addEventListener('change', handleSettingChange);
+            document.getElementById('setting-dump-bytecode').addEventListener('change', handleSettingChange);
+            document.getElementById('setting-trace-runtime').addEventListener('change', handleSettingChange);
+            document.getElementById('setting-strict').addEventListener('change', handleSettingChange);
+        }
+
+        // Debounce variables
+        let debounceTimer = null;
+        let isEvaluating = false;
+        let evaluationAborted = false;
+        const DEBOUNCE_DELAY = 500; // 500ms delay
+        
+        function debouncedEvaluate() {
+            // Clear existing timer
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
+            
+            // If currently evaluating, mark for abortion and reset timer
+            if (isEvaluating) {
+                evaluationAborted = true;
+                debounceTimer = setTimeout(debouncedEvaluate, DEBOUNCE_DELAY);
+                return;
+            }
+            
+            // Set new timer
+            debounceTimer = setTimeout(() => {
+                debounceTimer = null;
+                evaluationAborted = false;
+                evaluateCurrentExpression();
+            }, DEBOUNCE_DELAY);
+        }
+
+        function unquote(s) { return s.substring(1, s.length - 1); }
+        function maybeUnquote(s, rawMode) {
+          if ('"' === s[0] && '"' === s[s.length - 1]) {
+            return unquote(s);
+          } else {
+            return s;
+          }
+        }
+
+        function evaluateCurrentExpression() {
+            if (!editor) return;
+            
+            // Prevent concurrent evaluations
+            if (isEvaluating) {
+                console.log('Evaluation already in progress, skipping...');
+                return;
+            }
+            
+            const input = editor.state.doc.toString().trim();
+            const rawMode = document.getElementById('raw-mode').checked;
+            const settings = getSettings();
+
+            if (input && tvixEvaluator) {
+                isEvaluating = true;
+                evaluationAborted = false;
+                // Show evaluating indicator
+                setOutput('Evaluating...', 'info');
+                
+                // Use setTimeout to allow UI to update before evaluation
+                setTimeout(() => {
+                    // Check if evaluation was aborted while waiting
+                    if (evaluationAborted) {
+                        console.log('Evaluation aborted before execution');
+                        isEvaluating = false;
+                        return;
+                    }
+                    
+                    try {
+                        // Use the new evaluate_with_settings method if available, fall back to evaluate
+                        let result;
+                        if (typeof tvixEvaluator.evaluate_with_settings === 'function') {
+                            result = tvixEvaluator.evaluate_with_settings(
+                                input, 
+                                rawMode, 
+                                settings.prettyPrintAst,
+                                settings.displayAst, 
+                                settings.dumpBytecode, 
+                                settings.traceRuntime, 
+                                settings.strict
+                            );
+                        } else {
+                            result = tvixEvaluator.evaluate(input, rawMode);
+                        }
+                        
+                        // Check again after evaluation in case it was aborted
+                        if (!evaluationAborted) {
+                            setOutput(maybeUnquote(result, rawMode), 'success');
+                            
+                            // Handle pretty-print AST display
+                            if (settings.prettyPrintAst) {
+                                const astDisplay = document.getElementById('ast-display');
+                                if (typeof tvixEvaluator.evaluate_with_settings === 'function') {
+                                    // With the new WASM interface, AST data would be available
+                                    astDisplay.textContent = `Pretty-printed AST for: ${input.substring(0, 50)}${input.length > 50 ? '...' : ''}\n\n[Debug flags active - check console for additional output]`;
+                                } else {
+                                    astDisplay.textContent = `Pretty-printed AST for: ${input.substring(0, 50)}${input.length > 50 ? '...' : ''}\n\n(Rebuild WASM to see AST - new interface not available)`;
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        if (!evaluationAborted) {
+                            console.error('Evaluation error:', error);
+                            const errorMsg = error.toString() || String(error);
+                            setOutput(errorMsg, 'error');
+                        }
+                    } finally {
+                        isEvaluating = false;
+                    }
+                }, 10); // Small delay to allow UI update
+            } else if (!input) {
+                setOutput('Ready to evaluate', '');
+                // Clear AST display when no input
+                document.getElementById('ast-display').textContent = '';
+            }
+        }
+
+        function handleLiveMode() {
+            saveState();
+
+            const liveMode = document.getElementById('live-mode').checked;
+            const evaluateButton = document.getElementById('evaluate');
+            
+            if (liveMode) {
+                evaluateButton.style.display = 'none';
+                evaluateCurrentExpression();
+            } else {
+                evaluateButton.style.display = 'inline-block';
+            }
+        }
+
+        function toggleRawMode() {
+            saveState();
+            if (document.getElementById('live-mode').checked) {
+                debouncedEvaluate();
+            } else {
+                evaluateCurrentExpression();
+            }
+        }
+
+        function evaluateExpression() {
+            evaluateCurrentExpression();
+        };
+
+        function setOutput(text, type) {
+            const output = document.getElementById('output');
+            output.textContent = text;
+            output.className = 'output ' + (type || '');
+        }
+
+        initWasm();
+    </script>
+</body>
+</html>

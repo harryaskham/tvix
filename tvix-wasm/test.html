@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tvix WASM Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .loading { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Tvix WASM Test</h1>
+    <div id="status" class="loading">Loading...</div>
+    <div id="output"></div>
+    
+    <script type="module">
+        import init, { TvixEvaluator } from './www/tvix_wasm.js';
+        
+        async function test() {
+            const statusEl = document.getElementById('status');
+            const outputEl = document.getElementById('output');
+            
+            try {
+                statusEl.textContent = 'Initializing WASM module...';
+                await init();
+                statusEl.textContent = 'WASM initialized successfully!';
+                
+                const evaluator = new TvixEvaluator();
+                statusEl.textContent = 'TvixEvaluator created!';
+                
+                // Test basic evaluation
+                const tests = [
+                    '1 + 2',
+                    '{ x = 42; y = "hello"; }',
+                    '[1 2 3 4 5]',
+                    'builtins.length [1 2 3]',
+                    // Test global builtins
+                    'abort "test"',
+                    'throw "test error"',
+                    'derivation { name = "test"; system = "x86_64-linux"; builder = "/bin/sh"; }',
+                    // Test builtins namespace
+                    'builtins.abort "test"',
+                    'builtins.throw "test error"',
+                    'builtins.derivation'
+                ];
+                
+                let results = '<h3>Test Results:</h3>';
+                for (const test of tests) {
+                    try {
+                        const result = evaluator.evaluate(test);
+                        results += `<div><strong>${test}</strong> → ${result}</div>`;
+                        console.log(`✓ ${test} → ${result}`);
+                    } catch (error) {
+                        results += `<div class="error"><strong>${test}</strong> → Error: ${error.message}</div>`;
+                        console.error(`✗ ${test} → ${error.message}`);
+                    }
+                }
+                
+                outputEl.innerHTML = results;
+                statusEl.textContent = '✅ All tests completed!';
+                statusEl.className = 'success';
+                
+            } catch (error) {
+                console.error('Test failed:', error);
+                statusEl.textContent = '❌ WASM test failed: ' + error.message;
+                statusEl.className = 'error';
+                outputEl.innerHTML = `<div class="error">Error details: ${error.stack}</div>`;
+            }
+        }
+        
+        test();
+    </script>
+</body>
+</html>

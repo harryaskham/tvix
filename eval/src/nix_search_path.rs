@@ -47,13 +47,21 @@ fn canonicalise(path: PathBuf) -> Result<PathBuf, ErrorKind> {
     let absolute = if path.is_absolute() {
         path
     } else {
-        // TODO(tazjin): probably panics in wasm?
-        std::env::current_dir()
-            .map_err(|e| ErrorKind::IO {
-                path: Some(path.clone()),
-                error: e.into(),
-            })?
-            .join(path)
+        // In WASM, std::env::current_dir() is not supported, so we just treat
+        // relative paths as absolute. This should be fine for our use case.
+        #[cfg(target_arch = "wasm32")]
+        {
+            PathBuf::from("/").join(&path)
+        }
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            std::env::current_dir()
+                .map_err(|e| ErrorKind::IO {
+                    path: Some(path.clone()),
+                    error: e.into(),
+                })?
+                .join(path)
+        }
     }
     .clean();
 

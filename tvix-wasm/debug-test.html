@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Tvix WASM</title>
+</head>
+<body>
+    <script type="module">
+        import init, { TvixEvaluator } from './pkg/tvix_wasm.js';
+
+        async function test() {
+            await init();
+            
+            const evaluator = new TvixEvaluator();
+            
+            console.log('=== Testing <nixpkgs> resolution ===');
+            
+            try {
+                const result = evaluator.evaluate('<nixpkgs>');
+                console.log('SUCCESS:', result);
+            } catch (error) {
+                console.log('ERROR:', error.toString());
+            }
+        }
+
+        test();
+    </script>
+</body>
+</html>

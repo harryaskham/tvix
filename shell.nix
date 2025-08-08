@@ -25,6 +25,9 @@ pkgs.mkShell {
     pkgs.rustc
     pkgs.rustfmt
     pkgs.protobuf
+    pkgs.wasm-pack
+    pkgs.lld_18
+    pkgs.nodejs
   ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
     pkgs.runc
   ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [

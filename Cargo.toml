@@ -28,6 +28,7 @@ members = [
   "nix-compat-derive-tests",
   "serde",
   "simstore",
+  "tvix-wasm",
 ]
 
 [workspace.lints.clippy]
