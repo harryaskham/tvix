@@ -346,6 +346,9 @@ struct VM<'o> {
     /// Control is yielded to the outer VM loop, which evaluates the next frame
     /// and returns the result itself to the `builtins.tryEval` frame.
     try_eval_frames: Vec<usize>,
+
+    /// Configuration for how deep forcing should handle catchable errors
+    deep_force_mode: DeepForceMode,
 }
 
 impl<'o> VM<'o> {
@@ -356,6 +359,7 @@ impl<'o> VM<'o> {
         source: SourceCode,
         globals: Rc<GlobalsMap>,
         reasonable_span: Span,
+        deep_force_mode: DeepForceMode,
     ) -> Self {
         Self {
             nix_search_path,
@@ -370,6 +374,7 @@ impl<'o> VM<'o> {
             warnings: vec![],
             import_cache: Default::default(),
             try_eval_frames: vec![],
+            deep_force_mode,
         }
     }
 
@@ -1377,6 +1382,18 @@ pub enum EvalMode {
     Strict,
 }
 
+/// Specification for how deep forcing should handle catchable errors
+#[derive(Debug, Clone, Copy, Default)]
+pub enum DeepForceMode {
+    /// The default. Catchable errors encountered during deep forcing are returned as values.
+    /// This preserves them in data structures like attribute sets and lists.
+    #[default]
+    ReturnCatchableAsValue,
+    /// Catchable errors encountered during deep forcing are propagated as actual errors.
+    /// This matches Nix's behavior where deepSeq propagates thrown errors.
+    PropagateCatchableAsError,
+}
+
 pub fn run_lambda(
     nix_search_path: NixSearchPath,
     io_handle: Rc<dyn EvalIO>,
@@ -1385,6 +1402,7 @@ pub fn run_lambda(
     globals: Rc<GlobalsMap>,
     lambda: Rc<Lambda>,
     mode: EvalMode,
+    deep_force_mode: DeepForceMode,
 ) -> EvalResult<RuntimeResult> {
     // Retain the top-level span of the expression in this lambda, as
     // synthetic "calls" in deep_force will otherwise not have a span
@@ -1401,6 +1419,7 @@ pub fn run_lambda(
         source,
         globals,
         root_span,
+        deep_force_mode,
     );
 
     // When evaluating strictly, synthesise a frame that will instruct

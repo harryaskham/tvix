@@ -62,6 +62,12 @@ pub struct Args {
     #[clap(long)]
     pub strict: bool,
 
+    /// Enable Nix compatibility mode. Makes deepSeq propagate catchable errors
+    /// like Nix does, improving compatibility with Nix code that uses error
+    /// handling for control flow.
+    #[clap(long)]
+    pub nix_compat: bool,
+
     /// An optional path in which Derivations encountered during evaluation
     /// are dumped into, after evaluation. If it doesn't exist, the directory is created.
     ///

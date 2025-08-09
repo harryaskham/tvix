@@ -6,7 +6,7 @@ use tvix_cli::args::Args;
 use tvix_cli::repl::Repl;
 use tvix_cli::{init_io_handle, interpret, AllowIncomplete};
 use tvix_eval::observer::DisassemblingObserver;
-use tvix_eval::EvalMode;
+use tvix_eval::{EvalMode, DeepForceMode};
 use tvix_glue::tvix_store_io::TvixStoreIO;
 
 #[global_allocator]
@@ -19,6 +19,11 @@ fn lint(code: &str, path: Option<PathBuf>, args: &Args) -> bool {
 
     if args.strict {
         eval_builder = eval_builder.mode(EvalMode::Strict);
+    }
+    
+    // Configure Nix compatibility mode if enabled
+    if args.nix_compat {
+        eval_builder = eval_builder.deep_force_mode(DeepForceMode::PropagateCatchableAsError);
     }
 
     let source_map = eval_builder.source_map().clone();

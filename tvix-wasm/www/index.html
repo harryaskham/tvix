@@ -517,6 +517,19 @@
                         </label>
                     </div>
                 </div>
+                
+                <div class="setting-row">
+                    <div>
+                        <div class="setting-label">Nix Compatibility Mode</div>
+                        <div class="setting-description">Make deepSeq behave like Nix (propagates catchable errors)</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-nix-compat">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -675,8 +688,8 @@
                 }
             }
             
-            evaluate_with_settings(expression, raw, prettyPrintAst, displayAst, dumpBytecode, traceRuntime, strict) {
-                console.log(`Mock: evaluate_with_settings called with flags: display_ast=${displayAst}, dump_bytecode=${dumpBytecode}, trace_runtime=${traceRuntime}, strict=${strict}, pretty_print_ast=${prettyPrintAst}`);
+            evaluate_with_settings(expression, raw, prettyPrintAst, displayAst, dumpBytecode, traceRuntime, strict, nixCompat) {
+                console.log(`Mock: evaluate_with_settings called with flags: display_ast=${displayAst}, dump_bytecode=${dumpBytecode}, trace_runtime=${traceRuntime}, strict=${strict}, pretty_print_ast=${prettyPrintAst}, nix_compat=${nixCompat}`);
                 
                 if (displayAst) {
                     console.log('Mock: Display AST flag is set - would show AST here');
@@ -695,8 +708,8 @@
                 return this.evaluate(expression, raw);
             }
             
-            evaluate_with_debug_info(expression, raw, prettyPrintAst, displayAst, dumpBytecode, traceRuntime, strict) {
-                console.log(`Mock: evaluate_with_debug_info called with flags: display_ast=${displayAst}, dump_bytecode=${dumpBytecode}, trace_runtime=${traceRuntime}, strict=${strict}, pretty_print_ast=${prettyPrintAst}`);
+            evaluate_with_debug_info(expression, raw, prettyPrintAst, displayAst, dumpBytecode, traceRuntime, strict, nixCompat) {
+                console.log(`Mock: evaluate_with_debug_info called with flags: display_ast=${displayAst}, dump_bytecode=${dumpBytecode}, trace_runtime=${traceRuntime}, strict=${strict}, pretty_print_ast=${prettyPrintAst}, nix_compat=${nixCompat}`);
                 
                 // Generate mock debug information
                 const result = this.evaluate(expression, raw);
@@ -768,7 +781,8 @@ ${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${e
             displayAst: false,
             dumpBytecode: false,
             traceRuntime: false,
-            strict: false
+            strict: false,
+            nixCompat: false
         };
         
         function saveSettings() {
@@ -777,7 +791,8 @@ ${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${e
                 displayAst: document.getElementById('setting-display-ast').checked,
                 dumpBytecode: document.getElementById('setting-dump-bytecode').checked,
                 traceRuntime: document.getElementById('setting-trace-runtime').checked,
-                strict: document.getElementById('setting-strict').checked
+                strict: document.getElementById('setting-strict').checked,
+                nixCompat: document.getElementById('setting-nix-compat').checked
             };
             try {
                 localStorage.setItem('tvix-settings', JSON.stringify(settings));
@@ -796,6 +811,7 @@ ${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${e
                 document.getElementById('setting-dump-bytecode').checked = settings.dumpBytecode;
                 document.getElementById('setting-trace-runtime').checked = settings.traceRuntime;
                 document.getElementById('setting-strict').checked = settings.strict;
+                document.getElementById('setting-nix-compat').checked = settings.nixCompat;
                 
                 // Update debug display visibility
                 updateDebugDisplays();
@@ -815,7 +831,8 @@ ${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${e
                 displayAst: document.getElementById('setting-display-ast').checked,
                 dumpBytecode: document.getElementById('setting-dump-bytecode').checked,
                 traceRuntime: document.getElementById('setting-trace-runtime').checked,
-                strict: document.getElementById('setting-strict').checked
+                strict: document.getElementById('setting-strict').checked,
+                nixCompat: document.getElementById('setting-nix-compat').checked
             };
         }
         
@@ -938,6 +955,7 @@ ${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${e
             document.getElementById('setting-dump-bytecode').addEventListener('change', handleSettingChange);
             document.getElementById('setting-trace-runtime').addEventListener('change', handleSettingChange);
             document.getElementById('setting-strict').addEventListener('change', handleSettingChange);
+            document.getElementById('setting-nix-compat').addEventListener('change', handleSettingChange);
         }
 
         // Debounce variables
@@ -1017,7 +1035,8 @@ ${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${e
                                 settings.displayAst, 
                                 settings.dumpBytecode, 
                                 settings.traceRuntime, 
-                                settings.strict
+                                settings.strict,
+                                settings.nixCompat
                             );
                             result = debugInfo.result;
                         } else if (typeof tvixEvaluator.evaluate_with_settings === 'function') {
@@ -1028,7 +1047,8 @@ ${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${e
                                 settings.displayAst, 
                                 settings.dumpBytecode, 
                                 settings.traceRuntime, 
-                                settings.strict
+                                settings.strict,
+                                settings.nixCompat
                             );
                         } else {
                             result = tvixEvaluator.evaluate(input, rawMode);

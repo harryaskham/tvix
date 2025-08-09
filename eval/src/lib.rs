@@ -54,7 +54,7 @@ pub use crate::nix_search_path::NixSearchPath;
 pub use crate::pretty_ast::pretty_print_expr;
 pub use crate::source::SourceCode;
 pub use crate::value::{NixContext, NixContextElement};
-pub use crate::vm::{generators, EvalMode};
+pub use crate::vm::{generators, EvalMode, DeepForceMode};
 pub use crate::warnings::{EvalWarning, WarningKind};
 pub use builtin_macros;
 use smol_str::SmolStr;
@@ -91,6 +91,7 @@ pub struct EvaluationBuilder<'co, 'ro, 'env> {
     io_handle: Rc<dyn EvalIO>,
     enable_import: bool,
     mode: EvalMode,
+    deep_force_mode: DeepForceMode,
     nix_path: Option<String>,
     compiler_observer: Option<&'co mut dyn CompilerObserver>,
     runtime_observer: Option<&'ro mut dyn RuntimeObserver>,
@@ -133,6 +134,7 @@ impl<'co, 'ro, 'env> EvaluationBuilder<'co, 'ro, 'env> {
             env: self.env,
             io_handle: self.io_handle,
             mode: self.mode,
+            deep_force_mode: self.deep_force_mode,
             nix_path: self.nix_path,
             compiler_observer: self.compiler_observer,
             runtime_observer: self.runtime_observer,
@@ -157,6 +159,7 @@ impl<'co, 'ro, 'env> EvaluationBuilder<'co, 'ro, 'env> {
             }),
             env: None,
             mode: Default::default(),
+            deep_force_mode: Default::default(),
             nix_path: None,
             compiler_observer: None,
             runtime_observer: None,
@@ -171,6 +174,7 @@ impl<'co, 'ro, 'env> EvaluationBuilder<'co, 'ro, 'env> {
             env: self.env,
             enable_import: self.enable_import,
             mode: self.mode,
+            deep_force_mode: self.deep_force_mode,
             nix_path: self.nix_path,
             compiler_observer: self.compiler_observer,
             runtime_observer: self.runtime_observer,
@@ -252,6 +256,10 @@ impl<'co, 'ro, 'env> EvaluationBuilder<'co, 'ro, 'env> {
 
     pub fn mode(self, mode: EvalMode) -> Self {
         Self { mode, ..self }
+    }
+
+    pub fn deep_force_mode(self, deep_force_mode: DeepForceMode) -> Self {
+        Self { deep_force_mode, ..self }
     }
 
     pub fn nix_path(self, nix_path: Option<String>) -> Self {
@@ -358,6 +366,11 @@ pub struct Evaluation<'co, 'ro, 'env> {
     ///
     /// See the documentation for [`EvalMode`] for more information.
     mode: EvalMode,
+
+    /// Specification for how deep forcing should handle catchable errors
+    ///
+    /// See the documentation for [`DeepForceMode`] for more information.
+    deep_force_mode: DeepForceMode,
 
     /// (optional) Nix search path, e.g. the value of `NIX_PATH` used
     /// for resolving items on the search path (such as `<nixpkgs>`).
@@ -526,6 +539,7 @@ impl Evaluation<'_, '_, '_> {
             self.globals,
             lambda,
             self.mode,
+            self.deep_force_mode,
         );
 
         match vm_result {

@@ -12,6 +12,8 @@ extern "C" {
 
 pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Vec<String>) {
     embedded_paths.push("nixpkgs/lib".to_string());
+    embedded_paths.push("collective".to_string());
+    embedded_paths.push("nix-parsec".to_string());
     let all_embedded_paths = [
         "embedded/nixpkgs/lib/systems/examples.nix",
         "embedded/nixpkgs/lib/systems/platforms.nix",
@@ -249,6 +251,173 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
         "embedded/nixpkgs/lib/lists.nix",
         "embedded/nixpkgs/lib/debug.nix",
         "embedded/nixpkgs/lib/fetchers.nix",
+        "embedded/collective/collective-public/pkgs/pythonPackages/handheld-daemon/adjustor.nix",
+        "embedded/collective/collective-public/pkgs/pythonPackages/default.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/syntax.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/fan.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/eval/fn.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/eval/monad.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/eval/store.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/eval/ast.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/eval/default.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/data.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/log.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/clib.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/errors.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/binding.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/parser/default.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/typelib.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/attrsets.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/collections.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/modulelib.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/tests.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/wm.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/disk.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/rebinds.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/functions.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/script-utils/ansi-utils.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/script-utils/log-utils.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/script-utils/usage-utils.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/script-utils/options-utils.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/script-utils/command-utils.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/script-utils/main-utils.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/script-utils/script-types.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/script-utils/default.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/display.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/colors.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/dispatchlib.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/strings/strings_test.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/strings/strings.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/strings/default.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/default.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/lists.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/font.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/debuglib.nix",
+        "embedded/collective/collective-public/pkgs/default.nix",
+        "embedded/collective/collective-public/overlays/default.nix",
+        "embedded/collective/collective-public/flake.nix",
+        "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/default.nix",
+        "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/keyboards.nix",
+        "embedded/collective/collective-public/modules/agnostic/etc.nix",
+        "embedded/collective/collective-public/modules/agnostic/default.nix",
+        "embedded/collective/collective-public/modules/nixos/handheld-daemon.nix",
+        "embedded/collective/collective-public/modules/nixos/default.nix",
+        "embedded/collective/collective-public/modules/home-manager/default.nix",
+        "embedded/collective/collective-public/modules/nix-on-droid/session.nix",
+        "embedded/collective/collective-public/modules/nix-on-droid/fonts/fontconfig.nix",
+        "embedded/collective/collective-public/modules/nix-on-droid/fonts/packages.nix",
+        "embedded/collective/collective-public/modules/nix-on-droid/fonts/fontdir.nix",
+        "embedded/collective/collective-public/modules/nix-on-droid/dbus.nix",
+        "embedded/collective/collective-public/modules/nix-on-droid/sshd.nix",
+        "embedded/collective/collective-public/modules/nix-on-droid/termux.nix",
+        "embedded/collective/collective-public/modules/nix-on-droid/default.nix",
+        "embedded/collective/collective-public/modules/nix-darwin/default.nix",
+        "embedded/collective/collective-public/modules/default.nix",
+        "embedded/collective/pkgs/lmstudio/darwin.nix",
+        "embedded/collective/pkgs/lmstudio/package.nix",
+        "embedded/collective/pkgs/lmstudio/linux.nix",
+        "embedded/collective/pkgs/collective-scripts/cltv.nix",
+        "embedded/collective/pkgs/collective-scripts/misc.nix",
+        "embedded/collective/pkgs/collective-scripts/default.nix",
+        "embedded/collective/pkgs/collective-lib/display-library.nix",
+        "embedded/collective/pkgs/collective-lib/ssh.nix",
+        "embedded/collective/pkgs/collective-lib/default.nix",
+        "embedded/collective/pkgs/default.nix",
+        "embedded/collective/pkgs/shadps4.nix",
+        "embedded/collective/pkgs/talon.nix",
+        "embedded/collective/overlays/default.nix",
+        "embedded/collective/machines/duo/home-manager/home.nix",
+        "embedded/collective/machines/duo/nix-on-droid/nix-on-droid.nix",
+        "embedded/collective/machines/z13/nixos/hardware-configuration.nix",
+        "embedded/collective/machines/z13/nixos/configuration.nix",
+        "embedded/collective/machines/z13/home-manager/home.nix",
+        "embedded/collective/machines/winmini/nixos/hardware-configuration.nix",
+        "embedded/collective/machines/winmini/nixos/configuration.nix",
+        "embedded/collective/machines/winmini/home-manager/home.nix",
+        "embedded/collective/machines/aurora/nixos/hardware-configuration.nix",
+        "embedded/collective/machines/aurora/nixos/configuration.nix",
+        "embedded/collective/machines/aurora/home-manager/home.nix",
+        "embedded/collective/machines/sonance/nixos/hardware-configuration.nix",
+        "embedded/collective/machines/sonance/nixos/configuration.nix",
+        "embedded/collective/machines/sonance/home-manager/home.nix",
+        "embedded/collective/machines/emanation/nixos/disko-config.nix",
+        "embedded/collective/machines/emanation/nixos/configuration.nix",
+        "embedded/collective/machines/emanation/home-manager/home.nix",
+        "embedded/collective/machines/pocket4/nixos/hardware-configuration.nix",
+        "embedded/collective/machines/pocket4/nixos/configuration.nix",
+        "embedded/collective/machines/pocket4/home-manager/home.nix",
+        "embedded/collective/machines/askham-macbookpro3/home-manager/home.nix",
+        "embedded/collective/machines/askham-macbookpro3/nix-darwin/configuration.nix",
+        "embedded/collective/machines/armistice/nixos/hardware-configuration.nix",
+        "embedded/collective/machines/armistice/nixos/configuration.nix",
+        "embedded/collective/machines/armistice/home-manager/home.nix",
+        "embedded/collective/machines/sgu24/home-manager/home.nix",
+        "embedded/collective/machines/sgu24/nix-on-droid/nix-on-droid.nix",
+        "embedded/collective/machines/pocket2/nixos/hardware-configuration.nix",
+        "embedded/collective/machines/pocket2/nixos/configuration.nix",
+        "embedded/collective/machines/pocket2/home-manager/home.nix",
+        "embedded/collective/flake.nix",
+        "embedded/collective/modules/agnostic/shell.nix",
+        "embedded/collective/modules/agnostic/default.nix",
+        "embedded/collective/modules/nixos/fan.nix",
+        "embedded/collective/modules/nixos/bootstrap.nix",
+        "embedded/collective/modules/nixos/ai.nix",
+        "embedded/collective/modules/nixos/ssh.nix",
+        "embedded/collective/modules/nixos/k8s.nix",
+        "embedded/collective/modules/nixos/disk.nix",
+        "embedded/collective/modules/nixos/firewall.nix",
+        "embedded/collective/modules/nixos/wayland/hyprland.nix",
+        "embedded/collective/modules/nixos/wayland/sway.nix",
+        "embedded/collective/modules/nixos/login.nix",
+        "embedded/collective/modules/nixos/crypto.nix",
+        "embedded/collective/modules/nixos/game.nix",
+        "embedded/collective/modules/nixos/gfx.nix",
+        "embedded/collective/modules/nixos/miraclecast.nix",
+        "embedded/collective/modules/nixos/default.nix",
+        "embedded/collective/modules/home-manager/languages/python.nix",
+        "embedded/collective/modules/home-manager/languages/agda.nix",
+        "embedded/collective/modules/home-manager/languages/haskell.nix",
+        "embedded/collective/modules/home-manager/tmux.nix",
+        "embedded/collective/modules/home-manager/bootstrap.nix",
+        "embedded/collective/modules/home-manager/ai.nix",
+        "embedded/collective/modules/home-manager/ssh.nix",
+        "embedded/collective/modules/home-manager/wsl.nix",
+        "embedded/collective/modules/home-manager/rofi.nix",
+        "embedded/collective/modules/home-manager/x11/i3.nix",
+        "embedded/collective/modules/home-manager/x11/picom.nix",
+        "embedded/collective/modules/home-manager/x11/configs.nix",
+        "embedded/collective/modules/home-manager/x11/polybar.nix",
+        "embedded/collective/modules/home-manager/kitty.nix",
+        "embedded/collective/modules/home-manager/wm.nix",
+        "embedded/collective/modules/home-manager/lmstudio.nix",
+        "embedded/collective/modules/home-manager/zsh.nix",
+        "embedded/collective/modules/home-manager/emacs.nix",
+        "embedded/collective/modules/home-manager/wayland/hyprland.nix",
+        "embedded/collective/modules/home-manager/wayland/mako.nix",
+        "embedded/collective/modules/home-manager/wayland/sway.nix",
+        "embedded/collective/modules/home-manager/ghostty.nix",
+        "embedded/collective/modules/home-manager/vim.nix",
+        "embedded/collective/modules/home-manager/display.nix",
+        "embedded/collective/modules/home-manager/colors.nix",
+        "embedded/collective/modules/home-manager/game.nix",
+        "embedded/collective/modules/home-manager/default.nix",
+        "embedded/collective/modules/home-manager/git.nix",
+        "embedded/collective/modules/home-manager/alacritty.nix",
+        "embedded/collective/modules/home-manager/p10k.nix",
+        "embedded/collective/modules/nix-on-droid/bootstrap.nix",
+        "embedded/collective/modules/nix-on-droid/default.nix",
+        "embedded/collective/modules/nix-darwin/default.nix",
+        "embedded/collective/modules/default.nix",
+        "embedded/collective/shells/ml.nix",
+        "embedded/collective/shells/default.nix",
+        "embedded/nix-parsec/parsec.nix",
+        "embedded/nix-parsec/lexer.nix",
+        "embedded/nix-parsec/flake.nix",
+        "embedded/nix-parsec/default.nix",
+        "embedded/nix-parsec/examples/uuids/default.nix",
+        "embedded/nix-parsec/examples/parens/default.nix",
+        "embedded/nix-parsec/examples/kernel-config/default.nix",
+        "embedded/nix-parsec/examples/arithmetic/default.nix",
     ];
 
     for embedded_path in all_embedded_paths {
@@ -961,6 +1130,507 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
             },
             "embedded/nixpkgs/lib/fetchers.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/nix/store/n8gf8yr0571s1ld4nr6dmk143iv3rvmh-source/lib/fetchers.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/pythonPackages/handheld-daemon/adjustor.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/pythonPackages/handheld-daemon/adjustor.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/pythonPackages/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/pythonPackages/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/syntax.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/syntax.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/fan.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/fan.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/eval/fn.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/eval/fn.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/eval/monad.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/eval/monad.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/eval/store.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/eval/store.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/eval/ast.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/eval/ast.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/eval/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/eval/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/data.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/data.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/log.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/log.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/clib.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/clib.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/errors.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/errors.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/binding.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/binding.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/parser/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/parser/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/typelib.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/typelib.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/attrsets.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/attrsets.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/collections.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/collections.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/modulelib.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/modulelib.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/tests.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/tests.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/wm.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/wm.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/disk.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/disk.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/rebinds.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/rebinds.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/functions.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/functions.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/script-utils/ansi-utils.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/ansi-utils.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/script-utils/log-utils.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/log-utils.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/script-utils/usage-utils.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/usage-utils.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/script-utils/options-utils.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/options-utils.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/script-utils/command-utils.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/command-utils.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/script-utils/main-utils.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/main-utils.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/script-utils/script-types.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/script-types.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/script-utils/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/display.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/display.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/colors.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/colors.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/dispatchlib.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/dispatchlib.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/strings/strings_test.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/strings/strings_test.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/strings/strings.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/strings/strings.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/strings/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/strings/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/lists.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/lists.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/font.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/font.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/collective-lib/debuglib.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/debuglib.nix").to_string());
+            },
+            "embedded/collective/collective-public/pkgs/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/overlays/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/overlays/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/flake.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flake.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/agnostic/unexpected-keyboard/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/keyboards.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/agnostic/unexpected-keyboard/keyboards.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/agnostic/etc.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/agnostic/etc.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/agnostic/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/agnostic/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nixos/handheld-daemon.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nixos/handheld-daemon.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nixos/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nixos/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/home-manager/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/home-manager/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-on-droid/session.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-on-droid/session.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-on-droid/fonts/fontconfig.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-on-droid/fonts/fontconfig.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-on-droid/fonts/packages.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-on-droid/fonts/packages.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-on-droid/fonts/fontdir.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-on-droid/fonts/fontdir.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-on-droid/dbus.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-on-droid/dbus.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-on-droid/sshd.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-on-droid/sshd.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-on-droid/termux.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-on-droid/termux.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-on-droid/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-on-droid/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/nix-darwin/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/nix-darwin/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/default.nix").to_string());
+            },
+            "embedded/collective/pkgs/lmstudio/darwin.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/lmstudio/darwin.nix").to_string());
+            },
+            "embedded/collective/pkgs/lmstudio/package.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/lmstudio/package.nix").to_string());
+            },
+            "embedded/collective/pkgs/lmstudio/linux.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/lmstudio/linux.nix").to_string());
+            },
+            "embedded/collective/pkgs/collective-scripts/cltv.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/collective-scripts/cltv.nix").to_string());
+            },
+            "embedded/collective/pkgs/collective-scripts/misc.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/collective-scripts/misc.nix").to_string());
+            },
+            "embedded/collective/pkgs/collective-scripts/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/collective-scripts/default.nix").to_string());
+            },
+            "embedded/collective/pkgs/collective-lib/display-library.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/collective-lib/display-library.nix").to_string());
+            },
+            "embedded/collective/pkgs/collective-lib/ssh.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/collective-lib/ssh.nix").to_string());
+            },
+            "embedded/collective/pkgs/collective-lib/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/collective-lib/default.nix").to_string());
+            },
+            "embedded/collective/pkgs/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/default.nix").to_string());
+            },
+            "embedded/collective/pkgs/shadps4.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/shadps4.nix").to_string());
+            },
+            "embedded/collective/pkgs/talon.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/talon.nix").to_string());
+            },
+            "embedded/collective/overlays/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/overlays/default.nix").to_string());
+            },
+            "embedded/collective/machines/duo/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/duo/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/duo/nix-on-droid/nix-on-droid.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/duo/nix-on-droid/nix-on-droid.nix").to_string());
+            },
+            "embedded/collective/machines/z13/nixos/hardware-configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/z13/nixos/hardware-configuration.nix").to_string());
+            },
+            "embedded/collective/machines/z13/nixos/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/z13/nixos/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/z13/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/z13/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/winmini/nixos/hardware-configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/winmini/nixos/hardware-configuration.nix").to_string());
+            },
+            "embedded/collective/machines/winmini/nixos/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/winmini/nixos/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/winmini/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/winmini/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/aurora/nixos/hardware-configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/aurora/nixos/hardware-configuration.nix").to_string());
+            },
+            "embedded/collective/machines/aurora/nixos/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/aurora/nixos/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/aurora/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/aurora/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/sonance/nixos/hardware-configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/sonance/nixos/hardware-configuration.nix").to_string());
+            },
+            "embedded/collective/machines/sonance/nixos/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/sonance/nixos/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/sonance/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/sonance/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/emanation/nixos/disko-config.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/emanation/nixos/disko-config.nix").to_string());
+            },
+            "embedded/collective/machines/emanation/nixos/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/emanation/nixos/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/emanation/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/emanation/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/pocket4/nixos/hardware-configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/pocket4/nixos/hardware-configuration.nix").to_string());
+            },
+            "embedded/collective/machines/pocket4/nixos/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/pocket4/nixos/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/pocket4/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/pocket4/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/askham-macbookpro3/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/askham-macbookpro3/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/askham-macbookpro3/nix-darwin/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/askham-macbookpro3/nix-darwin/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/armistice/nixos/hardware-configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/armistice/nixos/hardware-configuration.nix").to_string());
+            },
+            "embedded/collective/machines/armistice/nixos/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/armistice/nixos/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/armistice/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/armistice/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/sgu24/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/sgu24/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/sgu24/nix-on-droid/nix-on-droid.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/sgu24/nix-on-droid/nix-on-droid.nix").to_string());
+            },
+            "embedded/collective/machines/pocket2/nixos/hardware-configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/pocket2/nixos/hardware-configuration.nix").to_string());
+            },
+            "embedded/collective/machines/pocket2/nixos/configuration.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/pocket2/nixos/configuration.nix").to_string());
+            },
+            "embedded/collective/machines/pocket2/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/pocket2/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/flake.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/flake.nix").to_string());
+            },
+            "embedded/collective/modules/agnostic/shell.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/agnostic/shell.nix").to_string());
+            },
+            "embedded/collective/modules/agnostic/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/agnostic/default.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/fan.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/fan.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/bootstrap.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/bootstrap.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/ai.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/ai.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/ssh.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/ssh.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/k8s.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/k8s.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/disk.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/disk.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/firewall.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/firewall.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/wayland/hyprland.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/wayland/hyprland.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/wayland/sway.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/wayland/sway.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/login.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/login.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/crypto.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/crypto.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/game.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/game.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/gfx.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/gfx.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/miraclecast.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/miraclecast.nix").to_string());
+            },
+            "embedded/collective/modules/nixos/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nixos/default.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/languages/python.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/languages/python.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/languages/agda.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/languages/agda.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/languages/haskell.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/languages/haskell.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/tmux.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/tmux.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/bootstrap.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/bootstrap.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/ai.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/ai.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/ssh.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/ssh.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/wsl.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/wsl.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/rofi.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/rofi.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/x11/i3.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/x11/i3.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/x11/picom.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/x11/picom.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/x11/configs.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/x11/configs.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/x11/polybar.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/x11/polybar.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/kitty.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/kitty.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/wm.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/wm.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/lmstudio.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/lmstudio.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/zsh.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/zsh.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/emacs.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/emacs.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/wayland/hyprland.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/wayland/hyprland.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/wayland/mako.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/wayland/mako.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/wayland/sway.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/wayland/sway.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/ghostty.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/ghostty.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/vim.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/vim.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/display.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/display.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/colors.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/colors.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/game.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/game.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/default.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/git.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/git.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/alacritty.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/alacritty.nix").to_string());
+            },
+            "embedded/collective/modules/home-manager/p10k.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/home-manager/p10k.nix").to_string());
+            },
+            "embedded/collective/modules/nix-on-droid/bootstrap.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nix-on-droid/bootstrap.nix").to_string());
+            },
+            "embedded/collective/modules/nix-on-droid/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nix-on-droid/default.nix").to_string());
+            },
+            "embedded/collective/modules/nix-darwin/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/nix-darwin/default.nix").to_string());
+            },
+            "embedded/collective/modules/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/modules/default.nix").to_string());
+            },
+            "embedded/collective/shells/ml.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/shells/ml.nix").to_string());
+            },
+            "embedded/collective/shells/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/shells/default.nix").to_string());
+            },
+            "embedded/nix-parsec/parsec.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/parsec.nix").to_string());
+            },
+            "embedded/nix-parsec/lexer.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/lexer.nix").to_string());
+            },
+            "embedded/nix-parsec/flake.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/flake.nix").to_string());
+            },
+            "embedded/nix-parsec/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/default.nix").to_string());
+            },
+            "embedded/nix-parsec/examples/uuids/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/examples/uuids/default.nix").to_string());
+            },
+            "embedded/nix-parsec/examples/parens/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/examples/parens/default.nix").to_string());
+            },
+            "embedded/nix-parsec/examples/kernel-config/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/examples/kernel-config/default.nix").to_string());
+            },
+            "embedded/nix-parsec/examples/arithmetic/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/examples/arithmetic/default.nix").to_string());
             },
             _ => {
                 log(&format!("VFS: Warning - file not embedded: {}", embedded_path));

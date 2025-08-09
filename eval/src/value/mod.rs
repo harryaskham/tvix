@@ -232,7 +232,15 @@ impl Value {
     ///
     /// This is a generator function.
     pub(super) async fn deep_force(self, co: GenCo, span: Span) -> Result<Value, ErrorKind> {
-        if let Some(v) = Self::deep_force_(self.clone(), co, span).await? {
+        use crate::vm::DeepForceMode;
+        self.deep_force_with_mode(co, span, DeepForceMode::ReturnCatchableAsValue).await
+    }
+
+    /// Deeply forces a value with a specific mode for handling catchable errors.
+    ///
+    /// This is a generator function.
+    pub(super) async fn deep_force_with_mode(self, co: GenCo, span: Span, mode: crate::vm::DeepForceMode) -> Result<Value, ErrorKind> {
+        if let Some(v) = Self::deep_force_with_mode_(self.clone(), co, span, mode).await? {
             Ok(v)
         } else {
             Ok(self)
@@ -241,6 +249,12 @@ impl Value {
 
     /// Returns Some(v) or None to indicate the returned value is myself
     async fn deep_force_(myself: Value, co: GenCo, span: Span) -> Result<Option<Value>, ErrorKind> {
+        use crate::vm::DeepForceMode;
+        Self::deep_force_with_mode_(myself, co, span, DeepForceMode::ReturnCatchableAsValue).await
+    }
+
+    /// Returns Some(v) or None to indicate the returned value is myself
+    async fn deep_force_with_mode_(myself: Value, co: GenCo, span: Span, mode: crate::vm::DeepForceMode) -> Result<Option<Value>, ErrorKind> {
         // This is a stack of values which still remain to be forced.
         let mut vals = vec![myself];
 
@@ -291,7 +305,15 @@ impl Value {
 
                 Value::Thunk(_) => panic!("Tvix bug: force_value() returned a thunk"),
 
-                Value::Catchable(_) => return Ok(Some(value)),
+                Value::Catchable(ref catchable_err) => {
+                    use crate::vm::DeepForceMode;
+                    match mode {
+                        DeepForceMode::ReturnCatchableAsValue => return Ok(Some(value)),
+                        DeepForceMode::PropagateCatchableAsError => {
+                            return Err(crate::ErrorKind::CatchableError((**catchable_err).clone()));
+                        }
+                    }
+                },
 
                 Value::AttrNotFound
                 | Value::Blueprint(_)

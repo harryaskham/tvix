@@ -373,7 +373,7 @@ impl TvixEvaluator {
 
     #[wasm_bindgen]
     pub fn evaluate(&mut self, expression: &str, raw: bool) -> Result<String, JsValue> {
-        self.evaluate_with_settings(expression, raw, false, false, false, false, false)
+        self.evaluate_with_settings(expression, raw, false, false, false, false, false, false)
     }
     
     #[wasm_bindgen]
@@ -385,11 +385,12 @@ impl TvixEvaluator {
         display_ast: bool, 
         dump_bytecode: bool, 
         trace_runtime: bool, 
-        strict: bool
+        strict: bool,
+        nix_compat_mode: bool
     ) -> Result<JsValue, JsValue> {
         let result = self.evaluate_with_settings_internal(
             expression, raw, pretty_print_ast, display_ast, 
-            dump_bytecode, trace_runtime, strict
+            dump_bytecode, trace_runtime, strict, nix_compat_mode
         )?;
         
         // Convert to JavaScript object
@@ -410,10 +411,11 @@ impl TvixEvaluator {
         display_ast: bool, 
         dump_bytecode: bool, 
         trace_runtime: bool, 
-        strict: bool
+        strict: bool,
+        nix_compat_mode: bool
     ) -> Result<DebugResult, JsValue> {
-        log(&format!("eval: evaluate_with_settings_internal called with flags: display_ast={}, dump_bytecode={}, trace_runtime={}, strict={}, pretty_print_ast={}", 
-            display_ast, dump_bytecode, trace_runtime, strict, pretty_print_ast));
+        log(&format!("eval: evaluate_with_settings_internal called with flags: display_ast={}, dump_bytecode={}, trace_runtime={}, strict={}, pretty_print_ast={}, nix_compat_mode={}", 
+            display_ast, dump_bytecode, trace_runtime, strict, pretty_print_ast, nix_compat_mode));
 
         // Reuse the persistent VFS for import caching
         let nix_path = self.vfs.get_nix_path();
@@ -428,6 +430,11 @@ impl TvixEvaluator {
         // Apply debug settings to evaluation builder
         if strict {
             eval_builder = eval_builder.mode(tvix_eval::EvalMode::Strict);
+        }
+        
+        // Configure deep force mode based on nix_compat_mode parameter
+        if nix_compat_mode {
+            eval_builder = eval_builder.deep_force_mode(tvix_eval::DeepForceMode::PropagateCatchableAsError);
         }
         
         log("eval: Evaluation builder configured with custom IO and NIX_PATH");
@@ -590,11 +597,12 @@ impl TvixEvaluator {
         display_ast: bool, 
         dump_bytecode: bool, 
         trace_runtime: bool, 
-        strict: bool
+        strict: bool,
+        nix_compat_mode: bool
     ) -> Result<String, JsValue> {
         let result = self.evaluate_with_settings_internal(
             expression, raw, pretty_print_ast, display_ast, 
-            dump_bytecode, trace_runtime, strict
+            dump_bytecode, trace_runtime, strict, nix_compat_mode
         )?;
         
         Ok(result.value)

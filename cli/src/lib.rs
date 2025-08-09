@@ -9,7 +9,7 @@ use tracing::instrument;
 use tvix_eval::{
     builtins::impure_builtins,
     observer::{DisassemblingObserver, TracingObserver},
-    ErrorKind, EvalIO, EvalMode, GlobalsMap, SourceCode, Value,
+    ErrorKind, EvalIO, EvalMode, DeepForceMode, GlobalsMap, SourceCode, Value,
 };
 use tvix_glue::{
     builtins::{add_derivation_builtins, add_import_builtins},
@@ -88,6 +88,11 @@ pub fn evaluate(
 
     if args.strict {
         eval_builder = eval_builder.mode(EvalMode::Strict);
+    }
+    
+    // Configure Nix compatibility mode if enabled
+    if args.nix_compat {
+        eval_builder = eval_builder.deep_force_mode(DeepForceMode::PropagateCatchableAsError);
     }
 
     match globals {

@@ -311,8 +311,9 @@ impl VM<'_> {
                         // Generator has requested a deep-force.
                         VMRequest::DeepForceValue(value) => {
                             self.reenqueue_generator(name, span, generator);
+                            let deep_force_mode = self.deep_force_mode;
                             self.enqueue_generator("deep_force", span, |co| {
-                                value.deep_force(co, span)
+                                value.deep_force_with_mode(co, span, deep_force_mode)
                             });
                             return Ok(false);
                         }
