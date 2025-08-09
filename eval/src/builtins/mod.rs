@@ -327,8 +327,13 @@ mod pure_builtins {
 
     #[builtin("deepSeq")]
     async fn builtin_deep_seq(co: GenCo, x: Value, y: Value) -> Result<Value, ErrorKind> {
-        generators::request_deep_force(&co, x).await;
-        Ok(y)
+        let deep_forced = generators::request_deep_force(&co, x).await;
+        // If deep_force returned a catchable value, return it instead of y
+        if deep_forced.is_catchable() {
+            Ok(deep_forced)
+        } else {
+            Ok(y)
+        }
     }
 
     #[builtin("div")]

@@ -573,9 +573,10 @@ export class TvixEvaluator {
      * @param {boolean} dump_bytecode
      * @param {boolean} trace_runtime
      * @param {boolean} strict
+     * @param {boolean} nix_compat_mode
      * @returns {any}
      */
-    evaluate_with_debug_info(expression, raw, pretty_print_ast, display_ast, dump_bytecode, trace_runtime, strict) {
+    evaluate_with_debug_info(expression, raw, pretty_print_ast, display_ast, dump_bytecode, trace_runtime, strict, nix_compat_mode) {
         if (this.__wbg_ptr == 0) throw new Error('Attempt to use a moved value');
         _assertNum(this.__wbg_ptr);
         const ptr0 = passStringToWasm0(expression, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
@@ -586,7 +587,8 @@ export class TvixEvaluator {
         _assertBoolean(dump_bytecode);
         _assertBoolean(trace_runtime);
         _assertBoolean(strict);
-        const ret = wasm.tvixevaluator_evaluate_with_debug_info(this.__wbg_ptr, ptr0, len0, raw, pretty_print_ast, display_ast, dump_bytecode, trace_runtime, strict);
+        _assertBoolean(nix_compat_mode);
+        const ret = wasm.tvixevaluator_evaluate_with_debug_info(this.__wbg_ptr, ptr0, len0, raw, pretty_print_ast, display_ast, dump_bytecode, trace_runtime, strict, nix_compat_mode);
         if (ret[2]) {
             throw takeFromExternrefTable0(ret[1]);
         }
@@ -600,9 +602,10 @@ export class TvixEvaluator {
      * @param {boolean} dump_bytecode
      * @param {boolean} trace_runtime
      * @param {boolean} strict
+     * @param {boolean} nix_compat_mode
      * @returns {string}
      */
-    evaluate_with_settings(expression, raw, pretty_print_ast, display_ast, dump_bytecode, trace_runtime, strict) {
+    evaluate_with_settings(expression, raw, pretty_print_ast, display_ast, dump_bytecode, trace_runtime, strict, nix_compat_mode) {
         let deferred3_0;
         let deferred3_1;
         try {
@@ -616,7 +619,8 @@ export class TvixEvaluator {
             _assertBoolean(dump_bytecode);
             _assertBoolean(trace_runtime);
             _assertBoolean(strict);
-            const ret = wasm.tvixevaluator_evaluate_with_settings(this.__wbg_ptr, ptr0, len0, raw, pretty_print_ast, display_ast, dump_bytecode, trace_runtime, strict);
+            _assertBoolean(nix_compat_mode);
+            const ret = wasm.tvixevaluator_evaluate_with_settings(this.__wbg_ptr, ptr0, len0, raw, pretty_print_ast, display_ast, dump_bytecode, trace_runtime, strict, nix_compat_mode);
             var ptr2 = ret[0];
             var len2 = ret[1];
             if (ret[3]) {

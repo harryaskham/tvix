@@ -118,8 +118,7 @@ export const _ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17h3c90
 export const _ZN6js_sys7Reflect3set17h828fb96589d450a1E: (a: number, b: number, c: number, d: number) => void;
 export const _ZN4core3ptr42drop_in_place$LT$wasm_bindgen..JsValue$GT$17h71204e1babf8ad1eE: (a: number) => void;
 export const _ZN4core3ptr35drop_in_place$LT$js_sys..Object$GT$17h7c5eca849903f3d5E: (a: number) => void;
-export const tvixevaluator_evaluate_with_debug_info: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number) => [number, number, number];
-export const _ZN4core3fmt2rt38_$LT$impl$u20$core..fmt..Arguments$GT$6new_v117hd6f41bb36384b7d9E: (a: number, b: number, c: number) => void;
+export const tvixevaluator_evaluate_with_debug_info: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => [number, number, number];
 export const _ZN9tvix_eval10Evaluation7builder17h9b1e5fed1cfd1461E: (a: number, b: number, c: number) => void;
 export const _ZN9tvix_eval17EvaluationBuilder13enable_import17h35578ca335f303d2E: (a: number, b: number) => void;
 export const _ZN9tvix_eval17EvaluationBuilder8nix_path17h203b0adee72986f6E: (a: number, b: number, c: number) => void;
@@ -142,6 +141,7 @@ export const _ZN72_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..deref.
 export const _ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$4iter17he7f0b37dca43bd02E: (a: number, b: number, c: number) => void;
 export const _ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdb6f8686f81e49b8E: (a: number, b: number) => void;
 export const _ZN4core3fmt2rt8Argument11new_display17h9c3c99302f3b0926E: (a: number, b: number) => void;
+export const _ZN4core3fmt2rt38_$LT$impl$u20$core..fmt..Arguments$GT$6new_v117hd6f41bb36384b7d9E: (a: number, b: number, c: number) => void;
 export const _ZN4core9panicking11panic_const24panic_const_add_overflow17h50a12272b4bbfed9E: (a: number) => void;
 export const _ZN4core3ptr78drop_in_place$LT$core..option..Option$LT$tvix_eval..source..SourceCode$GT$$GT$17h56feaa01207a8355E: (a: number) => void;
 export const _ZN4core3fmt2rt8Argument11new_display17h8aa2d642bb1135e1E: (a: number, b: number) => void;
@@ -154,7 +154,7 @@ export const _ZN4core3ptr115drop_in_place$LT$core..result..Result$LT$tvix_eval..
 export const _ZN45_$LT$T$u20$as$u20$alloc..string..ToString$GT$9to_string17h108864464fe9df66E: (a: number, b: number) => void;
 export const _ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$tvix_eval..errors..Error$GT$$GT$17h3d4b5744753abadaE: (a: number) => void;
 export const _ZN4core3ptr71drop_in_place$LT$core..option..Option$LT$rnix..ast..nodes..Expr$GT$$GT$17hf9154faa6628c6b4E: (a: number) => void;
-export const tvixevaluator_evaluate_with_settings: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number) => [number, number, number, number];
+export const tvixevaluator_evaluate_with_settings: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => [number, number, number, number];
 export const _ZN5alloc7raw_vec20RawVecInner$LT$A$GT$14grow_amortized17h3ce1edcb37b0ef74E: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
 export const _ZN5alloc7raw_vec12handle_error17h2130e935492a79a1E: (a: number, b: number, c: number) => void;
 export const _ZN4core4hash5impls52_$LT$impl$u20$core..hash..Hash$u20$for$u20$$RF$T$GT$4hash17ha243c4e4146b2f42E: (a: number, b: number) => void;
@@ -208,7 +208,7 @@ export const _ZN4core9panicking11panic_const24panic_const_sub_overflow17h37b4616
 export const _ZN4core9panicking13assert_failed17h559ef27f0749d188E: (a: number, b: number, c: number, d: number, e: number) => void;
 export const _ZN81_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..index..Index$LT$I$GT$$GT$5index17h2dfe45170bead935E: (a: number, b: number, c: number) => number;
 export const _ZN74_$LT$alloc..string..String$u20$as$u20$core..ops..index..Index$LT$I$GT$$GT$5index17h803d7e2c666a401eE: (a: number, b: number, c: number, d: number, e: number) => void;
-export const _ZN72_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..deref..Deref$GT$5deref17h04d7d08b01c1187bE: (a: number, b: number) => void;
+export const _ZN72_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..deref..Deref$GT$5deref17h224278925f73e57bE: (a: number, b: number) => void;
 export const _ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$4iter17h5d8e3a855f414086E: (a: number, b: number, c: number) => void;
 export const _ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$4iter17he1337e3d57a6eba5E: (a: number, b: number, c: number) => void;
 export const _ZN4core4iter6traits8iterator8Iterator9enumerate17h5439378dff952486E: (a: number, b: number, c: number) => void;
@@ -2391,6 +2391,8 @@ export const _ZN76_$LT$alloc..rc..Rc$LT$T$C$A$GT$$u20$as$u20$core..convert..AsRe
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$4push17h3a720149d835acacE: (a: number, b: number, c: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$3len17h8a1a3ebe0a617493E: (a: number) => number;
 export const _ZN72_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h3c6e7875a7e2a188E: (a: number) => void;
+export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8is_empty17hba519dc1c6b6199eE: (a: number) => number;
+export const _ZN4core3ptr103drop_in_place$LT$core..result..Result$LT$tvix_eval..value..Value$C$tvix_eval..errors..ErrorKind$GT$$GT$17h9527f2c1d202e011E: (a: number) => void;
 export const _ZN4core3ptr329drop_in_place$LT$genawaiter..rc..generator..Gen$LT$tvix_eval..vm..generators..VMRequest$C$tvix_eval..vm..generators..VMResponse$C$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$core..future..future..Future$u2b$Output$u20$$u3d$$u20$core..result..Result$LT$tvix_eval..value..Value$C$tvix_eval..errors..ErrorKind$GT$$GT$$GT$$GT$$GT$17hef132d2714a4ad6cE: (a: number) => void;
 export const _ZN110_$LT$tvix_eval..upvalues..Upvalues$u20$as$u20$core..ops..index..Index$LT$tvix_eval..opcode..UpvalueIdx$GT$$GT$5index17h7f2c239c4dc361eeE: (a: number, b: number, c: number) => number;
 export const _ZN87_$LT$tvix_eval..opcode..CodeIdx$u20$as$u20$core..ops..arith..AddAssign$LT$usize$GT$$GT$10add_assign17heface36dcf72a64dE: (a: number, b: number) => void;
@@ -2407,6 +2409,9 @@ export const _ZN4core6option15Option$LT$T$GT$6expect17hf3324b24ea213800E: (a: nu
 export const _ZN4core3ptr64drop_in_place$LT$alloc..vec..Vec$LT$tvix_eval..vm..Frame$GT$$GT$17hd1a4adf930d3e648E: (a: number) => void;
 export const _ZN4core3ptr47drop_in_place$LT$tvix_eval..vm..ImportCache$GT$17h50c7d9b4d6720b14E: (a: number) => void;
 export const _ZN4core3ptr62drop_in_place$LT$tvix_eval..nix_search_path..NixSearchPath$GT$17haa6c7821fe692a66E: (a: number) => void;
+export const _ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8position17h182f25178ddc3720E: (a: number, b: number, c: number) => void;
+export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$6remove17h857bb514a2adabacE: (a: number, b: number, c: number) => number;
+export const _ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8position17h3b23ff89f4d2c736E: (a: number, b: number, c: number) => void;
 export const _ZN4core3ptr38drop_in_place$LT$tvix_eval..vm..VM$GT$17h009bcd81422e4b90E: (a: number) => void;
 export const _ZN4core6option15Option$LT$T$GT$6as_ref17h4a9d845f9f2e6562E: (a: number) => number;
 export const _ZN4core6option15Option$LT$T$GT$6expect17h3da1e6b52b17337bE: (a: number, b: number, c: number, d: number) => number;
@@ -3439,6 +3444,7 @@ export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$4push17hf3b0e6e40a49165bE: (a: numbe
 export const _ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8grow_one17hd37111ee2f56e0deE: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$4push17hf6c2200bcc5e5c09E: (a: number, b: number, c: number) => void;
 export const _ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8grow_one17hba560990825ccd46E: (a: number, b: number) => void;
+export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$6remove13assert_failed17h47a72ed81b6c9a5dE: (a: number, b: number, c: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h02ee53fb539bc387E: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h1337525a5b907b7bE: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h1546eb1ab4daf81aE: (a: number, b: number) => void;
@@ -3447,6 +3453,7 @@ export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h29c44c9b43c619f8E: (a: n
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h3ba4ae6c459a639fE: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h438911dd53490061E: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h4607640fbddec71cE: (a: number, b: number) => void;
+export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h49fbde41b8db72c4E: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h647cae2a2ad28444E: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h680bde6df44b75e7E: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h87cd24cc84eba900E: (a: number, b: number) => void;
@@ -9369,7 +9376,6 @@ export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$6insert13assert_failed17h129a4038897
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$6insert17hf83df7088752685cE: (a: number, b: number, c: number, d: number) => void;
 export const _ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8grow_one17h286fa03578de3271E: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$6remove17h37c4c897d57db3eaE: (a: number, b: number, c: number, d: number) => void;
-export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$6remove13assert_failed17h47a72ed81b6c9a5dE: (a: number, b: number, c: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$6remove17ha5563136e8dcf662E: (a: number, b: number, c: number, d: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h1a5b392357de6a1aE: (a: number, b: number) => void;
 export const _ZN5alloc3vec16Vec$LT$T$C$A$GT$8as_slice17h4757113516b1d299E: (a: number, b: number) => void;
@@ -23860,6 +23866,7 @@ export const _ZN5alloc3vec16in_place_collect108_$LT$impl$u20$alloc..vec..spec_fr
 export const _ZN5alloc3vec16in_place_collect18from_iter_in_place17h7f0d0e45256c0e85E: (a: number, b: number, c: number) => void;
 export const _ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17he3ad865ea36148b2E: (a: number) => void;
 export const _ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h235f74fa79493129E: (a: number, b: number) => void;
+export const _ZN72_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..deref..Deref$GT$5deref17h04d7d08b01c1187bE: (a: number, b: number) => void;
 export const _ZN75_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..deref..DerefMut$GT$9deref_mut17hfe019818d254fe53E: (a: number, b: number) => void;
 export const _ZN83_$LT$I$u20$as$u20$alloc..vec..in_place_collect..SpecInPlaceCollect$LT$T$C$I$GT$$GT$16collect_in_place17hb7e4ecac245abd64E: (a: number, b: number, c: number) => number;
 export const _ZN90_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h1ca41c6fc4532990E: (a: number, b: number) => void;
