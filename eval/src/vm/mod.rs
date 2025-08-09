@@ -396,7 +396,13 @@ impl<'o> VM<'o> {
                         .observe_enter_call_frame(0, &call_frame.lambda, frame_id);
 
                     match self.execute_bytecode(span, call_frame) {
-                        Ok(true) => self.observer.observe_exit_call_frame(frame_id, &self.stack),
+                        Ok(true) => {
+                            // Clean up try_eval_frames when frame completes
+                            if let Some(pos) = self.try_eval_frames.iter().position(|&id| id == frame_id) {
+                                self.try_eval_frames.remove(pos);
+                            }
+                            self.observer.observe_exit_call_frame(frame_id, &self.stack);
+                        }
                         Ok(false) => self
                             .observer
                             .observe_suspend_call_frame(frame_id, &self.stack),
@@ -418,6 +424,10 @@ impl<'o> VM<'o> {
 
                     match self.run_generator(name, span, frame_id, state, generator, None) {
                         Ok(true) => {
+                            // Clean up try_eval_frames when frame completes
+                            if let Some(pos) = self.try_eval_frames.iter().position(|&id| id == frame_id) {
+                                self.try_eval_frames.remove(pos);
+                            }
                             self.observer
                                 .observe_exit_generator(frame_id, name, &self.stack)
                         }
@@ -1385,12 +1395,12 @@ pub enum EvalMode {
 /// Specification for how deep forcing should handle catchable errors
 #[derive(Debug, Clone, Copy, Default)]
 pub enum DeepForceMode {
-    /// The default. Catchable errors encountered during deep forcing are returned as values.
+    /// Catchable errors encountered during deep forcing are returned as values.
     /// This preserves them in data structures like attribute sets and lists.
-    #[default]
     ReturnCatchableAsValue,
-    /// Catchable errors encountered during deep forcing are propagated as actual errors.
+    /// The default. Catchable errors encountered during deep forcing are propagated as actual errors.
     /// This matches Nix's behavior where deepSeq propagates thrown errors.
+    #[default]
     PropagateCatchableAsError,
 }
 

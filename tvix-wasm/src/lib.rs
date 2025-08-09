@@ -432,9 +432,9 @@ impl TvixEvaluator {
             eval_builder = eval_builder.mode(tvix_eval::EvalMode::Strict);
         }
         
-        // Configure deep force mode based on nix_compat_mode parameter
-        if nix_compat_mode {
-            eval_builder = eval_builder.deep_force_mode(tvix_eval::DeepForceMode::PropagateCatchableAsError);
+        // Configure legacy Tvix behavior if NOT in Nix compatibility mode
+        if !nix_compat_mode {
+            eval_builder = eval_builder.deep_force_mode(tvix_eval::DeepForceMode::ReturnCatchableAsValue);
         }
         
         log("eval: Evaluation builder configured with custom IO and NIX_PATH");

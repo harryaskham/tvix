@@ -21,9 +21,9 @@ fn lint(code: &str, path: Option<PathBuf>, args: &Args) -> bool {
         eval_builder = eval_builder.mode(EvalMode::Strict);
     }
     
-    // Configure Nix compatibility mode if enabled
-    if args.nix_compat {
-        eval_builder = eval_builder.deep_force_mode(DeepForceMode::PropagateCatchableAsError);
+    // Configure legacy Tvix behavior if NOT in Nix compatibility mode
+    if !args.nix_compat {
+        eval_builder = eval_builder.deep_force_mode(DeepForceMode::ReturnCatchableAsValue);
     }
 
     let source_map = eval_builder.source_map().clone();

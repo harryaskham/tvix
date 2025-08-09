@@ -55,9 +55,14 @@ EXPRS+=("$(cat << EOF
 let strict = x: builtins.deepSeq x x;
     try = x: builtins.tryEval (strict x);
     catch = x: y: if x.success or false then x.value else y;
-    launchNukes = { nukes = throw "launched"; };
-    takeItEasy = { nukes = "not launched"; };
-in catch (try launchNukes) takeItEasy
+    nuke = { state = "armed"; };
+    launch = nuke: nuke // { state = throw "launching"; };
+    abortLaunch = nuke:
+      catch
+        (try nuke)
+        (nuke //  { state = "aborted"; });
+in
+  abortLaunch (launch nuke)
 EOF
 )")
 

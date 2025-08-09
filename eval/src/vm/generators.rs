@@ -509,7 +509,14 @@ impl VM<'_> {
                 // Generator has completed, and its result value should
                 // be left on the stack.
                 genawaiter::GeneratorState::Complete(result) => {
-                    let value = result.with_span(span, self)?;
+                    // Handle CatchableError specially in tryEval context
+                    let value = match result {
+                        Err(crate::ErrorKind::CatchableError(catch_err)) if !self.try_eval_frames.is_empty() => {
+                            // Convert CatchableError back to Catchable value in tryEval context
+                            crate::Value::Catchable(Box::new(catch_err))
+                        }
+                        _ => result.with_span(span, self)?
+                    };
                     self.stack.push(value);
                     return Ok(true);
                 }
