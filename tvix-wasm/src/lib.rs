@@ -4,7 +4,7 @@ use wasm_bindgen::prelude::*;
 use std::rc::Rc;
 use std::collections::HashMap;
 use std::{io, path::{Path, PathBuf}};
-use std::io::Cursor;
+use std::io::{Cursor, Write};
 use tvix_eval::observer::{DisassemblingObserver, TracingObserver};
 
 #[wasm_bindgen]
@@ -323,10 +323,12 @@ impl tvix_eval::EvalIO for VirtualFilesystemIO {
     }
 }
 
+
 #[wasm_bindgen]
 pub struct TvixEvaluator {
     globals: Option<Rc<tvix_eval::GlobalsMap>>,
     source_map: Option<tvix_eval::SourceCode>,
+    vfs: Rc<VirtualFilesystemIO>,
 }
 
 #[wasm_bindgen]
@@ -334,9 +336,15 @@ impl TvixEvaluator {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         console_error_panic_hook::set_once();
+        
+        // Create VFS once and reuse it for all evaluations to enable import caching
+        let vfs = VirtualFilesystemIO::new();
+        log(&format!("eval: Created persistent VFS with {} embedded files", vfs.files.len()));
+        
         Self { 
             globals: None,
             source_map: None,
+            vfs: Rc::new(vfs),
         }
     }
 
@@ -407,12 +415,12 @@ impl TvixEvaluator {
         log(&format!("eval: evaluate_with_settings_internal called with flags: display_ast={}, dump_bytecode={}, trace_runtime={}, strict={}, pretty_print_ast={}", 
             display_ast, dump_bytecode, trace_runtime, strict, pretty_print_ast));
 
-        let vfs = VirtualFilesystemIO::new();
-        let nix_path = vfs.get_nix_path();
-        log(&format!("eval: Using NIX_PATH: {}", nix_path));
-        log(&format!("eval: Created VFS with {} files", vfs.files.len()));
+        // Reuse the persistent VFS for import caching
+        let nix_path = self.vfs.get_nix_path();
+        log(&format!("eval: Using persistent VFS with {} files for import caching", self.vfs.files.len()));
+        log(&format!("eval: NIX_PATH: {}", nix_path));
         
-        let io_handle = Rc::new(vfs) as Rc<dyn tvix_eval::EvalIO>;
+        let io_handle = self.vfs.clone() as Rc<dyn tvix_eval::EvalIO>;
         let mut eval_builder = tvix_eval::Evaluation::builder(io_handle)
             .enable_import()
             .nix_path(Some(nix_path));

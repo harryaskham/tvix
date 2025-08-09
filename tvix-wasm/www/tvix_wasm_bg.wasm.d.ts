@@ -2303,6 +2303,8 @@ export const _ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17hc159ad9c00f79
 export const _ZN67_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17hce23260874e116a9E: (a: number, b: number) => number;
 export const _ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17hd79d24a632bbcc92E: (a: number, b: number) => number;
 export const _ZN67_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h891e210c677274a4E: (a: number, b: number) => number;
+export const _ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17h0f243e97f24c431dE: (a: number, b: number) => number;
+export const _ZN69_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..fmt..Display$GT$3fmt17h819001ad7241627cE: (a: number, b: number) => number;
 export const _ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17h0c460852c88d3842E: (a: number, b: number, c: number) => number;
 export const _ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17hd3ded31c84eb4864E: (a: number, b: number) => number;
 export const _ZN55_$LT$$RF$T$u20$as$u20$thiserror..display..AsDisplay$GT$10as_display17h7548e6aa7934c185E: (a: number) => number;
@@ -2364,6 +2366,7 @@ export const _ZN51_$LT$T$u20$as$u20$core..clone..uninit..CopySpec$GT$9clone_one1
 export const _ZN51_$LT$T$u20$as$u20$core..clone..uninit..CopySpec$GT$9clone_one17h465a41ec7b7614b2E: (a: number, b: number) => void;
 export const _ZN69_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17hfbd150d9b5790975E: (a: number) => number;
 export const _ZN51_$LT$T$u20$as$u20$core..clone..uninit..CopySpec$GT$9clone_one17h7e02308ff8b725ffE: (a: number, b: number) => void;
+export const _ZN76_$LT$tvix_eval..errors..CatchableErrorKind$u20$as$u20$core..fmt..Display$GT$3fmt17h609b90a592d5d5e3E: (a: number, b: number) => number;
 export const _ZN69_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..fmt..Pointer$GT$3fmt17hd92d9d884f9565bdE: (a: number, b: number) => number;
 export const _ZN54_$LT$$BP$const$u20$T$u20$as$u20$core..fmt..Pointer$GT$3fmt17h3cfb7cfbb16bd6bfE: (a: number, b: number) => number;
 export const _ZN74_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..ops..deref..Deref$GT$5deref17h1e6804f00b4640d3E: (a: number) => number;
@@ -2578,6 +2581,7 @@ export const _ZN9tvix_eval5value5thunk5Thunk20new_suspended_native17ha13eb7d33b5
 export const _ZN74_$LT$tvix_eval..value..string..NixString$u20$as$u20$core..fmt..Display$GT$3fmt17h268e7f7ae7f6e5ccE: (a: number, b: number) => number;
 export const _ZN73_$LT$tvix_eval..value..builtin..Builtin$u20$as$u20$core..fmt..Display$GT$3fmt17h9a6a8d9d18a08936E: (a: number, b: number) => number;
 export const _ZN81_$LT$tvix_eval..value..thunk..Thunk$u20$as$u20$tvix_eval..value..TotalDisplay$GT$9total_fmt17h9ee92a47c57cf8c3E: (a: number, b: number, c: number) => number;
+export const _ZN4core3fmt2rt8Argument11new_display17hb97f84272ceeeea1E: (a: number, b: number) => void;
 export const _ZN57_$LT$std..path..Display$u20$as$u20$core..fmt..Display$GT$3fmt17h2093b6f776f00a00E: (a: number, b: number) => number;
 export const _ZN84_$LT$tvix_eval..value..attrs..NixAttrs$u20$as$u20$tvix_eval..value..TotalDisplay$GT$9total_fmt17h499a0d25875a79f7E: (a: number, b: number, c: number) => number;
 export const _ZN75_$LT$tvix_eval..value..Value$u20$as$u20$core..convert..From$LT$bool$GT$$GT$4from17h1b3900ff2e406999E: (a: number, b: number) => void;
@@ -3858,7 +3862,6 @@ export const _ZN4core6option15Option$LT$T$GT$8and_then17hfd3ed1af35dfad84E: (a: 
 export const _ZN4core3ptr73drop_in_place$LT$alloc..vec..Vec$LT$codemap_diagnostic..SpanLabel$GT$$GT$17he1298a9b4853fdc1E: (a: number) => void;
 export const _ZN4core3ptr45drop_in_place$LT$tvix_eval..errors..Error$GT$17h2076443064b261e8E: (a: number) => void;
 export const _ZN4core4iter6traits8iterator8Iterator3map17h41f73061dc50a2f7E: (a: number, b: number, c: number) => void;
-export const _ZN76_$LT$tvix_eval..errors..CatchableErrorKind$u20$as$u20$core..fmt..Display$GT$3fmt17h609b90a592d5d5e3E: (a: number, b: number) => number;
 export const _ZN55_$LT$$RF$T$u20$as$u20$thiserror..display..AsDisplay$GT$10as_display17h02bbffbcf051b568E: (a: number) => number;
 export const _ZN4core3fmt2rt8Argument11new_display17hb3db2b892a092df0E: (a: number, b: number) => void;
 export const _ZN67_$LT$alloc..boxed..Box$LT$str$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h07716437f972f6cbE: (a: number, b: number) => void;
