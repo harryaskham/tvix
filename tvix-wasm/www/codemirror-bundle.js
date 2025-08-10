@@ -36672,7 +36672,7 @@
     pkgs.lib = import <nixpkgs/lib>;
     pkgs.system = "x86_64-linux";
     inputs.nix-parsec = import <nix-parsec>;
-    inputs.collective-public.lib.${args.pkgs.system} =
+    inputs.collective-public.lib.\${args.pkgs.system} =
       import <collective/collective-public/pkgs/collective-lib> args;
   };
   collective-lib = import <collective/pkgs/collective-lib> args;
