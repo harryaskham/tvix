@@ -36667,11 +36667,29 @@
 
   // Load expression from localStorage
   function loadExpression() {
+    const defaultExpression = `let
+  args = {
+    pkgs.lib = import <nixpkgs/lib>;
+    pkgs.system = "x86_64-linux";
+    inputs.nix-parsec = import <nix-parsec>;
+    inputs.collective-public.lib.${args.pkgs.system} =
+      import <collective/collective-public/pkgs/collective-lib> args;
+  };
+  collective-lib = import <collective/pkgs/collective-lib> args;
+  inherit (collective-lib) typed;
+in
+with typed;
+let
+  expr = "1";
+  ast = parser.parse expr;
+  value = eval.ast.runAST ast;
+in
+  toString ast`;
     try {
-      return localStorage.getItem('tvix-expression') || 'let lib = import <nixpkgs/lib>; in lib';
+      return localStorage.getItem('tvix-expression') || defaultExpression;
     } catch (e) {
       console.warn('Could not load expression from localStorage:', e);
-      return 'let lib = import <nixpkgs/lib>; in lib';
+      return defaultExpression;
     }
   }
 

@@ -38,39 +38,32 @@ function tvix-eval-nix-compat {
   tvix-eval "$@" "--nix-compat"
 }
 
+function tvix-eval-strict-nix-compat {
+  tvix-eval "$@" "--strict --nix-compat"
+}
+
 EXPRS=()
 
-EXPRS+=("$(cat << EOF
-{ e = throw "error"; }
-EOF
-)")
+# EXPRS+=("$(cat << EOF
+# { e = throw "error"; }
+# EOF
+# )")
+#
+# EXPRS+=("$(cat << EOF
+# let strict = x: builtins.deepSeq x x;
+# in strict { e = throw "error"; }
+# EOF
+# )")
 
-EXPRS+=("$(cat << EOF
-let strict = x: builtins.deepSeq x x;
-in strict { e = throw "error"; }
-EOF
-)")
-
-EXPRS+=("$(cat << EOF
-let strict = x: builtins.deepSeq x x;
-    try = x: builtins.tryEval (strict x);
-    catch = x: y: if x.success or false then x.value else y;
-    nuke = { state = "armed"; };
-    launch = nuke: nuke // { state = throw "launching"; };
-    abortLaunch = nuke:
-      catch
-        (try nuke)
-        (nuke //  { state = "aborted"; });
-in
-  abortLaunch (launch nuke)
-EOF
-)")
+EXPRS+=("$(cat nuke.nix | sed "s/0000/5555/")")
+EXPRS+=("$(cat nuke.nix | sed "s/0000/1234/")")
 
 function run-expr() {
   EXPR="$1"
   echo "=== Expression ==="
   echo "$EXPR"
-  for ix in nix-eval tvix-eval tvix-eval-strict tvix-eval-nix-compat; do
+  for ix in nix-eval tvix-eval-strict tvix-eval-strict-nix-compat; do
+  #for ix in nix-eval tvix-eval tvix-eval-strict tvix-eval-nix-compat tvix-eval-strict-nix-compat; do
     "$ix" "$EXPR"
   done
 }
