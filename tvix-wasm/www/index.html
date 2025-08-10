@@ -986,11 +986,23 @@ ${expression.includes('2') ? "0001 OP_CONSTANT      1    [ '1' '2' ]\n" : ''}${e
         }
 
         function unquote(s) { return s.substring(1, s.length - 1); }
+        
+        function unescapeWhitespace(s) {
+            // Convert escaped whitespace characters to actual whitespace
+            return s.replace(/\\n/g, '\n')
+                    .replace(/\\t/g, '\t')
+                    .replace(/\\r/g, '\r')
+                    .replace(/\\\\/g, '\\'); // Handle escaped backslashes last
+        }
+        
         function maybeUnquote(s, rawMode) {
           if ('"' === s[0] && '"' === s[s.length - 1]) {
-            return unquote(s);
+            const unquoted = unquote(s);
+            // In raw mode, also unescape whitespace characters
+            return rawMode ? unescapeWhitespace(unquoted) : unquoted;
           } else {
-            return s;
+            // Even if not quoted, unescape whitespace in raw mode
+            return rawMode ? unescapeWhitespace(s) : s;
           }
         }
 

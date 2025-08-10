@@ -16,7 +16,7 @@ let
   inherit (collective-lib) typed;
 in 
 with typed;
-let 
+let
   expr = "{a = 1;}";
   ast = parser.parse expr;
 in

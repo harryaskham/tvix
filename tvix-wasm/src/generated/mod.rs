@@ -283,6 +283,7 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
         "embedded/collective/collective-public/pkgs/collective-lib/script-utils/main-utils.nix",
         "embedded/collective/collective-public/pkgs/collective-lib/script-utils/script-types.nix",
         "embedded/collective/collective-public/pkgs/collective-lib/script-utils/default.nix",
+        "embedded/collective/collective-public/pkgs/collective-lib/ext.nix",
         "embedded/collective/collective-public/pkgs/collective-lib/display.nix",
         "embedded/collective/collective-public/pkgs/collective-lib/colors.nix",
         "embedded/collective/collective-public/pkgs/collective-lib/dispatchlib.nix",
@@ -298,6 +299,7 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
         "embedded/collective/collective-public/flake.nix",
         "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/default.nix",
         "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/keyboards.nix",
+        "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/wasm/default.nix",
         "embedded/collective/collective-public/modules/agnostic/etc.nix",
         "embedded/collective/collective-public/modules/agnostic/default.nix",
         "embedded/collective/collective-public/modules/nixos/handheld-daemon.nix",
@@ -1227,6 +1229,9 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
             "embedded/collective/collective-public/pkgs/collective-lib/script-utils/default.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/script-utils/default.nix").to_string());
             },
+            "embedded/collective/collective-public/pkgs/collective-lib/ext.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/ext.nix").to_string());
+            },
             "embedded/collective/collective-public/pkgs/collective-lib/display.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/collective-lib/display.nix").to_string());
             },
@@ -1271,6 +1276,9 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
             },
             "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/keyboards.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/agnostic/unexpected-keyboard/keyboards.nix").to_string());
+            },
+            "embedded/collective/collective-public/modules/agnostic/unexpected-keyboard/wasm/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/agnostic/unexpected-keyboard/wasm/default.nix").to_string());
             },
             "embedded/collective/collective-public/modules/agnostic/etc.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/agnostic/etc.nix").to_string());
