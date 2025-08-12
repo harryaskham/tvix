@@ -10,7 +10,7 @@ EXTRA_NIX_PATH ?= ""
 EMBED_NIX_PATH ?= nixpkgs/lib=$$(nix eval --impure --expr '<nixpkgs/lib>'):$(EXTRA_NIX_PATH)
 CLTV_DIR ?= /home/harry/collective
 NIX_PARSEC ?= nix-parsec=$$(nix eval --raw "$(CLTV_DIR)\#inputs.nix-parsec.outPath")
-NIX_REFLECT ?= nix-reflect=$$(nix eval --raw "$(CLTV_DIR)\#inputs.nix-reflect.outPath")
+NIX_REFLECT ?= nix-reflect=$$(nix eval --raw github:harryaskham/collective-public\#inputs.nix-reflect.outPath)
 CLTV_NIX_PATH ?= $(CLTV_DIR):$(NIX_PARSEC):$(NIX_REFLECT)
 
 # Default target

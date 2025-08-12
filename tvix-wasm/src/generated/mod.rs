@@ -14,6 +14,7 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
     embedded_paths.push("nixpkgs/lib".to_string());
     embedded_paths.push("collective".to_string());
     embedded_paths.push("nix-parsec".to_string());
+    embedded_paths.push("nix-reflect".to_string());
     let all_embedded_paths = [
         "embedded/nixpkgs/lib/systems/examples.nix",
         "embedded/nixpkgs/lib/systems/platforms.nix",
@@ -318,6 +319,15 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
         "embedded/collective/collective-public/modules/nix-on-droid/default.nix",
         "embedded/collective/collective-public/modules/nix-darwin/default.nix",
         "embedded/collective/collective-public/modules/default.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/fn.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/monad.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/store.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/ast.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/default.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/lib/parser/default.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/lib/default.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/lib/debuglib.nix",
+        "embedded/collective/collective-public/flakes/nix-reflect/flake.nix",
         "embedded/collective/pkgs/lmstudio/darwin.nix",
         "embedded/collective/pkgs/lmstudio/package.nix",
         "embedded/collective/pkgs/lmstudio/linux.nix",
@@ -423,6 +433,15 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
         "embedded/nix-parsec/examples/parens/default.nix",
         "embedded/nix-parsec/examples/kernel-config/default.nix",
         "embedded/nix-parsec/examples/arithmetic/default.nix",
+        "embedded/nix-reflect/lib/eval/fn.nix",
+        "embedded/nix-reflect/lib/eval/monad.nix",
+        "embedded/nix-reflect/lib/eval/store.nix",
+        "embedded/nix-reflect/lib/eval/ast.nix",
+        "embedded/nix-reflect/lib/eval/default.nix",
+        "embedded/nix-reflect/lib/parser/default.nix",
+        "embedded/nix-reflect/lib/default.nix",
+        "embedded/nix-reflect/lib/debuglib.nix",
+        "embedded/nix-reflect/flake.nix",
     ];
 
     for embedded_path in all_embedded_paths {
@@ -1337,6 +1356,33 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
             "embedded/collective/collective-public/modules/default.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/modules/default.nix").to_string());
             },
+            "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/fn.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/lib/eval/fn.nix").to_string());
+            },
+            "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/monad.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/lib/eval/monad.nix").to_string());
+            },
+            "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/store.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/lib/eval/store.nix").to_string());
+            },
+            "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/ast.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/lib/eval/ast.nix").to_string());
+            },
+            "embedded/collective/collective-public/flakes/nix-reflect/lib/eval/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/lib/eval/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/flakes/nix-reflect/lib/parser/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/lib/parser/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/flakes/nix-reflect/lib/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/lib/default.nix").to_string());
+            },
+            "embedded/collective/collective-public/flakes/nix-reflect/lib/debuglib.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/lib/debuglib.nix").to_string());
+            },
+            "embedded/collective/collective-public/flakes/nix-reflect/flake.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/flakes/nix-reflect/flake.nix").to_string());
+            },
             "embedded/collective/pkgs/lmstudio/darwin.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/pkgs/lmstudio/darwin.nix").to_string());
             },
@@ -1651,6 +1697,33 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
             },
             "embedded/nix-parsec/examples/arithmetic/default.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/examples/arithmetic/default.nix").to_string());
+            },
+            "embedded/nix-reflect/lib/eval/fn.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/fn.nix").to_string());
+            },
+            "embedded/nix-reflect/lib/eval/monad.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/monad.nix").to_string());
+            },
+            "embedded/nix-reflect/lib/eval/store.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/store.nix").to_string());
+            },
+            "embedded/nix-reflect/lib/eval/ast.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/ast.nix").to_string());
+            },
+            "embedded/nix-reflect/lib/eval/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/default.nix").to_string());
+            },
+            "embedded/nix-reflect/lib/parser/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/parser/default.nix").to_string());
+            },
+            "embedded/nix-reflect/lib/default.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/default.nix").to_string());
+            },
+            "embedded/nix-reflect/lib/debuglib.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/debuglib.nix").to_string());
+            },
+            "embedded/nix-reflect/flake.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/flake.nix").to_string());
             },
             _ => {
                 log(&format!("VFS: Warning - file not embedded: {}", embedded_path));

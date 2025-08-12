@@ -331,11 +331,16 @@ class NixComponent extends HTMLElement {
             editorEl,
             null, // Initial content will be set later
             (update) => {
-                if (this.settings.liveMode && !this.settings.readOnly) {
+                // Prevent changes in read-only mode
+                if (this.settings.readOnly) {
+                    return;
+                }
+                
+                if (this.settings.liveMode) {
                     this.debouncedEvaluate();
                 }
                 
-                if (this.settings.saveChanges && !this.settings.readOnly) {
+                if (this.settings.saveChanges) {
                     this.dispatchEvent(new CustomEvent('change', {
                         detail: { content: this.editor.state.doc.toString() }
                     }));
@@ -544,43 +549,79 @@ class NixComponent extends HTMLElement {
     updateReadOnlyMode() {
         if (!this.editor) return;
         
-        // Update visual styling and disable editing for read-only
         const editorEl = this.shadowRoot.getElementById('editor');
-        const cmEditor = editorEl.querySelector('.cm-editor');
         
         if (this.settings.readOnly) {
-            editorEl.style.opacity = '0.8';
+            // Multiple approaches to ensure read-only mode works
+            
+            // 1. Block all document changes at the transaction level
+            if (!this.readOnlyTransactionFilter) {
+                this.readOnlyTransactionFilter = this.editor.state.transactionFilter.of((tr) => {
+                    // Block all document changes
+                    if (tr.docChanged) {
+                        return []; // Return empty array to cancel the transaction
+                    }
+                    return tr;
+                });
+                
+                this.editor.dispatch({
+                    effects: this.editor.state.reconfigureExtensions.of([this.readOnlyTransactionFilter])
+                });
+            }
+            
+            // 2. DOM-level blocking
+            const cmEditor = editorEl.querySelector('.cm-editor');
             if (cmEditor) {
                 cmEditor.style.pointerEvents = 'none';
                 cmEditor.setAttribute('aria-readonly', 'true');
             }
             
-            // Disable keyboard input by intercepting key events
-            if (this.editor) {
-                this.editor.contentDOM.addEventListener('keydown', this.preventReadOnlyEdit);
-                this.editor.contentDOM.addEventListener('input', this.preventReadOnlyEdit);
-                this.editor.contentDOM.addEventListener('paste', this.preventReadOnlyEdit);
+            // 3. Visual feedback
+            editorEl.style.opacity = '0.8';
+            
+            // 4. Complete overlay for absolute security
+            if (!this.readOnlyOverlay) {
+                this.readOnlyOverlay = document.createElement('div');
+                this.readOnlyOverlay.style.cssText = `
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 1000;
+                    cursor: not-allowed;
+                    background: rgba(0,0,0,0.01);
+                    user-select: none;
+                    pointer-events: all;
+                `;
+                editorEl.style.position = 'relative';
+                editorEl.appendChild(this.readOnlyOverlay);
             }
         } else {
+            // Enable editing
             editorEl.style.opacity = '1';
+            
+            // Remove DOM restrictions
+            const cmEditor = editorEl.querySelector('.cm-editor');
             if (cmEditor) {
                 cmEditor.style.pointerEvents = 'auto';
                 cmEditor.removeAttribute('aria-readonly');
             }
             
-            // Re-enable keyboard input
-            if (this.editor) {
-                this.editor.contentDOM.removeEventListener('keydown', this.preventReadOnlyEdit);
-                this.editor.contentDOM.removeEventListener('input', this.preventReadOnlyEdit);
-                this.editor.contentDOM.removeEventListener('paste', this.preventReadOnlyEdit);
+            // Remove overlay
+            if (this.readOnlyOverlay) {
+                this.readOnlyOverlay.remove();
+                this.readOnlyOverlay = null;
+            }
+            
+            // Remove transaction filter by reconfiguring without it
+            if (this.readOnlyTransactionFilter) {
+                this.editor.dispatch({
+                    effects: this.editor.state.reconfigureExtensions.of([])
+                });
+                this.readOnlyTransactionFilter = null;
             }
         }
-    }
-
-    preventReadOnlyEdit = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        return false;
     }
 
     // Public API methods
