@@ -535,16 +535,55 @@
     </div>
 
     <script src="codemirror-bundle.js"></script>
-    <script>
-        // This variable can be set during build time to provide initial expression
-        window.INITIAL_EXPRESSION = "{ hello = world; }";
+    <script type="module">
+        import wasmInit, { TvixEvaluator } from './tvix_wasm.js';
 
-        function initEditor() {
+        let wasm;
+        let tvixEvaluator;
+        let editor;
+
+        // Load initial expression from JSON file if it exists
+        async function loadInitialExpression() {
+            try {
+                const response = await fetch('./initial-expression.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.expression;
+                }
+            } catch (e) {
+                // File doesn't exist or error loading - this is fine
+            }
+            return null;
+        }
+
+        async function initWasm() {
+            try {
+                console.log('Initializing WASM...');
+                wasm = await wasmInit();
+                tvixEvaluator = new TvixEvaluator();
+                console.log('WASM initialized successfully');
+                document.getElementById('status-light').className = 'status-light status-green';
+            } catch (error) {
+                console.error('Failed to initialize WASM:', error);
+                console.log('Using mock evaluator as fallback');
+                tvixEvaluator = new MockTvixEvaluator();
+                document.getElementById('status-light').className = 'status-light status-yellow';
+            }
+            
+            // Load initial expression and initialize editor
+            const initialExpression = await loadInitialExpression();
+            initEditor(initialExpression);
+            setupEventHandlers();
+            restoreState();
+            handleLiveMode();
+        }
+
+        function initEditor(initialExpression) {
             // Create editor using our bundled function with callbacks
-            // Use INITIAL_EXPRESSION if provided, otherwise fall back to localStorage
+            // Use provided expression, fall back to localStorage if null
             editor = window.createTvixEditor(
                 document.getElementById('editor'), 
-                window.INITIAL_EXPRESSION || '', // Use build-time expression or localStorage
+                initialExpression, // Use provided expression or null for localStorage fallback
                 function(update) {
                     // Doc change callback - for live mode
                     if (document.getElementById('live-mode').checked) {

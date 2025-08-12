@@ -1,0 +1,3 @@
+{
+  "expression": "with (import /embedded/collective/collective-public/pkgs/collective-lib/ext.nix).wasm;\nwith typed;\n\nlet\n  ast = parser.parse \"{ a = 1; }\";\nin ''\n  AST:\n  ${_p_ ast}\n\n  Evaluated:\n  ${_p_ (eval ast)}\n''"
+}

@@ -1,5 +1,5 @@
 # Tvix WebAssembly Build System
-.PHONY: all build clean eval generate-src help logs release restart run serve start stop
+.PHONY: all build clean eval generate-src help logs release restart run serve start stop cltv cltv-unexpected-keyboard cltv-parse-eval
 
 # Default optimization level for wasm-pack
 WASM_PACK_FLAGS ?= --dev
@@ -53,15 +53,16 @@ copy-files: build
 	cp pkg/tvix_wasm_bg.wasm www/
 	cp pkg/tvix_wasm_bg.wasm.d.ts www/
 	cp pkg/tvix_wasm.d.ts www/
-	@echo "Injecting initial expression if EXPR is provided..."
+	@echo "Creating initial expression if EXPR is provided..."
 	@if [ -n "$(EXPR)" ] && [ -f "$(EXPR)" ]; then \
 		echo "Reading expression from file: $(EXPR)"; \
-		./inject-expression.sh "$(EXPR)"; \
+		./create-initial-expression.sh "$(EXPR)"; \
 	elif [ -n "$(EXPR)" ]; then \
 		echo "Using expression directly: $(EXPR)"; \
-		./inject-expression.sh - "$(EXPR)"; \
+		./create-initial-expression.sh - "$(EXPR)"; \
 	else \
-		echo "No EXPR provided, using default behavior"; \
+		echo "No EXPR provided - using localStorage behavior"; \
+		./create-initial-expression.sh; \
 	fi
 
 # Start the server in background
@@ -141,6 +142,12 @@ run: all restart
 
 cltv:
 	$(MAKE) "EXTRA_NIX_PATH=$(CLTV_NIX_PATH)" run
+
+cltv-unexpected-keyboard:
+	$(MAKE) "EXTRA_NIX_PATH=$(CLTV_NIX_PATH)" "EXPR=exprs/unexpected-keyboard.nix" run
+
+cltv-parse-eval:
+	$(MAKE) "EXTRA_NIX_PATH=$(CLTV_NIX_PATH)" "EXPR=exprs/parse-eval.nix" run
 
 # Clean build artifacts
 clean:
