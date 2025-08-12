@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Minimal Nix Evaluator Example</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        nix-evaluator { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Minimal Example</h1>
+    <p>This is the simplest possible integration:</p>
+    
+    <nix-evaluator expression="1 + 2"></nix-evaluator>
+    
+    <p>With custom settings:</p>
+    
+    <nix-evaluator 
+        height="200px"
+        strict="true">
+{ hello = "world"; }
+    </nix-evaluator>
+
+    <script src="../js/codemirror-bundle.js"></script>
+    <script type="module" src="../js/nix-component.js"></script>
+</body>
+</html>

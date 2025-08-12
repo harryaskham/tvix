@@ -2,7 +2,7 @@ with (import /embedded/collective/collective-public/pkgs/collective-lib/ext.nix)
 with typed;
 
 let
-  ast = parser.parse "{ a = 1; }";
+  ast = parser.parse ''let xs = { a = 1; }; in 1 + 2 == ''${toString (xs.b or xs.a + 2)'';
 in ''
   AST:
   ${_p_ ast}
