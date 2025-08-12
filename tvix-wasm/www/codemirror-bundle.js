@@ -36666,7 +36666,7 @@
   }
 
   // Load expression from localStorage
-  function loadExpression() {
+  function loadExpression(providedExpression = null) {
     const defaultExpression = `let
   args = {
     pkgs.lib = import <nixpkgs/lib>;
@@ -36685,6 +36685,12 @@ let
   value = eval.ast.runAST ast;
 in
   toString ast`;
+    
+    // If a specific expression was provided, use it
+    if (providedExpression !== null && providedExpression !== undefined) {
+      return providedExpression;
+    }
+    
     try {
       return localStorage.getItem('tvix-expression') || defaultExpression;
     } catch (e) {
@@ -36695,9 +36701,12 @@ in
 
   // Global editor instance
   window.createTvixEditor = function(element, initialDoc = '', onDocChange = null, onEvaluate = null) {
-    // Use saved expression if no initial doc provided
+    // Use saved expression if no initial doc provided, or use provided initial doc
     if (!initialDoc) {
       initialDoc = loadExpression();
+    } else {
+      // If initial doc was provided, use it but pass it through loadExpression for consistency
+      initialDoc = loadExpression(initialDoc);
     }
     // Create keybindings array
     const keybindings = [indentWithTab];

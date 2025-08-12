@@ -536,71 +536,15 @@
 
     <script src="codemirror-bundle.js"></script>
     <script>
-        let tvixEvaluator = null;
-        let editor = null;
-
-        async function initWasm() {
-            try {
-                console.log('Starting WASM initialization...');
-                
-                // Try to load the real WASM first
-                console.log('Attempting to load real WASM module...');
-                try {
-                    const jsModule = await import('./tvix_wasm.js');
-                    await jsModule.default();
-                    tvixEvaluator = new jsModule.TvixEvaluator();
-                    console.log('Real WASM evaluator loaded successfully!');
-                    document.getElementById('status-light').className = 'status-light status-green';
-                } catch (wasmError) {
-                    console.log('WASM loading failed, using mock evaluator:', wasmError.message);
-                    tvixEvaluator = new MockTvixEvaluator();
-                    document.getElementById('status-light').className = 'status-light status-red';
-                }
-                
-                document.getElementById('evaluate').disabled = false;
-                
-                // Initialize CodeMirror editor (handles loading localStorage expr)
-                initEditor();
-                
-                // Restore live and raw modes from localStorage
-                restoreState();
-
-                // Attach event handlers
-                setupEventHandlers();
-                
-                // Auto-evaluate the default expression
-                handleLiveMode();
-                liveMode = document.getElementById('live-mode').checked;
-                if (liveMode) {
-                  evaluateCurrentExpression();
-                }
-            } catch (error) {
-                console.error('Failed to initialize WASM:', error);
-                console.error('Error stack:', error.stack);
-                
-                // Fall back to mock for demonstration
-                console.log('Falling back to mock evaluator for demonstration...');
-                tvixEvaluator = new MockTvixEvaluator();
-                document.getElementById('status-light').className = 'status-light status-red';
-                document.getElementById('evaluate').disabled = false;
-                
-                // Initialize CodeMirror editor
-                initEditor();
-                
-                // Attach event handlers even with mock
-                setupEventHandlers();
-                
-                // Auto-evaluate the default expression
-                evaluateCurrentExpression();
-            }
-        }
+        // This variable can be set during build time to provide initial expression
+        window.INITIAL_EXPRESSION = "{ hello = world; }";
 
         function initEditor() {
             // Create editor using our bundled function with callbacks
-            // The editor will automatically load from localStorage
+            // Use INITIAL_EXPRESSION if provided, otherwise fall back to localStorage
             editor = window.createTvixEditor(
                 document.getElementById('editor'), 
-                '', // Empty string means use localStorage
+                window.INITIAL_EXPRESSION || '', // Use build-time expression or localStorage
                 function(update) {
                     // Doc change callback - for live mode
                     if (document.getElementById('live-mode').checked) {

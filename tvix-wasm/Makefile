@@ -53,6 +53,16 @@ copy-files: build
 	cp pkg/tvix_wasm_bg.wasm www/
 	cp pkg/tvix_wasm_bg.wasm.d.ts www/
 	cp pkg/tvix_wasm.d.ts www/
+	@echo "Injecting initial expression if EXPR is provided..."
+	@if [ -n "$(EXPR)" ] && [ -f "$(EXPR)" ]; then \
+		echo "Reading expression from file: $(EXPR)"; \
+		./inject-expression.sh "$(EXPR)"; \
+	elif [ -n "$(EXPR)" ]; then \
+		echo "Using expression directly: $(EXPR)"; \
+		./inject-expression.sh - "$(EXPR)"; \
+	else \
+		echo "No EXPR provided, using default behavior"; \
+	fi
 
 # Start the server in background
 start:
@@ -168,3 +178,9 @@ help:
 	@echo "  eval             - Evaluate Nix expression with Node.js (usage: make EXPR='1+2' eval)"
 	@echo "  clean            - Clean everything"
 	@echo "  help             - Show this help message"
+	@echo ""
+	@echo "Environment Variables:"
+	@echo "  EXPR             - Path to .nix file for initial editor content (usage: make EXPR=file.nix release)"
+	@echo "                     or direct expression string (usage: make EXPR='1 + 2' release)"
+	@echo "  EMBED_NIX_PATH   - Nix search path for embedded VFS (default: nixpkgs/lib=...)"
+	@echo "  EXTRA_NIX_PATH   - Additional paths for embedded VFS"
