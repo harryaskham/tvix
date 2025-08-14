@@ -368,6 +368,8 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
         "embedded/collective/machines/armistice/home-manager/home.nix",
         "embedded/collective/machines/sgu24/home-manager/home.nix",
         "embedded/collective/machines/sgu24/nix-on-droid/nix-on-droid.nix",
+        "embedded/collective/machines/astra/home-manager/home.nix",
+        "embedded/collective/machines/astra/nix-on-droid/nix-on-droid.nix",
         "embedded/collective/machines/pocket2/nixos/hardware-configuration.nix",
         "embedded/collective/machines/pocket2/nixos/configuration.nix",
         "embedded/collective/machines/pocket2/home-manager/home.nix",
@@ -1502,6 +1504,12 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
             },
             "embedded/collective/machines/sgu24/nix-on-droid/nix-on-droid.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/sgu24/nix-on-droid/nix-on-droid.nix").to_string());
+            },
+            "embedded/collective/machines/astra/home-manager/home.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/astra/home-manager/home.nix").to_string());
+            },
+            "embedded/collective/machines/astra/nix-on-droid/nix-on-droid.nix" => {
+                fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/astra/nix-on-droid/nix-on-droid.nix").to_string());
             },
             "embedded/collective/machines/pocket2/nixos/hardware-configuration.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/machines/pocket2/nixos/hardware-configuration.nix").to_string());
