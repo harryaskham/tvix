@@ -1,5 +1,5 @@
 # Tvix WebAssembly Build System
-.PHONY: all build clean eval generate-src help logs release restart run serve start stop cltv cltv-unexpected-keyboard cltv-parse-eval
+.PHONY: all build clean eval generate-src help logs release restart run serve start stop cltv cltv-unexpected-keyboard cltv-parse-eval notebook cltv-repl
 
 # Default optimization level for wasm-pack
 WASM_PACK_FLAGS ?= --dev
@@ -7,11 +7,12 @@ WASM_PACK_FLAGS ?= --dev
 # Default EMBED_NIX_PATH - dynamically resolved nixpkgs path
 #EMBED_NIX_PATH ?= nixpkgs=$$(nix eval --impure --expr '<nixpkgs>')
 EXTRA_NIX_PATH ?= ""
-EMBED_NIX_PATH ?= nixpkgs/lib=$$(nix eval --impure --expr '<nixpkgs/lib>'):$(EXTRA_NIX_PATH)
+EMBED_NIX_PATH ?= nixpkgs=$$(nix eval --impure --expr '<nixpkgs>'):$(EXTRA_NIX_PATH)
 CLTV_DIR ?= /home/harry/collective
+CLTV ?= collective=/home/harry/collective
 NIX_PARSEC ?= nix-parsec=$$(nix eval --raw "$(CLTV_DIR)\#inputs.nix-parsec.outPath")
 NIX_REFLECT ?= nix-reflect=$$(nix eval --raw github:harryaskham/collective-public\#inputs.nix-reflect.outPath)
-CLTV_NIX_PATH ?= $(CLTV_DIR):$(NIX_PARSEC):$(NIX_REFLECT)
+CLTV_NIX_PATH ?= $(CLTV):$(NIX_PARSEC):$(NIX_REFLECT)
 
 # Default target
 all: generate-src build copy-files
@@ -141,6 +142,12 @@ serve: start logs
 # Combined dev + serve
 run: all restart
 
+repl:
+	../target/release/tvix -I "$(EMBED_NIX_PATH):$(EXTRA_NIX_PATH)"
+
+cltv-repl:
+	$(MAKE) "EXTRA_NIX_PATH=$(CLTV_NIX_PATH)" repl
+
 cltv:
 	$(MAKE) "EXTRA_NIX_PATH=$(CLTV_NIX_PATH)" run
 
@@ -184,11 +191,23 @@ help:
 	@echo "  stop             - Stop background development server"
 	@echo "  restart          - Restart background development server"
 	@echo "  eval             - Evaluate Nix expression with Node.js (usage: make EXPR='1+2' eval)"
+	@echo "  notebook         - Create .nixnb file from expressions (usage: make EXPRS='exprs/*.nix' notebook)"
 	@echo "  clean            - Clean everything"
 	@echo "  help             - Show this help message"
 	@echo ""
 	@echo "Environment Variables:"
 	@echo "  EXPR             - Path to .nix file for initial editor content (usage: make EXPR=file.nix release)"
 	@echo "                     or direct expression string (usage: make EXPR='1 + 2' release)"
+	@echo "  EXPRS            - Glob pattern for .nix files to create notebook (usage: make EXPRS='exprs/*.nix' notebook)"
 	@echo "  EMBED_NIX_PATH   - Nix search path for embedded VFS (default: nixpkgs/lib=...)"
 	@echo "  EXTRA_NIX_PATH   - Additional paths for embedded VFS"
+
+# Create a Nix notebook from expression files
+notebook:
+	@if [ -z "$(EXPRS)" ]; then \
+		echo "Usage: make EXPRS='exprs/*.nix' notebook"; \
+		echo "Example: make EXPRS='exprs/parse-eval.nix exprs/basic.nix' notebook"; \
+		exit 1; \
+	fi
+	@echo "Creating notebook from expressions: $(EXPRS)"
+	@./create-notebook.sh $(EXPRS)

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Nix Notebook - Interactive Nix Evaluation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #2e3440;
+            color: #d8dee9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #2e3440;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #4c566a;
+            border-top: 3px solid #88c0d0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #81a1c1;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .app-container {
+            display: none;
+        }
+        
+        
+        nix-notebook {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">
+            Loading Nix Notebook...<br>
+            <small>Initializing WASM evaluator</small>
+        </div>
+    </div>
+
+    <!-- Main application -->
+    <div class="app-container" id="app-container">
+        <nix-notebook id="notebook"></nix-notebook>
+    </div>
+
+    <!-- Load scripts -->
+    <script src="codemirror-bundle.js"></script>
+    <script type="module">
+        import './nix-notebook-cell.js';
+        import { NixNotebook } from './nix-notebook.js';
+        
+        // Initialize the app
+        async function initApp() {
+            const loadingScreen = document.getElementById('loading-screen');
+            const appContainer = document.getElementById('app-container');
+            
+            try {
+                // Small delay to show the loading screen
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Hide loading screen and show app
+                loadingScreen.style.display = 'none';
+                appContainer.style.display = 'block';
+                
+                console.log('Nix Notebook initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize Nix Notebook:', error);
+                document.querySelector('.loading-text').innerHTML = 
+                    'Failed to load Nix Notebook<br><small>Check console for details</small>';
+            }
+        }
+        
+        // Start the app when page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>

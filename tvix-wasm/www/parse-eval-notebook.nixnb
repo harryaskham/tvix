@@ -1,0 +1,25 @@
+{
+  "title": "parse-eval Notebook",
+  "globalSettings": {
+    "strict": false,
+    "nixCompat": false,
+    "rawMode": false,
+    "prettyPrintAst": false,
+    "displayAst": false,
+    "dumpBytecode": false,
+    "traceRuntime": false
+  },
+  "cells": [
+    {
+      "content": "# parse-eval.nix",
+      "liveMode": true,
+      "isTextMode": true,
+      "showCode": false
+    },
+    {
+      "content": "with (import /embedded/collective/collective-public/pkgs/collective-lib/ext.nix).wasm;\nwith typed;\n\nlet\n  ast = parser.parse ''let xs = { a = 1; }; in 1 + 2 == ''${toString (xs.b or xs.a + 2)'';\nin ''\n  AST:\n  ${_p_ ast}\n\n  Evaluated:\n  ${_p_ (eval ast)}\n''\n",
+      "liveMode": false
+    }
+  ],
+  "version": "1.0"
+}

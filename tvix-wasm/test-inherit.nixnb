@@ -1,0 +1,32 @@
+{
+  "title": "Inherit Feature Test",
+  "globalSettings": {
+    "strict": false,
+    "nixCompat": false,
+    "rawMode": false,
+    "prettyPrintAst": false,
+    "displayAst": false,
+    "dumpBytecode": false,
+    "traceRuntime": false,
+    "autosave": false,
+    "showInspector": true
+  },
+  "cells": [
+    {
+      "content": "# Test Inherit Functionality\n\nThis notebook demonstrates the new **inherit** feature for importing multiple variables at once.",
+      "liveMode": true,
+      "isTextMode": true,
+      "showCode": false
+    },
+    {
+      "content": "{ \n  name = \"Alice\";\n  age = 30;\n  city = \"New York\";\n  isActive = true;\n}",
+      "liveMode": false,
+      "isInherit": true
+    },
+    {
+      "content": "# Now we can use the inherited variables\n\n\"Hello, ${name}! You are ${toString age} years old and live in ${city}.\"",
+      "liveMode": false
+    }
+  ],
+  "version": "1.0"
+}
