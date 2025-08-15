@@ -11,7 +11,7 @@ extern "C" {
 }
 
 pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Vec<String>) {
-    embedded_paths.push("nixpkgs/lib".to_string());
+    embedded_paths.push("nixpkgs".to_string());
     embedded_paths.push("collective".to_string());
     embedded_paths.push("nix-parsec".to_string());
     embedded_paths.push("nix-reflect".to_string());
@@ -450,721 +450,721 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
         log(&format!("VFS: Embedding file: {}", embedded_path));
         match embedded_path {
             "embedded/nixpkgs/lib/systems/examples.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/systems/examples.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/systems/examples.nix").to_string());
             },
             "embedded/nixpkgs/lib/systems/platforms.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/systems/platforms.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/systems/platforms.nix").to_string());
             },
             "embedded/nixpkgs/lib/systems/parse.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/systems/parse.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/systems/parse.nix").to_string());
             },
             "embedded/nixpkgs/lib/systems/doubles.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/systems/doubles.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/systems/doubles.nix").to_string());
             },
             "embedded/nixpkgs/lib/systems/inspect.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/systems/inspect.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/systems/inspect.nix").to_string());
             },
             "embedded/nixpkgs/lib/systems/architectures.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/systems/architectures.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/systems/architectures.nix").to_string());
             },
             "embedded/nixpkgs/lib/systems/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/systems/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/systems/default.nix").to_string());
             },
             "embedded/nixpkgs/lib/systems/flake-systems.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/systems/flake-systems.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/systems/flake-systems.nix").to_string());
             },
             "embedded/nixpkgs/lib/strings-with-deps.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/strings-with-deps.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/strings-with-deps.nix").to_string());
             },
             "embedded/nixpkgs/lib/asserts.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/asserts.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/asserts.nix").to_string());
             },
             "embedded/nixpkgs/lib/types.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/types.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/types.nix").to_string());
             },
             "embedded/nixpkgs/lib/versions.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/versions.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/versions.nix").to_string());
             },
             "embedded/nixpkgs/lib/filesystem.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/filesystem.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/filesystem.nix").to_string());
             },
             "embedded/nixpkgs/lib/kernel.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/kernel.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/kernel.nix").to_string());
             },
             "embedded/nixpkgs/lib/attrsets.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/attrsets.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/attrsets.nix").to_string());
             },
             "embedded/nixpkgs/lib/network/internal.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/network/internal.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/network/internal.nix").to_string());
             },
             "embedded/nixpkgs/lib/network/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/network/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/network/default.nix").to_string());
             },
             "embedded/nixpkgs/lib/derivations.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/derivations.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/derivations.nix").to_string());
             },
             "embedded/nixpkgs/lib/trivial.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/trivial.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/trivial.nix").to_string());
             },
             "embedded/nixpkgs/lib/strings.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/strings.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/strings.nix").to_string());
             },
             "embedded/nixpkgs/lib/minver.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/minver.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/minver.nix").to_string());
             },
             "embedded/nixpkgs/lib/licenses.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/licenses.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/licenses.nix").to_string());
             },
             "embedded/nixpkgs/lib/flake-version-info.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/flake-version-info.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/flake-version-info.nix").to_string());
             },
             "embedded/nixpkgs/lib/source-types.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/source-types.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/source-types.nix").to_string());
             },
             "embedded/nixpkgs/lib/modules.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/modules.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/modules.nix").to_string());
             },
             "embedded/nixpkgs/lib/fileset/internal.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/fileset/internal.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/fileset/internal.nix").to_string());
             },
             "embedded/nixpkgs/lib/fileset/mock-splitRoot.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/fileset/mock-splitRoot.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/fileset/mock-splitRoot.nix").to_string());
             },
             "embedded/nixpkgs/lib/fileset/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/fileset/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/fileset/default.nix").to_string());
             },
             "embedded/nixpkgs/lib/sources.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/sources.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/sources.nix").to_string());
             },
             "embedded/nixpkgs/lib/path/tests/unit.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/path/tests/unit.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/path/tests/unit.nix").to_string());
             },
             "embedded/nixpkgs/lib/path/tests/prop.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/path/tests/prop.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/path/tests/prop.nix").to_string());
             },
             "embedded/nixpkgs/lib/path/tests/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/path/tests/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/path/tests/default.nix").to_string());
             },
             "embedded/nixpkgs/lib/path/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/path/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/path/default.nix").to_string());
             },
             "embedded/nixpkgs/lib/generators.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/generators.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/generators.nix").to_string());
             },
             "embedded/nixpkgs/lib/options.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/options.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/options.nix").to_string());
             },
             "embedded/nixpkgs/lib/customisation.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/customisation.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/customisation.nix").to_string());
             },
             "embedded/nixpkgs/lib/flake.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/flake.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/flake.nix").to_string());
             },
             "embedded/nixpkgs/lib/deprecated/misc.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/deprecated/misc.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/deprecated/misc.nix").to_string());
             },
             "embedded/nixpkgs/lib/gvariant.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/gvariant.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/gvariant.nix").to_string());
             },
             "embedded/nixpkgs/lib/meta.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/meta.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/meta.nix").to_string());
             },
             "embedded/nixpkgs/lib/cli.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/cli.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/cli.nix").to_string());
             },
             "embedded/nixpkgs/lib/ascii-table.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/ascii-table.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/ascii-table.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/nix-for-tests.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/nix-for-tests.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/nix-for-tests.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/teams.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/teams.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/teams.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/d.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/my-namespace/d.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/d.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/my-sub-namespace/h.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/my-namespace/my-sub-namespace/h.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/my-sub-namespace/h.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/my-sub-namespace/g.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/my-namespace/my-sub-namespace/g.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/my-sub-namespace/g.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/f/package.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/my-namespace/f/package.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/f/package.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/e.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/my-namespace/e.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/my-namespace/e.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/a.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/a.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/a.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/c/package.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/c/package.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/c/package.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/c/support-definitions.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/c/support-definitions.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/c/support-definitions.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/c/not-a-namespace/not-a-package.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/c/not-a-namespace/not-a-package.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/c/not-a-namespace/not-a-package.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/plain/b.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/plain/b.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/plain/b.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/d.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/my-namespace/d.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/d.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/my-sub-namespace/h.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/my-namespace/my-sub-namespace/h.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/my-sub-namespace/h.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/my-sub-namespace/g.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/my-namespace/my-sub-namespace/g.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/my-sub-namespace/g.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/f/package.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/my-namespace/f/package.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/f/package.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/e.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/my-namespace/e.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/my-namespace/e.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/a.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/a.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/a.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/c/package.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/c/package.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/c/package.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/c/support-definitions.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/c/support-definitions.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/c/support-definitions.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/c/not-a-namespace/not-a-package.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/c/not-a-namespace/not-a-package.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/c/not-a-namespace/not-a-package.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/packages-from-directory/scope/b.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/packages-from-directory/scope/b.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/packages-from-directory/scope/b.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/check-eval.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/check-eval.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/check-eval.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/systems.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/systems.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/systems.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/maintainers.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/maintainers.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/maintainers.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/test-with-nix.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/test-with-nix.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/test-with-nix.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/release.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/release.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/release.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/misc.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/misc.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/misc.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/maintainer-module.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/maintainer-module.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/maintainer-module.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-set.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-set.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-set.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-bar-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-bar-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-bar-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-define-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-define-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-define-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-enable-abort.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-enable-abort.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-enable-abort.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/deferred-module-error.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/deferred-module-error.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/deferred-module-error.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-option-dependently-nested.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-option-dependently-nested.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-option-dependently-nested.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-value-int-positive.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-value-int-positive.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-value-int-positive.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-shorthandOnlyDefinesConfig-true.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-shorthandOnlyDefinesConfig-true.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-shorthandOnlyDefinesConfig-true.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-value-string.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-value-string.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-value-string.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-foo.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-foo.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-foo.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-if-foo-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-if-foo-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-if-foo-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/error-mkOption-in-submodule-config.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/error-mkOption-in-submodule-config.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/error-mkOption-in-submodule-config.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/merge-module-with-key.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/merge-module-with-key.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/merge-module-with-key.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/lazy-attrsWith.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/lazy-attrsWith.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/lazy-attrsWith.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-lazyAttrsOf.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-lazyAttrsOf.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-lazyAttrsOf.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/name-merge-attrsWith-1.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/name-merge-attrsWith-1.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/name-merge-attrsWith-1.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-variants.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-variants.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-variants.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/freeform-submodules.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/freeform-submodules.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/freeform-submodules.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-enable-throw.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-enable-throw.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-enable-throw.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-enable-force.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-foo-enable-force.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-enable-force.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-value-int-zero.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-value-int-zero.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-value-int-zero.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-submoduleWith-noshorthand.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-submoduleWith-noshorthand.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-submoduleWith-noshorthand.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/pathWith.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/pathWith.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/pathWith.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/assert-module-class-is-nixos.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/assert-module-class-is-nixos.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/assert-module-class-is-nixos.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/freeform-attrsOf.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/freeform-attrsOf.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/freeform-attrsOf.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/import-custom-arg.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/import-custom-arg.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/import-custom-arg.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-attrTag.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-attrTag.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-attrTag.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/functionTo/trivial.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/functionTo/trivial.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/functionTo/trivial.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/functionTo/merging-list.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/functionTo/merging-list.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/functionTo/merging-list.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/functionTo/submodule-options.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/functionTo/submodule-options.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/functionTo/submodule-options.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/functionTo/list-order.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/functionTo/list-order.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/functionTo/list-order.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/functionTo/wrong-type.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/functionTo/wrong-type.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/functionTo/wrong-type.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/functionTo/merging-attrs.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/functionTo/merging-attrs.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/functionTo/merging-attrs.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/doRename-condition-migrated.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/doRename-condition-migrated.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/doRename-condition-migrated.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-value-string-bigint.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-value-string-bigint.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-value-string-bigint.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-submoduleWith-noshorthand.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-submoduleWith-noshorthand.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-submoduleWith-noshorthand.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-submoduleWith-shorthand.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-submoduleWith-shorthand.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-submoduleWith-shorthand.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/doRename-warnings.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/doRename-warnings.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/doRename-warnings.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/importApply.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/importApply.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/importApply.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-module-with-key.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-module-with-key.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-module-with-key.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-recursive/disable-bar.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-recursive/disable-bar.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-recursive/disable-bar.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-recursive/foo.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-recursive/foo.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-recursive/foo.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-recursive/bar.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-recursive/bar.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-recursive/bar.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-recursive/disable-foo.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-recursive/disable-foo.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-recursive/disable-foo.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-recursive/main.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-recursive/main.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-recursive/main.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/module-argument-default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/module-argument-default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/module-argument-default.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/doRename-basic.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/doRename-basic.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/doRename-basic.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/module-imports-_type-check.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/module-imports-_type-check.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/module-imports-_type-check.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/specialArgs-class.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/specialArgs-class.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/specialArgs-class.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-settingsDict-a-is-b.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-settingsDict-a-is-b.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-settingsDict-a-is-b.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-submoduleWith-shorthand.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-submoduleWith-shorthand.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-submoduleWith-shorthand.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/mkDefinition.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/mkDefinition.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/mkDefinition.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/extendModules-168767-imports.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/extendModules-168767-imports.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/extendModules-168767-imports.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-enable-if.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-foo-enable-if.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-enable-if.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/doRename-condition-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/doRename-condition-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/doRename-condition-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/submoduleFiles.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/submoduleFiles.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/submoduleFiles.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/boolByOr.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/boolByOr.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/boolByOr.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-enable-nested.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-enable-nested.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-enable-nested.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/specialArgs-lib.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/specialArgs-lib.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/specialArgs-lib.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-attrTag-wrong-decl.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-attrTag-wrong-decl.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-attrTag-wrong-decl.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/importApply-function.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/importApply-function.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/importApply-function.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-enable-with-top-level-mkIf.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-enable-with-top-level-mkIf.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-enable-with-top-level-mkIf.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/deprecated-wrapped.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/deprecated-wrapped.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/deprecated-wrapped.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/attrsOf-lazy-check.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/attrsOf-lazy-check.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/attrsOf-lazy-check.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-force-attrsOfSub-foo-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-force-attrsOfSub-foo-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-force-attrsOfSub-foo-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-option-dependently.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-option-dependently.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-option-dependently.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-bare-submodule-deep-option.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-bare-submodule-deep-option.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-bare-submodule-deep-option.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/error-nonEmptyListOf-submodule.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/error-nonEmptyListOf-submodule.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/error-nonEmptyListOf-submodule.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-enable-modules.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-enable-modules.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-enable-modules.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/default-type-merge-both.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/default-type-merge-both.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/default-type-merge-both.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/import-error-submodule.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/import-error-submodule.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/import-error-submodule.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/optionTypeMerging.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/optionTypeMerging.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/optionTypeMerging.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/freeform-lazyAttrsOf.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/freeform-lazyAttrsOf.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/freeform-lazyAttrsOf.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-unique.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-unique.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-unique.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-coerced-value-unsound.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-coerced-value-unsound.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-coerced-value-unsound.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/doRename-condition-no-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/doRename-condition-no-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/doRename-condition-no-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-either.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-either.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-either.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/error-mkOption-in-config.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/error-mkOption-in-config.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/error-mkOption-in-config.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-bare-submodule-deep-option-duplicate.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-bare-submodule-deep-option-duplicate.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-bare-submodule-deep-option-duplicate.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-bare-submodule-values.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-bare-submodule-values.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-bare-submodule-values.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-_module-args-custom.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-_module-args-custom.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-_module-args-custom.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-force-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-foo-force-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-force-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/import-configuration.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/import-configuration.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/import-configuration.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/options-type-error-typical-nested.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/options-type-error-typical-nested.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/options-type-error-typical-nested.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-variant.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-variant.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-variant.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-value-string-properties.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-value-string-properties.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-value-string-properties.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/polymorphic-module.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/polymorphic-module.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/polymorphic-module.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/alias-with-priority-can-override.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/alias-with-priority-can-override.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/alias-with-priority-can-override.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-mkPackageOption.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-mkPackageOption.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-mkPackageOption.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/freeform-unstr-dep-str.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/freeform-unstr-dep-str.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/freeform-unstr-dep-str.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/docs.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/docs.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/docs.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/strMatching-merge.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/strMatching-merge.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/strMatching-merge.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/module-class-is-darwin.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/module-class-is-darwin.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/module-class-is-darwin.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-submodule-via-evalModules.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-submodule-via-evalModules.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-submodule-via-evalModules.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-module-with-toString-key.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-module-with-toString-key.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-module-with-toString-key.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/emptyValues.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/emptyValues.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/emptyValues.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-bare-submodule-nested-option.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-bare-submodule-nested-option.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-bare-submodule-nested-option.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/name-merge-attrsWith-2.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/name-merge-attrsWith-2.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/name-merge-attrsWith-2.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-coerced-value.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-coerced-value.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-coerced-value.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/doRename-condition.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/doRename-condition.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/doRename-condition.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/options-type-error-typical.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/options-type-error-typical.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/options-type-error-typical.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-module-check.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-module-check.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-module-check.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-int-between-value.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-int-between-value.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-int-between-value.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-submoduleWith-modules.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-submoduleWith-modules.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-submoduleWith-modules.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-force-foo-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-force-foo-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-force-foo-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-value-int-negative.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-value-int-negative.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-value-int-negative.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/merge-typeless-option.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/merge-typeless-option.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/merge-typeless-option.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/graph/test.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/graph/test.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/graph/test.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/graph/a.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/graph/a.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/graph/a.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/graph/b.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/graph/b.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/graph/b.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-value-list.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-value-list.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-value-list.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-bar.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-bar.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-bar.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/adhoc-freeformType-survives-type-merge.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/adhoc-freeformType-survives-type-merge.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/adhoc-freeformType-survives-type-merge.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-foo-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-int-positive-value.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-int-positive-value.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-int-positive-value.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-if-attrsOfSub-foo-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-if-attrsOfSub-foo-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-if-attrsOfSub-foo-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/freeform-nested.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/freeform-nested.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/freeform-nested.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/import-from-store.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/import-from-store.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/import-from-store.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-int-unsigned-value.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-int-unsigned-value.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-int-unsigned-value.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-module-bad-key.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-module-bad-key.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-module-bad-key.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-value-string-arbitrary.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-value-string-arbitrary.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-value-string-arbitrary.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/gvariant.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/gvariant.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/gvariant.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/importApply-disabling.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/importApply-disabling.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/importApply-disabling.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-if-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-attrsOfSub-foo-if-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-attrsOfSub-foo-if-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-enable-with-custom-arg.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-enable-with-custom-arg.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-enable-with-custom-arg.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-bare-submodule.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-bare-submodule.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-bare-submodule.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-define-enable-string-path.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-define-enable-string-path.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-define-enable-string-path.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-int-positive-value-nested.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-int-positive-value-nested.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-int-positive-value-nested.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/raw.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/raw.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/raw.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-oneOf.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-oneOf.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-oneOf.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/test-mergeAttrDefinitionsWithPrio.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/test-mergeAttrDefinitionsWithPrio.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/test-mergeAttrDefinitionsWithPrio.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/module-class-is-nixos.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/module-class-is-nixos.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/module-class-is-nixos.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/expose-module-class.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/expose-module-class.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/expose-module-class.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/deferred-module.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/deferred-module.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/deferred-module.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/prefix-module-argument.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/prefix-module-argument.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/prefix-module-argument.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-submoduleWith-special.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-submoduleWith-special.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-submoduleWith-special.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/shorthand-meta.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/shorthand-meta.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/shorthand-meta.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-force-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-force-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-force-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/alias-with-priority.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/alias-with-priority.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/alias-with-priority.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-enable-force.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-enable-force.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-enable-force.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-submoduleWith-path.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-submoduleWith-path.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-submoduleWith-path.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-coerced-value-no-default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-coerced-value-no-default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-coerced-value-no-default.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/default.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/disable-declare-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/disable-declare-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/disable-declare-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/attrsOf-conditional-check.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/attrsOf-conditional-check.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/attrsOf-conditional-check.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/define-freeform-keywords-shorthand.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/define-freeform-keywords-shorthand.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/define-freeform-keywords-shorthand.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declaration-positions.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declaration-positions.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declaration-positions.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-attrsOf.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-attrsOf.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-attrsOf.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/optionTypeFile.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/optionTypeFile.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/optionTypeFile.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-anything/equal-atoms.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-anything/equal-atoms.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-anything/equal-atoms.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-anything/mk-mods.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-anything/mk-mods.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-anything/mk-mods.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-anything/nested-attrs.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-anything/nested-attrs.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-anything/nested-attrs.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-anything/functions.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-anything/functions.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-anything/functions.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-anything/attrs-coercible.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-anything/attrs-coercible.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-anything/attrs-coercible.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/types-anything/lists.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/types-anything/lists.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/types-anything/lists.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/freeform-str-dep-unstr.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/freeform-str-dep-unstr.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/freeform-str-dep-unstr.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/declare-attrsOfSub-any-enable.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/declare-attrsOfSub-any-enable.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/declare-attrsOfSub-any-enable.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/class-check.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/class-check.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/class-check.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/modules/options-type-error-configuration.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/modules/options-type-error-configuration.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/modules/options-type-error-configuration.nix").to_string());
             },
             "embedded/nixpkgs/lib/tests/fetchers.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/tests/fetchers.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/tests/fetchers.nix").to_string());
             },
             "embedded/nixpkgs/lib/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/default.nix").to_string());
             },
             "embedded/nixpkgs/lib/fixed-points.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/fixed-points.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/fixed-points.nix").to_string());
             },
             "embedded/nixpkgs/lib/lists.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/lists.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/lists.nix").to_string());
             },
             "embedded/nixpkgs/lib/debug.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/debug.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/debug.nix").to_string());
             },
             "embedded/nixpkgs/lib/fetchers.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/c39q7pww80997lz0fyqxpvsr29q6f7ld-source/lib/fetchers.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/tmp/nixpkgs/lib/fetchers.nix").to_string());
             },
             "embedded/collective/collective-public/pkgs/pythonPackages/handheld-daemon/adjustor.nix" => {
                 fs.insert(embedded_path.to_string(), include_str!("/home/harry/collective/collective-public/pkgs/pythonPackages/handheld-daemon/adjustor.nix").to_string());

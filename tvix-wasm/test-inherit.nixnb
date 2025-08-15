@@ -20,12 +20,14 @@
     },
     {
       "content": "{ \n  name = \"Alice\";\n  age = 30;\n  city = \"New York\";\n  isActive = true;\n}",
-      "liveMode": false,
-      "isInherit": true
+      "liveMode": true,
+      "isInherit": true,
+      "showCode": true
     },
     {
       "content": "# Now we can use the inherited variables\n\n\"Hello, ${name}! You are ${toString age} years old and live in ${city}.\"",
-      "liveMode": false
+      "liveMode": true,
+      "showCode": true
     }
   ],
   "version": "1.0"

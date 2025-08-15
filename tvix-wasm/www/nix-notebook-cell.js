@@ -321,10 +321,57 @@ class NixNotebookCell extends HTMLElement {
                     font-size: 10px;
                     z-index: 100;
                     display: none;
+                    animation: pulse 1.5s ease-in-out infinite;
                 }
                 
                 .execution-indicator.active {
                     display: block;
+                }
+                
+                .execution-indicator.completed {
+                    background: var(--success);
+                    animation: none;
+                }
+                
+                .execution-indicator.error {
+                    background: var(--error);
+                    animation: none;
+                }
+                
+                @keyframes pulse {
+                    0% { opacity: 1; transform: scale(1); }
+                    50% { opacity: 0.7; transform: scale(1.05); }
+                    100% { opacity: 1; transform: scale(1); }
+                }
+                
+                .output-status-indicator {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 4px;
+                    font-size: 10px;
+                    color: var(--text-secondary);
+                }
+                
+                .status-dot {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: var(--border);
+                }
+                
+                .status-dot.evaluating {
+                    background: var(--accent);
+                    animation: pulse 1s ease-in-out infinite;
+                }
+                
+                .status-dot.completed {
+                    background: var(--success);
+                    animation: none;
+                }
+                
+                .status-dot.error {
+                    background: var(--error);
+                    animation: none;
                 }
             </style>
             
@@ -338,6 +385,9 @@ class NixNotebookCell extends HTMLElement {
                     <div class="output-section ${cell.showCode === false ? 'full-width' : ''}" id="output-section">
                         <div class="output-controls">
                             <div class="cell-controls">
+                                <button class="cell-btn toggle-btn" id="show-code-btn">
+                                    ${cell.showCode !== false ? '<<' : '>>'}
+                                </button>
                                 <label>
                                     <input type="checkbox" id="text-mode" ${cell.isTextMode ? 'checked' : ''}>
                                     Text
@@ -356,6 +406,10 @@ class NixNotebookCell extends HTMLElement {
                                 </button>
                             </div>
                             <div class="cell-actions">
+                                <div class="output-status-indicator" id="output-status">
+                                    <span class="status-dot" id="status-dot"></span>
+                                    <span id="status-text">Ready</span>
+                                </div>
                                 <div class="button-group">
                                     <button class="cell-btn secondary small-btn" id="move-up-btn" 
                                             ${index === 0 ? 'disabled' : ''}>↑</button>
@@ -365,9 +419,6 @@ class NixNotebookCell extends HTMLElement {
                                     <button class="cell-btn secondary small-btn" id="add-above-btn">+</button>
                                     <button class="cell-btn secondary small-btn" id="add-below-btn">+</button>
                                 </div>
-                                <button class="cell-btn toggle-btn" id="show-code-btn">
-                                    ${cell.showCode !== false ? '<<' : '>>'}
-                                </button>
                                 <button class="cell-btn danger small-btn" id="delete-btn">×</button>
                                 <span class="variable-indicator ${cell.isVariable || cell.isInherit ? '' : 'hidden'}" 
                                       id="variable-indicator" style="display: ${cell.isVariable || cell.isInherit ? 'inline' : 'none'}">
@@ -490,6 +541,10 @@ class NixNotebookCell extends HTMLElement {
             
             if (this.notebook) {
                 this.notebook.markDirty();
+                // Re-evaluate if live mode is on
+                if (this.cellData.liveMode !== false) {
+                    this.evaluateCell();
+                }
             }
         });
 
@@ -504,6 +559,10 @@ class NixNotebookCell extends HTMLElement {
             
             if (this.notebook) {
                 this.notebook.markDirty();
+                // Re-evaluate if turning live mode ON
+                if (e.target.checked) {
+                    this.evaluateCell();
+                }
             }
         });
 
@@ -515,6 +574,10 @@ class NixNotebookCell extends HTMLElement {
             
             if (this.notebook) {
                 this.notebook.markDirty();
+                // Re-evaluate if live mode is on
+                if (this.cellData.liveMode !== false) {
+                    this.evaluateCell();
+                }
             }
         });
 
@@ -609,6 +672,44 @@ class NixNotebookCell extends HTMLElement {
         }
     }
 
+    updateStatusIndicator(status, text) {
+        const statusDot = this.shadowRoot.getElementById('status-dot');
+        const statusText = this.shadowRoot.getElementById('status-text');
+        const executionIndicator = this.shadowRoot.getElementById('execution-indicator');
+        
+        if (statusDot) {
+            statusDot.className = 'status-dot';
+            if (status) statusDot.classList.add(status);
+        }
+        
+        if (statusText) {
+            statusText.textContent = text || 'Ready';
+        }
+        
+        if (executionIndicator) {
+            executionIndicator.className = 'execution-indicator';
+            if (status === 'evaluating') {
+                executionIndicator.classList.add('active');
+                executionIndicator.textContent = 'Evaluating...';
+            } else if (status === 'completed') {
+                // Show completed briefly, then hide
+                executionIndicator.classList.add('completed');
+                executionIndicator.textContent = 'Done';
+                setTimeout(() => {
+                    executionIndicator.classList.remove('active', 'completed');
+                }, 1000);
+            } else if (status === 'error') {
+                executionIndicator.classList.add('error');
+                executionIndicator.textContent = 'Error';
+                setTimeout(() => {
+                    executionIndicator.classList.remove('active', 'error');
+                }, 2000);
+            } else {
+                executionIndicator.classList.remove('active', 'completed', 'error');
+            }
+        }
+    }
+
     setEditorContent(content) {
         if (this.editor) {
             const transaction = this.editor.state.update({
@@ -680,8 +781,11 @@ class NixNotebookCell extends HTMLElement {
         const content = this.cellData.content.trim();
         if (!content) {
             this.updateOutput('', null, 'empty');
+            this.updateStatusIndicator(null, 'Empty');
             return;
         }
+        
+        this.updateStatusIndicator('evaluating', 'Rendering');
 
         // Simple markdown renderer
         let html = content
@@ -705,6 +809,7 @@ class NixNotebookCell extends HTMLElement {
             .replace(/\n/g, '<br>');
 
         this.updateOutput(html, null, 'markdown');
+        this.updateStatusIndicator('completed', 'Rendered');
     }
 
     async evaluateCell(forceEvaluation = false) {
@@ -720,15 +825,24 @@ class NixNotebookCell extends HTMLElement {
         const content = this.cellData.content.trim();
         if (!content) {
             this.updateOutput('', null);
+            this.updateStatusIndicator(null, 'Empty');
             return;
         }
         
         this.isEvaluating = true;
-        this.shadowRoot.getElementById('execution-indicator').classList.add('active');
-        this.shadowRoot.getElementById('cell-container').classList.add('executing');
         
+        // Update status indicators BEFORE starting evaluation
+        this.updateStatusIndicator('evaluating', 'Evaluating');
+        this.shadowRoot.getElementById('cell-container').classList.add('executing');
         this.updateOutput('Evaluating...', null, 'info');
         
+        // Use setTimeout to allow UI to update before heavy computation
+        setTimeout(async () => {
+            await this.performEvaluation(content);
+        }, 10);
+    }
+
+    async performEvaluation(content) {
         try {
             // Build the evaluation context with global scope
             let evaluationExpression;
@@ -750,10 +864,12 @@ class NixNotebookCell extends HTMLElement {
                     // Store in global scope (store the actual expression, not the result string)
                     this.notebook.globalScope.set(varName, expression);
                     
-                    // Update output to show both the result and assignment
-                    this.updateOutput(`${result}\n(assigned to ${varName})`, null);
+                    // Update output to show just the result
+                    this.updateOutput(result, null);
+                    this.updateStatusIndicator('completed', 'Assigned');
                 } else {
                     this.updateOutput('', 'Invalid variable assignment syntax');
+                    this.updateStatusIndicator('error', 'Invalid syntax');
                 }
             } else {
                 // For regular expressions, evaluate with global context
@@ -767,16 +883,18 @@ class NixNotebookCell extends HTMLElement {
                 // If this is an inherit cell, try to parse the result as an attrset
                 if (this.cellData.isInherit) {
                     await this.handleInheritResult(result, evaluationExpression);
+                    this.updateStatusIndicator('completed', 'Inherited');
                 } else {
                     this.updateOutput(result, null);
+                    this.updateStatusIndicator('completed', 'Done');
                 }
             }
             
         } catch (error) {
             this.updateOutput('', error.toString());
+            this.updateStatusIndicator('error', 'Error');
         } finally {
             this.isEvaluating = false;
-            this.shadowRoot.getElementById('execution-indicator').classList.remove('active');
             this.shadowRoot.getElementById('cell-container').classList.remove('executing');
             
             if (this.notebook) {

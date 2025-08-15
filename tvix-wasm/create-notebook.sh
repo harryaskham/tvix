@@ -94,6 +94,8 @@ echo "✓ Notebook created successfully: $OUTPUT_FILE"
 echo "  Title: $TITLE"
 echo "  Cells: $(($# * 2)) (comment + expression for each file)"
 echo ""
+NOTEBOOK_NAME=$(basename "$OUTPUT_FILE")
+
 echo "To use this notebook:"
 echo "  1. Start the server: make serve"
 echo "  2. Option A - Direct link: http://localhost:8089/notebook.html?file=$OUTPUT_FILE"

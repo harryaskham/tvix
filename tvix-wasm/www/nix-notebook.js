@@ -70,12 +70,20 @@ class NixNotebook extends HTMLElement {
 
     async handleUrlParams() {
         const urlParams = new URLSearchParams(window.location.search);
-        const filePath = urlParams.get('file');
+        const fileParam = urlParams.get('file');
         
-        if (filePath) {
+        if (fileParam) {
             try {
-                // Try to load the file
-                const response = await fetch(filePath);
+                // Try the path as-is first, then try with www/ prefix if it fails
+                let filePath = fileParam;
+                let response = await fetch(filePath);
+                
+                if (!response.ok && !fileParam.includes('/')) {
+                    // If it failed and it's just a filename, try with www/ prefix
+                    filePath = `www/${fileParam}`;
+                    response = await fetch(filePath);
+                }
+                
                 if (response.ok) {
                     const content = await response.text();
                     const data = JSON.parse(content);
@@ -92,18 +100,22 @@ class NixNotebook extends HTMLElement {
                         isVariable: false,
                         variableName: null,
                         isTextMode: cell.isTextMode || false,
-                        showCode: cell.showCode !== undefined ? cell.showCode : !(cell.isTextMode || false)
+                        showCode: cell.showCode !== undefined ? cell.showCode : !(cell.isTextMode || false),
+                        isInherit: cell.isInherit || false
                     }));
                     
-                    this.currentFilePath = filePath.split('/').pop();
+                    // Store the full path that worked for future URL updates
+                    this.currentFilePath = filePath;
                     this.isDirty = false;
                     this.lastSaveTime = new Date();
                     this.globalScope.clear();
                     
                     console.log(`Loaded notebook from URL: ${filePath}`);
+                } else {
+                    console.warn(`Failed to fetch file: ${filePath} (${response.status})`);
                 }
             } catch (error) {
-                console.warn(`Failed to load file from URL: ${filePath}`, error);
+                console.warn(`Failed to load file from URL: ${fileParam}`, error);
             }
         }
     }
@@ -111,7 +123,8 @@ class NixNotebook extends HTMLElement {
     updateUrl() {
         if (this.currentFilePath) {
             const url = new URL(window.location);
-            url.searchParams.set('file', `www/${this.currentFilePath}`);
+            // Store the full path that was used to load the file
+            url.searchParams.set('file', this.currentFilePath);
             window.history.replaceState({}, '', url);
         } else {
             const url = new URL(window.location);
@@ -931,8 +944,11 @@ class NixNotebook extends HTMLElement {
                 isInherit: cell.isInherit || false
             }));
             
+            // For files loaded via file picker, we can't use the full path in URLs
+            // so we just store the filename and won't have URL deep linking for these
             this.currentFilePath = file.name;
             this.isDirty = false;
+            // Don't update URL for manually loaded files since we can't reload them
             this.globalScope.clear();
             this.render();
             this.renderCells();

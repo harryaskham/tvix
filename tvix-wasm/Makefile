@@ -7,12 +7,21 @@ WASM_PACK_FLAGS ?= --dev
 # Default EMBED_NIX_PATH - dynamically resolved nixpkgs path
 #EMBED_NIX_PATH ?= nixpkgs=$$(nix eval --impure --expr '<nixpkgs>')
 EXTRA_NIX_PATH ?= ""
-EMBED_NIX_PATH ?= nixpkgs=$$(nix eval --impure --expr '<nixpkgs>'):$(EXTRA_NIX_PATH)
+#EMBED_NIX_PATH ?= nixpkgs/lib=$$(nix eval --impure --expr '<nixpkgs/lib>'):$(EXTRA_NIX_PATH)
+EMBED_NIX_PATH ?= nixpkgs=/tmp/nixpkgs:$(EXTRA_NIX_PATH)
 CLTV_DIR ?= /home/harry/collective
 CLTV ?= collective=/home/harry/collective
 NIX_PARSEC ?= nix-parsec=$$(nix eval --raw "$(CLTV_DIR)\#inputs.nix-parsec.outPath")
 NIX_REFLECT ?= nix-reflect=$$(nix eval --raw github:harryaskham/collective-public\#inputs.nix-reflect.outPath)
 CLTV_NIX_PATH ?= $(CLTV):$(NIX_PARSEC):$(NIX_REFLECT)
+
+copy-nixpkgs-lib:
+	mkdir -p /tmp/nixpkgs
+	sudo chown -R $(USER) /tmp/nixpkgs
+	sudo chmod -R 777 /tmp/nixpkgs
+	cp -r $$(nix eval --impure --expr '<nixpkgs/lib>') /tmp/nixpkgs/
+	sudo chown -R $(USER) /tmp/nixpkgs
+	sudo chmod -R 777 /tmp/nixpkgs
 
 # Default target
 all: generate-src build copy-files
@@ -23,7 +32,7 @@ release:
 	$(MAKE) WASM_PACK_FLAGS="--release" all
 
 # Generate the src/generated directory with embedded Nix files
-generate-src:
+generate-src: copy-nixpkgs-lib
 	@echo "Writing out Rust library with static embedded paths"
 	./generate-embedded-lib.sh "$(EMBED_NIX_PATH)"
 
@@ -143,7 +152,7 @@ serve: start logs
 run: all restart
 
 repl:
-	../target/release/tvix -I "$(EMBED_NIX_PATH):$(EXTRA_NIX_PATH)"
+	../target/release/tvix -I "$(EMBED_NIX_PATH)"
 
 cltv-repl:
 	$(MAKE) "EXTRA_NIX_PATH=$(CLTV_NIX_PATH)" repl
