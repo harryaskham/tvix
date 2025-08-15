@@ -1707,31 +1707,31 @@ pub fn embed_directory(fs: &mut HashMap<String, String>, embedded_paths: &mut Ve
                 fs.insert(embedded_path.to_string(), include_str!("/nix/store/nlawm43dvjgaz5q9bj45vwk6a3rfddbn-source/examples/arithmetic/default.nix").to_string());
             },
             "embedded/nix-reflect/lib/eval/fn.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/fn.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/lib/eval/fn.nix").to_string());
             },
             "embedded/nix-reflect/lib/eval/monad.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/monad.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/lib/eval/monad.nix").to_string());
             },
             "embedded/nix-reflect/lib/eval/store.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/store.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/lib/eval/store.nix").to_string());
             },
             "embedded/nix-reflect/lib/eval/ast.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/ast.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/lib/eval/ast.nix").to_string());
             },
             "embedded/nix-reflect/lib/eval/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/eval/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/lib/eval/default.nix").to_string());
             },
             "embedded/nix-reflect/lib/parser/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/parser/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/lib/parser/default.nix").to_string());
             },
             "embedded/nix-reflect/lib/default.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/default.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/lib/default.nix").to_string());
             },
             "embedded/nix-reflect/lib/debuglib.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/lib/debuglib.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/lib/debuglib.nix").to_string());
             },
             "embedded/nix-reflect/flake.nix" => {
-                fs.insert(embedded_path.to_string(), include_str!("/nix/store/4hj8w1jwpnfl7fawj5xb762yyx0p9051-source/flake.nix").to_string());
+                fs.insert(embedded_path.to_string(), include_str!("/nix/store/zg5a8aiqkz4bdcwbi06mrgria520pn2j-source/flake.nix").to_string());
             },
             _ => {
                 log(&format!("VFS: Warning - file not embedded: {}", embedded_path));

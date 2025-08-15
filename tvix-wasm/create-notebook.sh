@@ -98,7 +98,6 @@ NOTEBOOK_NAME=$(basename "$OUTPUT_FILE")
 
 echo "To use this notebook:"
 echo "  1. Start the server: make serve"
-echo "  2. Option A - Direct link: http://localhost:8089/notebook.html?file=$OUTPUT_FILE"
-echo "  3. Option B - Manual load: http://localhost:8089/notebook.html"
-echo "     Then click 'Load' and select: $OUTPUT_FILE"
+echo "  2. Open: http://localhost:8089/notebook.html"
+echo "  3. Click 'Load' and select: $OUTPUT_FILE"
 echo ""

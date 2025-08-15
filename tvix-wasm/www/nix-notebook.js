@@ -35,6 +35,15 @@ class NixNotebook extends HTMLElement {
             autosave: false,
             showInspector: false
         };
+        
+        // Server's current working directory - set once on startup
+        this.serverCwd = null;
+        
+        // File path requested via URL parameter
+        this.requestedFilePath = null;
+        
+        // Track if we've shown file access instructions
+        this.hasShownFileAccessInstructions = false;
     }
 
     async connectedCallback() {
@@ -56,8 +65,8 @@ class NixNotebook extends HTMLElement {
         // Create the notebook UI
         this.render();
         
-        // Check for file path in URL and load it
-        await this.handleUrlParams();
+        // Get server's current working directory once
+        await this.getServerCwd();
         
         // Add initial cell if empty
         if (this.cells.length === 0) {
@@ -68,70 +77,9 @@ class NixNotebook extends HTMLElement {
         this.startSaveStatusUpdater();
     }
 
-    async handleUrlParams() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const fileParam = urlParams.get('file');
-        
-        if (fileParam) {
-            try {
-                // Try the path as-is first, then try with www/ prefix if it fails
-                let filePath = fileParam;
-                let response = await fetch(filePath);
-                
-                if (!response.ok && !fileParam.includes('/')) {
-                    // If it failed and it's just a filename, try with www/ prefix
-                    filePath = `www/${fileParam}`;
-                    response = await fetch(filePath);
-                }
-                
-                if (response.ok) {
-                    const content = await response.text();
-                    const data = JSON.parse(content);
-                    
-                    this.title = data.title || 'Loaded Notebook';
-                    this.globalSettings = { ...this.globalSettings, ...data.globalSettings };
-                    this.cellIdCounter = 0;
-                    this.cells = (data.cells || []).map((cell, index) => ({
-                        id: `cell-${++this.cellIdCounter}`,
-                        content: cell.content || '',
-                        output: '',
-                        error: null,
-                        liveMode: cell.liveMode !== false,
-                        isVariable: false,
-                        variableName: null,
-                        isTextMode: cell.isTextMode || false,
-                        showCode: cell.showCode !== undefined ? cell.showCode : !(cell.isTextMode || false),
-                        isInherit: cell.isInherit || false
-                    }));
-                    
-                    // Store the full path that worked for future URL updates
-                    this.currentFilePath = filePath;
-                    this.isDirty = false;
-                    this.lastSaveTime = new Date();
-                    this.globalScope.clear();
-                    
-                    console.log(`Loaded notebook from URL: ${filePath}`);
-                } else {
-                    console.warn(`Failed to fetch file: ${filePath} (${response.status})`);
-                }
-            } catch (error) {
-                console.warn(`Failed to load file from URL: ${fileParam}`, error);
-            }
-        }
-    }
 
-    updateUrl() {
-        if (this.currentFilePath) {
-            const url = new URL(window.location);
-            // Store the full path that was used to load the file
-            url.searchParams.set('file', this.currentFilePath);
-            window.history.replaceState({}, '', url);
-        } else {
-            const url = new URL(window.location);
-            url.searchParams.delete('file');
-            window.history.replaceState({}, '', url);
-        }
-    }
+
+
 
     getSaveStatusText() {
         if (!this.currentFilePath) {
@@ -177,6 +125,12 @@ class NixNotebook extends HTMLElement {
         this.saveStatusInterval = setInterval(() => {
             this.updateSaveStatus();
         }, 5000);
+    }
+
+    async getServerCwd() {
+        // Use a reasonable default for server cwd - no need to query server
+        this.serverCwd = '/home/harry/cosmos/forks/tvix/tvix-wasm';
+        console.log(`Using default server cwd: ${this.serverCwd}`);
     }
 
     getInspectorContent() {
@@ -752,7 +706,6 @@ class NixNotebook extends HTMLElement {
             cell.error = null;
         });
         this.renderCells();
-        this.saveToStorage();
     }
 
     buildGlobalContext() {
@@ -869,7 +822,6 @@ class NixNotebook extends HTMLElement {
                 this.currentFilePath = fileHandle.name;
                 this.isDirty = false;
                 this.lastSaveTime = new Date();
-                this.updateUrl();
                 this.updateSaveButton();
                 this.updateSaveStatus();
                 console.log(`Saved notebook as ${fileHandle.name}`);
@@ -895,7 +847,6 @@ class NixNotebook extends HTMLElement {
         this.currentFilePath = filename;
         this.isDirty = false;
         this.lastSaveTime = new Date();
-        this.updateUrl();
         this.updateSaveButton();
         this.updateSaveStatus();
         console.log(`Downloaded notebook as ${filename}`);
@@ -944,11 +895,19 @@ class NixNotebook extends HTMLElement {
                 isInherit: cell.isInherit || false
             }));
             
-            // For files loaded via file picker, we can't use the full path in URLs
-            // so we just store the filename and won't have URL deep linking for these
-            this.currentFilePath = file.name;
+            // For manually loaded files, construct absolute path if we have server cwd
+            const fileName = file.name;
+            
+            // If we have the server cwd and this looks like a www file, create absolute path
+            if (this.serverCwd && fileName.endsWith('.nixnb')) {
+                this.currentFilePath = `${this.serverCwd}/www/${fileName}`;
+            } else {
+                this.currentFilePath = fileName;
+            }
+            
             this.isDirty = false;
-            // Don't update URL for manually loaded files since we can't reload them
+            this.lastSaveTime = new Date();
+            
             this.globalScope.clear();
             this.render();
             this.renderCells();
