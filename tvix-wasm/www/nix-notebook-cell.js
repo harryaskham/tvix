@@ -400,6 +400,10 @@ class NixNotebookCell extends HTMLElement {
                                     <input type="checkbox" id="inherit-mode" ${cell.isInherit ? 'checked' : ''}>
                                     Inherit
                                 </label>
+                                <label id="raw-mode-label" ${cell.isTextMode ? 'style="display: none;"' : ''}>
+                                    <input type="checkbox" id="raw-mode" ${cell.rawMode ? 'checked' : ''}>
+                                    Raw
+                                </label>
                                 <button class="cell-btn ${cell.liveMode !== false ? 'hidden' : ''}" 
                                         id="evaluate-btn" style="display: ${cell.liveMode !== false ? 'none' : 'inline-block'}">
                                     ${cell.isTextMode ? 'Render' : 'Run'}
@@ -571,6 +575,20 @@ class NixNotebookCell extends HTMLElement {
         inheritModeCheckbox?.addEventListener('change', (e) => {
             this.cellData.isInherit = e.target.checked;
             this.updateInheritIndicator();
+            
+            if (this.notebook) {
+                this.notebook.markDirty();
+                // Re-evaluate if live mode is on
+                if (this.cellData.liveMode !== false) {
+                    this.evaluateCell();
+                }
+            }
+        });
+
+        // Raw mode toggle
+        const rawModeCheckbox = this.shadowRoot.getElementById('raw-mode');
+        rawModeCheckbox?.addEventListener('change', (e) => {
+            this.cellData.rawMode = e.target.checked;
             
             if (this.notebook) {
                 this.notebook.markDirty();
@@ -753,6 +771,7 @@ class NixNotebookCell extends HTMLElement {
     toggleTextMode() {
         const evaluateBtn = this.shadowRoot.getElementById('evaluate-btn');
         const inheritLabel = this.shadowRoot.getElementById('inherit-mode-label');
+        const rawLabel = this.shadowRoot.getElementById('raw-mode-label');
         
         if (this.cellData.isTextMode) {
             // Switch to text mode
@@ -761,6 +780,7 @@ class NixNotebookCell extends HTMLElement {
                 evaluateBtn.style.display = this.cellData.liveMode ? 'none' : 'inline-block';
             }
             if (inheritLabel) inheritLabel.style.display = 'none';
+            if (rawLabel) rawLabel.style.display = 'none';
             
             // Render markdown immediately when switching to text mode
             this.renderMarkdown();
@@ -771,6 +791,7 @@ class NixNotebookCell extends HTMLElement {
                 evaluateBtn.style.display = this.cellData.liveMode ? 'none' : 'inline-block';
             }
             if (inheritLabel) inheritLabel.style.display = '';
+            if (rawLabel) rawLabel.style.display = '';
             
             // Clear output when switching back to code mode
             this.updateOutput('Ready to evaluate...', null, 'empty');
@@ -907,11 +928,12 @@ class NixNotebookCell extends HTMLElement {
     async evaluateExpression(expression) {
         const evaluator = this.notebook.evaluator;
         const settings = this.notebook.globalSettings;
+        const rawMode = this.cellData.rawMode || false;
         
         if (typeof evaluator.evaluate_with_settings === 'function') {
             return evaluator.evaluate_with_settings(
                 expression,
-                settings.rawMode,
+                rawMode,
                 settings.prettyPrintAst,
                 settings.displayAst,
                 settings.dumpBytecode,
@@ -920,7 +942,7 @@ class NixNotebookCell extends HTMLElement {
                 settings.nixCompat
             );
         } else {
-            return evaluator.evaluate(expression, settings.rawMode);
+            return evaluator.evaluate(expression, rawMode);
         }
     }
 

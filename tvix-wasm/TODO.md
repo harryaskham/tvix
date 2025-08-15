@@ -17,13 +17,13 @@
   - [x] Remove the 'quick start examples'
   - [x] Remove the 'Nix notebook' header text; the notebook title section serves as the page header overall.
   - [x] Currently, `make notebook` generates cells like "# nix-file.nix" as titles, however these are interpreted as Nix comments instead. Add a "text" mode toggle to cells, and for text mode cells, render as Markdown instead of evaluating as Nix. Respect "live" for these cells where editing the text re-renders the markdown result.
-  - [ ] The "live" toggle is missing for text cells, add this back.
-  - [ ] The 'save' button still just downloads a .nixnb file. This should instead overwrite the original file (the site should request permissions it needs to operate over local files).
-  - [ ] Let's reclaim some vertical space; the "results" should appear to the right of the editor, just as in the embedded blog post example. The cell controls should appear above the results pane only, with the whole left side of the cell being top-to-bottom used for the cell editor. To make this more comfortable, the width of the central UI notebook column can be enlarged slightly.
-  - [ ] The cell editor should have start with a fixed viewport height of 20 lines, or the number of lines of the code it contains, whichever is smaller. There should be an expand toggle that grows the cell to show the entire code, or contracts it back to 20 lines (or the number of lines present)
-  - [ ] Drop the "In[1]" "Out[1]", it's clear what is the expression and what is the result already.
-  - [ ] Cells should have a "Show Code" toggle that is persistent in the notebook JSON, which entirely hides the code of the cell if set, and only shows the results. Text cells should have Show Code on by default.
-  - [ ] `make notebook` should generate code cells that are not "live" by default.
-  - [ ] Small buttons on each cell controls panel for "Add cell above" and "Add cell below"
-  - [ ] "New Cell" currently adds a cell with duplicate code to an existing cell - it should add an empty cell.
+  - [x] The "live" toggle is missing for text cells, add this back.
+  - [x] The 'save' button still just downloads a .nixnb file. This should instead overwrite the original file (the site should request permissions it needs to operate over local files).
+  - [x] Let's reclaim some vertical space; the "results" should appear to the right of the editor, just as in the embedded blog post example. The cell controls should appear above the results pane only, with the whole left side of the cell being top-to-bottom used for the cell editor. To make this more comfortable, the width of the central UI notebook column can be enlarged slightly.
+  - [x] The cell editor should have start with a fixed viewport height of 20 lines, or the number of lines of the code it contains, whichever is smaller. There should be an expand toggle that grows the cell to show the entire code, or contracts it back to 20 lines (or the number of lines present)
+  - [x] Drop the "In[1]" "Out[1]", it's clear what is the expression and what is the result already.
+  - [x] Cells should have a "Show Code" toggle that is persistent in the notebook JSON, which entirely hides the code of the cell if set, and only shows the results. Text cells should have Show Code on by default.
+  - [x] `make notebook` should generate code cells that are not "live" by default.
+  - [x] Small buttons on each cell controls panel for "Add cell above" and "Add cell below"
+  - [x] "New Cell" currently adds a cell with duplicate code to an existing cell - it should add an empty cell.
   

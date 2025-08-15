@@ -27,7 +27,6 @@ class NixNotebook extends HTMLElement {
         this.globalSettings = {
             strict: false,
             nixCompat: false,
-            rawMode: false,
             prettyPrintAst: false,
             displayAst: false,
             dumpBytecode: false,
@@ -468,10 +467,6 @@ class NixNotebook extends HTMLElement {
                             Nix Compat
                         </label>
                         <label>
-                            <input type="checkbox" id="global-raw-mode" ${this.globalSettings.rawMode ? 'checked' : ''}>
-                            Raw Mode
-                        </label>
-                        <label>
                             <input type="checkbox" id="global-autosave" ${this.globalSettings.autosave ? 'checked' : ''}>
                             Autosave
                         </label>
@@ -619,7 +614,8 @@ class NixNotebook extends HTMLElement {
             variableName: null,
             isTextMode: isTextMode,
             showCode: !isTextMode, // Text cells start with code hidden, code cells show code by default
-            isInherit: false // Whether this cell inherits its result attrset into global scope
+            isInherit: false, // Whether this cell inherits its result attrset into global scope
+            rawMode: false // Per-cell raw mode setting
         };
 
         if (index === -1) {
@@ -861,7 +857,8 @@ class NixNotebook extends HTMLElement {
                 liveMode: cell.liveMode,
                 isTextMode: cell.isTextMode,
                 showCode: cell.showCode,
-                isInherit: cell.isInherit
+                isInherit: cell.isInherit,
+                rawMode: cell.rawMode
             })),
             version: '1.0'
         };
@@ -892,7 +889,8 @@ class NixNotebook extends HTMLElement {
                 variableName: null,
                 isTextMode: cell.isTextMode || false,
                 showCode: cell.showCode !== undefined ? cell.showCode : !(cell.isTextMode || false),
-                isInherit: cell.isInherit || false
+                isInherit: cell.isInherit || false,
+                rawMode: cell.rawMode || false
             }));
             
             // For manually loaded files, construct absolute path if we have server cwd

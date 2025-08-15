@@ -96,7 +96,8 @@ window.createTvixEditor = function(element, initialDoc = '', onDocChange = null,
         },
         '.cm-editor': {
           width: '100%',
-          height: '300px',
+          height: '20em',
+          maxHeight: '20em',
           border: '1px solid #4c566a',
           borderRadius: '4px'
         },

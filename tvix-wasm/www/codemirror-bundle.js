@@ -36666,47 +36666,20 @@
   }
 
   // Load expression from localStorage
-  function loadExpression(providedExpression = null) {
-    const defaultExpression = `let
-  args = {
-    pkgs.lib = import <nixpkgs/lib>;
-    pkgs.system = "x86_64-linux";
-    inputs.nix-parsec = import <nix-parsec>;
-    inputs.collective-public.lib.\${args.pkgs.system} =
-      import <collective/collective-public/pkgs/collective-lib> args;
-  };
-  collective-lib = import <collective/pkgs/collective-lib> args;
-  inherit (collective-lib) typed;
-in
-with typed;
-let
-  expr = "1";
-  ast = parser.parse expr;
-  value = eval.ast.runAST ast;
-in
-  toString ast`;
-    
-    // If a specific expression was provided, use it
-    if (providedExpression !== null && providedExpression !== undefined) {
-      return providedExpression;
-    }
-    
+  function loadExpression() {
     try {
-      return localStorage.getItem('tvix-expression') || defaultExpression;
+      return localStorage.getItem('tvix-expression') || 'let lib = import <nixpkgs/lib>; in lib';
     } catch (e) {
       console.warn('Could not load expression from localStorage:', e);
-      return defaultExpression;
+      return 'let lib = import <nixpkgs/lib>; in lib';
     }
   }
 
   // Global editor instance
   window.createTvixEditor = function(element, initialDoc = '', onDocChange = null, onEvaluate = null) {
-    // Use saved expression if no initial doc provided, or use provided initial doc
+    // Use saved expression if no initial doc provided
     if (!initialDoc) {
       initialDoc = loadExpression();
-    } else {
-      // If initial doc was provided, use it but pass it through loadExpression for consistency
-      initialDoc = loadExpression(initialDoc);
     }
     // Create keybindings array
     const keybindings = [indentWithTab];
@@ -36771,7 +36744,8 @@ in
           },
           '.cm-editor': {
             width: '100%',
-            height: '300px',
+            height: '20em',
+            maxHeight: '20em',
             border: '1px solid #4c566a',
             borderRadius: '4px'
           },
