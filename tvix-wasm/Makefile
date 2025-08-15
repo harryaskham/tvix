@@ -152,7 +152,7 @@ serve: start logs
 run: all restart
 
 repl:
-	../target/release/tvix -I "$(EMBED_NIX_PATH)"
+	../target/release/tvix -I "$(EMBED_NIX_PATH)" --trace-runtime --trace-runtime-timing
 
 cltv-repl:
 	$(MAKE) "EXTRA_NIX_PATH=$(CLTV_NIX_PATH)" repl
